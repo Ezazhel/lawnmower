@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+app-root {
+  height: inherit;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.w-100 {
+  width: 100%;
+}
+
+.upgrades {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.neighboors {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-rows: repeat(10, minmax(calc(15% - 1rem), 1fr));
+  grid-template-columns: repeat(10, minmax(calc(10% - 1rem), 1fr));
+  .neighboor {
+    background: lightblue;
+  }
+}
+main {
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
