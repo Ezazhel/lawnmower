@@ -7,6 +7,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 const Material = [
   MatButtonModule,
   MatCheckboxModule,
@@ -15,10 +18,14 @@ const Material = [
   MatTableModule,
   MatTabsModule,
   MatCardModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatProgressBarModule,
 ];
 @NgModule({
   declarations: [],
   imports: [CommonModule, ...Material],
+  providers: [MatIconRegistry],
   exports: Material,
 })
 export class MaterialModule {}

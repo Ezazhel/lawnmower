@@ -1,28 +1,12 @@
-<header>
-  <mat-toolbar>
-    <span> Lawnmoner </span>
-  </mat-toolbar>
-</header>
-<main id="mainContainer"></main>
-<footer>
-  <mat-tab-group class="mat-elevation-z4" dynamicHeight mat-stretch-tabs>
-    <mat-tab label="$">
-      <mat-tab-group mat-stretch-tabs dynamicHeight>
-        <mat-tab label="N">
-          <mowing></mowing>
-        </mat-tab>
-        <mat-tab label="B">
-          <blogging></blogging>
-        </mat-tab>
-      </mat-tab-group>
-    </mat-tab>
-    <mat-tab label="U">
-      <mat-tab-group mat-stretch-tabs>
-        <mat-tab label="N"></mat-tab>
-        <mat-tab label="B"></mat-tab>
-      </mat-tab-group>
-    </mat-tab>
-    <mat-tab label="A"></mat-tab>
-    <mat-tab label="S"></mat-tab>
-  </mat-tab-group>
-</footer>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" opened="false" role="navigation"
+    >La sidenav
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+    <main id="mainContainer">
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

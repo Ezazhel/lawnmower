@@ -1,42 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
+import * as Hammer from 'hammerjs';
 
-export interface PeriodicElement {
-  size: number;
-  time: number;
-  pay: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { size: 1, time: 5 * 60, pay: 10 },
-  { size: 2, time: 5 * 60, pay: 10 },
-  { size: 3, time: 5 * 60, pay: 10 },
-  { size: 4, time: 5 * 60, pay: 10 },
-  { size: 5, time: 5 * 60, pay: 10 },
-  { size: 6, time: 5 * 60, pay: 10 },
-  { size: 7, time: 5 * 60, pay: 10 },
-  { size: 8, time: 5 * 60, pay: 10 },
-  { size: 9, time: 5 * 60, pay: 10 },
-  { size: 10, time: 5 * 60, pay: 10 },
-];
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  @ViewChild(MatSidenav)
+  public sidenav: MatSidenav;
+
   title = 'lawnmower';
-  displayedColumns: string[] = ['size', 'time', 'pay'];
-  dataSource = ELEMENT_DATA;
-  breakpoint: number;
-  ngOnInit() {
-    this.breakpoint = window.innerWidth <= 720 ? 1 : 4;
+
+  constructor(elementRef: ElementRef) {
+    const hammertime = new Hammer(elementRef.nativeElement, {});
+    hammertime.on('panright', (event) => {
+      if (event.center.x >= 1 && event.center.x <= 50) this.sidenav.open();
+    });
+    hammertime.on('panleft', (event) => {
+      this.sidenav.close();
+    });
   }
 
-  onResize(event) {
-    this.breakpoint = event.target.innerWidth <= 720 ? 1 : 4;
-  }
+  ngOnInit() {}
 
-  tabChanged(event) {
-    console.log(event);
+  onToggleSideNav() {
+    this.sidenav.toggle();
   }
 }

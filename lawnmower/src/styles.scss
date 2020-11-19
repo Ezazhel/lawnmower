@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 html,
 body {
   height: 100vh;
@@ -7,10 +8,13 @@ body {
   padding: 0;
 }
 
-app-root {
-  height: inherit;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+mat-sidenav-container {
+  height: 100%;
+  mat-sidenav-content {
+    height: inherit !important;
+    display: grid !important;
+    grid-template-rows: auto 1fr auto;
+  }
 }
 .w-100 {
   width: 100%;

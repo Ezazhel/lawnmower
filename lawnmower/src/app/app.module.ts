@@ -5,7 +5,9 @@ import { AppComponent } from './app.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MoneyEarningModule } from './features/money-earning/money-earning.module';
-import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
+import { FooterHeaderModule } from '@shared/footer-header/footer-header.module';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -14,7 +16,8 @@ import { RouterModule } from '@angular/router';
     MaterialModule,
     FlexLayoutModule,
     MoneyEarningModule,
-    RouterModule,
+    AppRoutingModule,
+    FooterHeaderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
