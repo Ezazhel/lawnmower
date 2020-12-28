@@ -27,12 +27,15 @@ mat-sidenav-container {
 }
 
 .neighboors {
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-rows: repeat(10, minmax(calc(15% - 1rem), 1fr));
-  grid-template-columns: repeat(10, minmax(calc(10% - 1rem), 1fr));
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   .neighboor {
-    background: lightblue;
+    flex: 1 1 300px;
+    margin: 5px;
+    &:hover{
+      cursor: pointer;
+    }
   }
 }
 main {

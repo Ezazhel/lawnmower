@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
 const Material = [
   MatButtonModule,
   MatCheckboxModule,
@@ -21,6 +22,7 @@ const Material = [
   MatSidenavModule,
   MatIconModule,
   MatProgressBarModule,
+  MatExpansionModule,
 ];
 @NgModule({
   declarations: [],

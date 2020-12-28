@@ -12,12 +12,18 @@ import { RouterModule } from '@angular/router';
     SharedModule,
     RouterModule.forChild([
       {
-        path: 'mowing',
-        component: MowingComponent,
-      },
-      {
-        path: 'blogging',
-        component: BloggingComponent,
+        path: 'earning',
+        children: [
+          {
+            path: 'mowing',
+            component: MowingComponent,
+          },
+          {
+            path: 'blogging',
+            component: BloggingComponent,
+          },
+          { path: '**', redirectTo: 'mowing' },
+        ],
       },
     ]),
   ],

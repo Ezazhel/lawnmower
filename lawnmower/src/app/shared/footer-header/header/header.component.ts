@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-
+import { select, Store } from '@ngrx/store';
+import { RootStoreState, StatsSelector } from 'app/root-store';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-header',
   template: `
@@ -11,6 +13,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
           </button>
         </div>
         <div>Lawnmoner</div>
+        <span> money : {{ money$ | async }}$ </span>
       </mat-toolbar>
     </header>
   `,
@@ -18,7 +21,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
-  constructor() {}
+  public money$: Observable<number> = this.store.pipe(
+    select(StatsSelector.selectStatsMoney)
+  );
+  constructor(private store: Store<RootStoreState.State>) {}
 
   ngOnInit(): void {}
   onToggleSideNav = () => {

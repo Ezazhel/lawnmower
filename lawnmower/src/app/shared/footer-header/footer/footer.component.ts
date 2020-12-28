@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { menuLink } from '@shared/menu/menuLink';
 
 @Component({
@@ -8,11 +9,16 @@ import { menuLink } from '@shared/menu/menuLink';
 })
 export class FooterComponent implements OnInit {
   routes = menuLink;
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   getPath(tab: { path: string }, subTab: { path: string }) {
     return `${tab.path}/${subTab.path}`;
+  }
+
+  navigate(path: string) {
+    console.log(path);
+    this.router.navigateByUrl(path);
   }
 }

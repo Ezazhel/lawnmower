@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'earning', pathMatch: 'full' },
   {
     path: 'earning',
     loadChildren: () =>
@@ -10,10 +9,12 @@ const routes: Routes = [
         (m) => m.MoneyEarningModule
       ),
   },
+  { path: '', redirectTo: 'earning', pathMatch: 'full' },
+  { path: '**', redirectTo: 'earning', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { initialNavigation: false })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

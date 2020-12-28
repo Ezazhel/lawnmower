@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MoneyEarningModule } from './features/money-earning/money-earning.module';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterHeaderModule } from '@shared/footer-header/footer-header.module';
-
+import { RootStoreModule } from './root-store';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -18,6 +18,7 @@ import { FooterHeaderModule } from '@shared/footer-header/footer-header.module';
     MoneyEarningModule,
     AppRoutingModule,
     FooterHeaderModule,
+    RootStoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

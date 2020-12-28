@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { NavtabComponent } from './navtab/navtab.component';
 
 @NgModule({
-  declarations: [SidenavComponent, NavtabComponent],
+  declarations: [SidenavComponent],
   imports: [CommonModule],
-  exports: [SidenavComponent, NavtabComponent],
+  exports: [SidenavComponent],
 })
 export class MenuModule {}
