@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { RootStoreState, EarningAction, StatsAction } from 'app/root-store';
 import { interval } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { getCompletion } from '../../root-store/neighboor/neighboor-selector';
+import { getCompletion, getAllNeighboors } from '../../root-store/neighboor/neighboor-selector';
 import { Neighboors } from '../data/neighboors-data';
 
 @Injectable({
@@ -28,13 +28,16 @@ export class IdlingService {
         //select neighboors, foreach; Object.assign from const for easier management; completion * money * bonus * deltaTime= dollar.
         // Call earnMoney ; incrementTotalMoney.
         this.store
-            .select(getCompletion, 0)
+            .select(getAllNeighboors)
             .pipe(take(1))
-            .subscribe((completion) => {
-                const n = Object.assign(Neighboors[0], { completion });
-                let money = n.income * completion * this.deltaModifier;
-                this.store.dispatch(EarningAction.earnMoney({ money }));
-                this.store.dispatch(StatsAction.incrementTotalMoney({ money }));
+            .subscribe((neighboors) => {
+                neighboors.forEach((n) => {
+                    if (n.completion > 0) {
+                        let money = n.income * n.completion * this.deltaModifier;
+                        this.store.dispatch(EarningAction.earnMoney({ money }));
+                        this.store.dispatch(StatsAction.incrementTotalMoney({ money }));
+                    }
+                });
             });
     }
 }

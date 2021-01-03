@@ -1,9 +1,13 @@
 import { Neighboor } from '@core/models/neighboor';
 import { Neighboors } from '@core/data/neighboors-data';
 export interface State {
-    neighboors: Partial<Neighboor>[];
+    completions: {
+        [neighboorId: number]: number;
+    };
 }
 
 export const initialState: State = {
-    neighboors: [{ completion: Neighboors[0].completion }],
+    completions: {
+        [0]: Neighboors[0].completion,
+    },
 };

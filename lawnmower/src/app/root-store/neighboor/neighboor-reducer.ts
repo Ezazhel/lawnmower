@@ -10,6 +10,6 @@ export const reducer = createReducer(
 function updateCompletion(state: State, id: number, modifier: number): State {
     return {
         ...state,
-        neighboors: { ...state.neighboors, [0]: { completion: state.neighboors[id].completion + modifier } },
+        completions: { ...state.completions, [id]: state.completions[id] + modifier },
     };
 }

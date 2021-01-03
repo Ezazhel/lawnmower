@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Neighboors } from '@core/data/neighboors-data';
-import { IdlingService } from '@core/services/idling.service';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { NeighboorAction } from 'app/root-store/neighboor';
-import { Neighboor } from '../../../../core/models/neighboor';
+import { Neighboor } from '@core/models/neighboor';
 @Component({
     selector: 'mowing',
     templateUrl: './mowing.component.html',
@@ -13,7 +12,7 @@ import { Neighboor } from '../../../../core/models/neighboor';
 export class MowingComponent implements OnInit {
     neighboors = Neighboors;
 
-    constructor(private store: Store<RootStoreState.State>, private idlingService: IdlingService) {}
+    constructor(private store: Store<RootStoreState.State>) {}
 
     ngOnInit(): void {}
 

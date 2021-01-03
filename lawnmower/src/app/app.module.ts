@@ -8,19 +8,23 @@ import { MoneyEarningModule } from './features/money-earning/money-earning.modul
 import { AppRoutingModule } from './app-routing.module';
 import { FooterHeaderModule } from '@shared/footer-header/footer-header.module';
 import { RootStoreModule } from './root-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 @NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    FlexLayoutModule,
-    MoneyEarningModule,
-    AppRoutingModule,
-    FooterHeaderModule,
-    RootStoreModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        FlexLayoutModule,
+        MoneyEarningModule,
+        AppRoutingModule,
+        FooterHeaderModule,
+        RootStoreModule,
+        StoreDevtoolsModule.instrument({
+            name: 'lawnmoner',
+        }),
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}
