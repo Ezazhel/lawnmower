@@ -1,4 +1,3 @@
-import { Neighboor } from '@core/models/neighboor';
 import { Neighboors } from '@core/data/neighboors-data';
 export interface State {
     completions: {
