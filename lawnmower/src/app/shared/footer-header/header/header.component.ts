@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
                     </button>
                 </div>
                 <div>Lawnmoner</div>
-                <span> money : {{ (money$ | async).toExponential(2) }}$ </span>
+                <span> money : {{ money$ | async | exponential }}$ </span>
             </mat-toolbar>
         </header>
     `,
