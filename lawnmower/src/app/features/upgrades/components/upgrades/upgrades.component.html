@@ -1,0 +1,16 @@
+<div class="neighboors">
+    <mat-card
+        class="neighboor"
+        *ngFor="let upgrade of upgrades; index as i; trackBy: trackByFunction"
+    >
+        <mat-card-title>
+            {{ upgrade.name }}
+        </mat-card-title>
+        <mat-card-subtitle>
+            Price : {{ upgrade.price }}{{upgrade.currency}}
+        </mat-card-subtitle>
+        <mat-card-content>
+            <div>It does something</div>
+        </mat-card-content>
+    </mat-card>
+</div>

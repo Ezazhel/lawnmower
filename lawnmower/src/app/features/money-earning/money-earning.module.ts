@@ -4,12 +4,14 @@ import { MowingComponent } from './components/mowing/mowing.component';
 import { BloggingComponent } from './components/blogging/blogging.component';
 import { SharedModule } from '@shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { UpgradesModule } from '../upgrades/upgrades.module';
 
 @NgModule({
   declarations: [MowingComponent, BloggingComponent],
   imports: [
     CommonModule,
     SharedModule,
+    UpgradesModule,
     RouterModule.forChild([
       {
         path: 'earning',

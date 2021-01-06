@@ -11,21 +11,23 @@ import { Neighboor } from '@core/models/neighboor';
 })
 export class MowingComponent implements OnInit {
     neighboors = Neighboors;
-
+    cutInterval = null;
     constructor(private store: Store<RootStoreState.State>) {}
 
     ngOnInit(): void {}
 
     cut = (neighboor: Neighboor) => {
-        let interval = setInterval(() => {
-            neighboor.cut();
-            if (neighboor.cutPercent >= 100) {
-                this.store.dispatch(NeighboorAction.cutAction({ id: 0, modifier: 1 }));
-                neighboor.cutCompleted();
-                if (!neighboor.regrowing) this.regrow(neighboor);
-                window.clearInterval(interval);
-            }
-        }, 50);
+        if(this.cutInterval == null){
+            this.cutInterval = setInterval(() => {
+                neighboor.cut();
+                if (neighboor.cutPercent >= 100) {
+                    this.store.dispatch(NeighboorAction.cutAction({ id: 0, modifier: 1 }));
+                    neighboor.cutCompleted();
+                    if (!neighboor.regrowing) this.regrow(neighboor);
+                    window.clearInterval(this.cutInterval); this.cutInterval=null;
+                }
+            }, 50);
+        }
     };
 
     regrow = (neighboor: Neighboor) => {
