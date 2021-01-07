@@ -1,48 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 html,
 body {
-  height: 100vh;
-  margin: 0;
-  padding: 0;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 mat-sidenav-container {
-  height: 100%;
-  mat-sidenav-content {
-    height: inherit !important;
-    display: grid !important;
-    grid-template-rows: auto 1fr auto;
-  }
+    height: 100%;
+    mat-sidenav-content {
+        height: inherit !important;
+        display: grid !important;
+        grid-template-rows: auto 1fr auto;
+    }
 }
 .w-100 {
-  width: 100%;
+    width: 100%;
 }
 
 .upgrades {
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
 .neighboors {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  .neighboor {
-    flex: 1 1 300px;
-    margin: 5px;
-    &:hover{
-      cursor: pointer;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .neighboor {
+        flex: 1 1 300px;
+        margin: 5px;
+        &:hover {
+            cursor: pointer;
+        }
     }
-  }
 }
 main {
-  overflow: auto;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  &::-webkit-scrollbar {
-    display: none;
-  }
+    overflow: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.red {
+    background: red !important;
+}
+.blue {
+    background: blue !important;
 }

@@ -1,12 +1,13 @@
+import { MowingUpgrade } from '@core/data/upgrade-data';
 export interface State {
-    global: [];
+    global: { [id: string]: boolean };
     mowing: { [id: string]: boolean };
 }
 
 export const initialState: State = {
-    global: null,
+    global: {},
     mowing: {
-        ['sharpen']: false,
-        ['rich-grass']: false,
+        [MowingUpgrade.sharpen.id]: false,
+        [MowingUpgrade['rich-grass'].id]: false,
     },
 };

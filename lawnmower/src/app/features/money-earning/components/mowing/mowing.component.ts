@@ -4,6 +4,9 @@ import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { NeighboorAction } from 'app/root-store/neighboor';
 import { Neighboor } from '@core/models/neighboor';
+import { Observable } from 'rxjs';
+import { Upgrade } from '@core/models/upgrade';
+import { selectMowingUpgradeCompletion } from 'app/root-store/upgrades/upgrades-selector';
 @Component({
     selector: 'mowing',
     templateUrl: './mowing.component.html',
@@ -12,19 +15,21 @@ import { Neighboor } from '@core/models/neighboor';
 export class MowingComponent implements OnInit {
     neighboors = Neighboors;
     cutInterval = null;
+    upgrades$: Observable<Upgrade[]> = this.store.select(selectMowingUpgradeCompletion);
     constructor(private store: Store<RootStoreState.State>) {}
 
     ngOnInit(): void {}
 
     cut = (neighboor: Neighboor) => {
-        if(this.cutInterval == null){
+        if (this.cutInterval == null) {
             this.cutInterval = setInterval(() => {
                 neighboor.cut();
                 if (neighboor.cutPercent >= 100) {
                     this.store.dispatch(NeighboorAction.cutAction({ id: 0, modifier: 1 }));
                     neighboor.cutCompleted();
                     if (!neighboor.regrowing) this.regrow(neighboor);
-                    window.clearInterval(this.cutInterval); this.cutInterval=null;
+                    window.clearInterval(this.cutInterval);
+                    this.cutInterval = null;
                 }
             }, 50);
         }

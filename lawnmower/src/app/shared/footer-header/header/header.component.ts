@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { RootStoreState, StatsSelector } from 'app/root-store';
 import { Observable } from 'rxjs';
+import { selectMoney } from '../../../root-store/earning/earning-selector';
 @Component({
     selector: 'app-header',
     template: `
@@ -21,7 +22,7 @@ import { Observable } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
     @Output() public sidenavToggle = new EventEmitter();
-    public money$: Observable<number> = this.store.pipe(select(StatsSelector.selectStatsMoney));
+    public money$: Observable<number> = this.store.pipe(select(selectMoney));
     constructor(private store: Store<RootStoreState.State>) {}
 
     ngOnInit(): void {}
