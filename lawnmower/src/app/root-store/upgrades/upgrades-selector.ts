@@ -10,7 +10,7 @@ const getMowingUpgradeCompletedOnly = (state: State): Upgrade[] =>
     getMowingUpgradeCompletion(state).filter((u) => u.bought);
 
 const getMowingSpeedUpgradeModifier = (state: State): number =>
-    getMowingUpgradeCompletedOnly(state).reduce((acc, current) => acc + current.effect(), 1);
+    getMowingUpgradeCompletedOnly(state).reduce((acc, current) => acc * current.effect(), 1);
 export const selectUpgradeState: MemoizedSelector<object, State> = createFeatureSelector('upgrades');
 
 export const selectMowingUpgradeCompletion = createSelector(selectUpgradeState, getMowingUpgradeCompletion);
