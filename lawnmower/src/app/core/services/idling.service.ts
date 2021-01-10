@@ -1,43 +1,44 @@
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { RootStoreState, EarningAction, StatsAction } from 'app/root-store';
-import { interval } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { getCompletion, getAllNeighboors } from '../../root-store/neighboor/neighboor-selector';
-import { Neighboors } from '../data/neighboors-data';
-
+import { interval, animationFrameScheduler, combineLatest, Subject } from 'rxjs';
+import { map, sampleTime, scan, take, tap, withLatestFrom } from 'rxjs/operators';
+import { getAllNeighboorsWhereCompletionGtOne, getAllNeighboors } from '../../root-store/neighboor/neighboor-selector';
 @Injectable({
     providedIn: 'root',
 })
 export class IdlingService {
-    deltaModifier: number;
-    lastUpdate: number = null;
+    timer$ = interval(60, animationFrameScheduler).pipe(
+        map(() => ({
+            time: Date.now(),
+            deltaTime: null,
+        })),
+        scan((previous, current) => ({
+            time: current.time,
+            deltaTime: (current.time - previous.time) / 1000,
+        })),
+    );
+
     constructor(private store: Store<RootStoreState.State>) {}
 
-    loop() {
-        let loop = interval(50);
-        loop.subscribe(() => {
-            const currentTime = Date.now();
-            if (this.lastUpdate == null) this.lastUpdate = currentTime;
-            this.deltaModifier = (currentTime - this.lastUpdate) / 1000;
-            this.earnMoney();
-            this.lastUpdate = Date.now();
-        });
-    }
-    earnMoney() {
-        //select neighboors, foreach; Object.assign from const for easier management; completion * money * bonus * deltaTime= dollar.
-        // Call earnMoney ; incrementTotalMoney.
-        this.store
-            .select(getAllNeighboors)
-            .pipe(take(1))
-            .subscribe((neighboors) => {
-                neighboors.forEach((n) => {
-                    if (n.completion > 0) {
-                        let money = n.income * n.completion * this.deltaModifier;
-                        this.store.dispatch(EarningAction.earnMoney({ money }));
-                        this.store.dispatch(StatsAction.incrementTotalMoney({ money }));
-                    }
-                });
-            });
-    }
+    doSomething = ([ticker]) => {
+        this.doEarnMoney$.next(ticker.deltaTime);
+    };
+
+    loop$ = combineLatest([this.timer$]).pipe(sampleTime(60)).subscribe(this.doSomething);
+
+    doEarnMoney$: Subject<number> = new Subject<number>();
+    earnMoney$ = this.doEarnMoney$
+        .pipe(
+            withLatestFrom(this.store.select(getAllNeighboorsWhereCompletionGtOne), (deltaModifier, neighboors) => {
+                let money = neighboors.reduce((previous, current) => {
+                    return previous + current.income * current.completion * deltaModifier;
+                }, 0);
+                if (money != 0) {
+                    this.store.dispatch(EarningAction.earnMoney({ money }));
+                    this.store.dispatch(StatsAction.incrementTotalMoney({ money }));
+                }
+            }),
+        )
+        .subscribe();
 }

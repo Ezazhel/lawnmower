@@ -32,29 +32,27 @@ export class Neighboor {
         this.income = income;
     }
 
-    cut = () => {
-        let cutTime = Date.now();
-        if (this.lastTimeCut == null) this.lastTimeCut = cutTime;
-        let deltaTime = cutTime - this.lastTimeCut;
-        this.cutPercent += (deltaTime / this.time) * 100;
-        this.lastTimeCut = cutTime;
+    cut = (modifier: number) => {
+        let now = Date.now();
+        if (this.lastTimeCut == null) this.lastTimeCut = now;
+        const delta = now - this.lastTimeCut;
+        this.cutPercent += ((delta * modifier) / this.time) * 100;
+        this.lastTimeCut = now;
     };
     cutCompleted = () => {
-        this.completion += 1;
         this.cutPercent = 0;
         this.lastTimeCut = null;
     };
 
-    regrow = () => {
-        let regrowtTime = Date.now();
-        if (this.lastTimeRegrow == null) this.lastTimeRegrow = regrowtTime;
-        let deltaTime = regrowtTime - this.lastTimeRegrow;
-        this.regrowPercent -= (deltaTime / this.regrowTime) * 100;
-        this.lastTimeRegrow = regrowtTime;
+    regrow = (modifier: number) => {
+        const now = Date.now();
+        if (this.lastTimeRegrow == null) this.lastTimeRegrow = now;
+        const delta = now - this.lastTimeRegrow;
+        this.regrowPercent -= ((delta * modifier) / this.regrowTime) * 100;
+        this.lastTimeRegrow = now;
     };
 
     regrowCompleted = () => {
-        this.completion -= 1;
         this.regrowPercent = 100;
         this.lastTimeRegrow = null;
     };

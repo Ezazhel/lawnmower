@@ -10,6 +10,12 @@ export const reducer = createReducer(
 function updateCompletion(state: State, id: number, modifier: number): State {
     return {
         ...state,
-        completions: { ...state.completions, [id]: state.completions[id] + modifier },
+        completions: {
+            ...state.completions,
+            [id]:
+                modifier < 0
+                    ? Math.max(state.completions[id] + modifier, 0)
+                    : Math.min(state.completions[id] + modifier, 100),
+        },
     };
 }

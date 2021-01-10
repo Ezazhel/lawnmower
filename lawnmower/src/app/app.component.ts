@@ -24,9 +24,7 @@ export class AppComponent {
         });
     }
 
-    ngOnInit() {
-        this._idlingService.loop();
-    }
+    ngOnInit() {}
 
     onToggleSideNav() {
         this.sidenav.toggle();
