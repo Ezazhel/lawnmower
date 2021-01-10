@@ -7,15 +7,15 @@ export const reducer = createReducer(
     on(cutAction, regrowAction, (state, { id, modifier }) => updateCompletion(state, id, modifier)),
 );
 
-function updateCompletion(state: State, id: number, modifier: number): State {
+function updateCompletion(state: State, id: string, modifier: number): State {
     return {
         ...state,
         completions: {
             ...state.completions,
             [id]:
                 modifier < 0
-                    ? Math.max(state.completions[id] + modifier, 0)
-                    : Math.min(state.completions[id] + modifier, 100),
+                    ? Math.max((state.completions[id] ?? 0) + modifier, 0)
+                    : Math.min((state.completions[id] ?? 0) + modifier, 100),
         },
     };
 }

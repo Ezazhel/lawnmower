@@ -7,6 +7,6 @@ export interface State {
 
 export const initialState: State = {
     completions: {
-        [0]: Neighboors[0].completion,
+        [Neighboors['n1'].id]: Neighboors['n1'].completion,
     },
 };

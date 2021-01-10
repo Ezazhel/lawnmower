@@ -1,4 +1,5 @@
 export class Neighboor {
+    id: string;
     title: string;
     completion: number;
     maxCompletion: number;
@@ -9,10 +10,12 @@ export class Neighboor {
     cutPercent: number = 0;
     regrowPercent: number = 100;
     regrowing: boolean = false;
+    cutting: boolean = false;
     time: number;
     regrowTime: number;
     income: number;
     constructor(
+        id: string,
         title: string,
         completion: number,
         maxCompletion: number,
@@ -22,6 +25,7 @@ export class Neighboor {
         regrowTime: number,
         income: number,
     ) {
+        this.id = id;
         this.title = title;
         this.completion = completion;
         this.maxCompletion = maxCompletion;
@@ -32,28 +36,21 @@ export class Neighboor {
         this.income = income;
     }
 
-    cut = (modifier: number) => {
-        let now = Date.now();
-        if (this.lastTimeCut == null) this.lastTimeCut = now;
-        const delta = now - this.lastTimeCut;
-        this.cutPercent += ((delta * modifier) / this.time) * 100;
-        this.lastTimeCut = now;
+    cut = (deltaTime: number, modifier: number) => {
+        this.cutPercent += ((deltaTime * modifier) / this.time) * 100;
     };
+
     cutCompleted = () => {
+        this.cutting = false;
         this.cutPercent = 0;
         this.lastTimeCut = null;
     };
 
-    regrow = (modifier: number) => {
-        const now = Date.now();
-        if (this.lastTimeRegrow == null) this.lastTimeRegrow = now;
-        const delta = now - this.lastTimeRegrow;
-        this.regrowPercent -= ((delta * modifier) / this.regrowTime) * 100;
-        this.lastTimeRegrow = now;
+    regrow = (deltaTime: number, modifier: number) => {
+        this.regrowPercent -= ((deltaTime * modifier) / this.regrowTime) * 100;
     };
 
     regrowCompleted = () => {
         this.regrowPercent = 100;
-        this.lastTimeRegrow = null;
     };
 }
