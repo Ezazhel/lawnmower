@@ -1,6 +1,15 @@
-.red {
-    background: red !important;
+.notUnlocked {
+    background: rgba(235, 47, 6, 0.6);
+    transition-duration: 0.7s;
+    transition-property: background-color;
+    &:hover {
+        background: rgba(120, 224, 143, 1);
+    }
+    .price {
+        color: rgba(250, 211, 144, 1);
+    }
 }
-.blue {
-    background: blue !important;
+.unlocked {
+    background: rgba(120, 224, 143, 1);
+    cursor: not-allowed !important;
 }

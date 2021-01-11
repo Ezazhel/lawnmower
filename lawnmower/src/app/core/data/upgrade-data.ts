@@ -1,4 +1,5 @@
 import { Upgrade } from '@core/models/upgrade';
+import { AffectType } from '../models/upgrade';
 
 export const MowingUpgrade = {
     ['sharpen']: new Upgrade(
@@ -8,6 +9,7 @@ export const MowingUpgrade = {
         'mowing',
         'Sharp blade will cut grass faster',
         'You cut grass 10% faster',
+        'speed',
         (): number => {
             return 1.1;
         },
@@ -19,6 +21,7 @@ export const MowingUpgrade = {
         'mowing',
         'It seems that your neighboor money come from their grasses !',
         '15% more money from cutting grass',
+        'gain',
         (): number => {
             return 1.15;
         },

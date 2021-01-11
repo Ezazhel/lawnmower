@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState, EarningAction, StatsAction } from 'app/root-store';
 import { interval, animationFrameScheduler, combineLatest, Subject } from 'rxjs';
-import { map, sampleTime, scan, take, tap, withLatestFrom } from 'rxjs/operators';
+import { map, sampleTime, scan, withLatestFrom } from 'rxjs/operators';
 import { getAllNeighboorsWhereCompletionGtOne, getAllNeighboors } from '../../root-store/neighboor/neighboor-selector';
+import { selectMowingGainModifier } from '../../root-store/upgrades/upgrades-selector';
 @Injectable({
     providedIn: 'root',
 })
@@ -22,23 +23,27 @@ export class IdlingService {
     constructor(private store: Store<RootStoreState.State>) {}
 
     doSomething = ([ticker]) => {
-        this.doEarnMoney$.next(ticker.deltaTime);
+        this.doEarnMoneyFromNeighboors$.next(ticker.deltaTime);
     };
 
     loop$ = combineLatest([this.timer$]).pipe(sampleTime(60)).subscribe(this.doSomething);
 
-    doEarnMoney$: Subject<number> = new Subject<number>();
-    earnMoney$ = this.doEarnMoney$
+    doEarnMoneyFromNeighboors$: Subject<number> = new Subject<number>();
+    earnMoneyFromNeighboors$ = this.doEarnMoneyFromNeighboors$
         .pipe(
-            withLatestFrom(this.store.select(getAllNeighboorsWhereCompletionGtOne), (deltaModifier, neighboors) => {
-                let money = neighboors.reduce((previous, current) => {
-                    return previous + current.income * current.completion * deltaModifier;
-                }, 0);
-                if (money != 0) {
-                    this.store.dispatch(EarningAction.earnMoney({ money }));
-                    this.store.dispatch(StatsAction.incrementTotalMoney({ money }));
-                }
-            }),
+            withLatestFrom(
+                this.store.select(getAllNeighboorsWhereCompletionGtOne),
+                this.store.select(selectMowingGainModifier),
+                (deltaModifier, neighboors, gainModifier) => {
+                    let money = neighboors.reduce((previous, current) => {
+                        return previous + current.income * current.completion * deltaModifier * gainModifier;
+                    }, 0);
+                    if (money != 0) {
+                        this.store.dispatch(EarningAction.earnMoney({ money }));
+                        this.store.dispatch(StatsAction.incrementTotalMoney({ money }));
+                    }
+                },
+            ),
         )
         .subscribe();
 }

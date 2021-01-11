@@ -8,9 +8,9 @@ import { Observable, combineLatest } from 'rxjs';
 import { Upgrade } from '@core/models/upgrade';
 import {
     selectMowingSpeedUpgradeModifier,
-    selectMowingUpgradeCompletion,
+    selectMowingUpgradeBoughtValue,
 } from 'app/root-store/upgrades/upgrades-selector';
-import { IdlingService } from '../../../../core/services/idling.service';
+import { IdlingService } from '@core/services/idling.service';
 import { sampleTime } from 'rxjs/operators';
 @Component({
     selector: 'mowing',
@@ -20,7 +20,7 @@ import { sampleTime } from 'rxjs/operators';
 export class MowingComponent implements OnInit {
     neighboors = [...Object.values(Neighboors)];
     cutInterval = null;
-    upgrades$: Observable<Upgrade[]> = this.store.select(selectMowingUpgradeCompletion);
+    upgrades$: Observable<Upgrade[]> = this.store.select(selectMowingUpgradeBoughtValue);
     constructor(private store: Store<RootStoreState.State>, private idlingService: IdlingService) {}
 
     ngOnInit(): void {}
@@ -32,6 +32,7 @@ export class MowingComponent implements OnInit {
             const cut$ = combineLatest([this.idlingService.timer$, this.store.select(selectMowingSpeedUpgradeModifier)])
                 .pipe(sampleTime(60))
                 .subscribe(([timer, speedModifier]) => {
+                    console.log(speedModifier);
                     neighboor.cut(timer.deltaTime, speedModifier);
                     if (neighboor.cutPercent >= 100) {
                         this.store.dispatch(NeighboorAction.cutAction({ id: neighboor.id, modifier: 1 }));

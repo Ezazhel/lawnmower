@@ -1,14 +1,16 @@
 <div class="neighboors">
     <mat-card
         class="neighboor"
-        [ngClass]="upgrade.bought ? 'blue' : 'red'"
+        [ngClass]="upgrade.bought ? 'unlocked' : 'notUnlocked'"
         *ngFor="let upgrade of upgrades; index as i; trackBy: trackByFunction"
         (click)="unlock(upgrade.id)"
     >
         <mat-card-title>
             {{ upgrade.name }}
         </mat-card-title>
-        <mat-card-subtitle> Price : {{ upgrade.price }}{{ upgrade.currency }} </mat-card-subtitle>
+        <mat-card-subtitle class="price" *ngIf="!upgrade.bought">
+            Price : {{ upgrade.price }}{{ upgrade.currency }}
+        </mat-card-subtitle>
         <mat-card-content>
             <div>{{ upgrade.description }}</div>
             <div>{{ upgrade.effectDescription }}</div>

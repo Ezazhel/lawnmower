@@ -7,6 +7,7 @@ import { selectMoney } from '../../root-store/earning/earning-selector';
 import { MowingUpgrade } from '../data/upgrade-data';
 import { Upgrade } from '../models/upgrade';
 import { unlockMowingUpgradeAction } from '../../root-store/upgrades/upgrades-action';
+import { selectMowingUpgradeBoughtValue } from '../../root-store/upgrades/upgrades-selector';
 
 @Injectable({
     providedIn: 'root',
@@ -18,9 +19,10 @@ export class UpgradesService {
 
     private _unlockUpgradeSubscription: Subscription = this.doUnlockUpgrade$
         .pipe(
-            withLatestFrom(this.money$, (id, money) => {
-                const upgrade: Upgrade = MowingUpgrade[id];
-                if (money >= upgrade.price) {
+            withLatestFrom(this.store.select(selectMowingUpgradeBoughtValue), this.money$, (id, upgrades, money) => {
+                const upgrade: Upgrade = upgrades.find((u) => u.id == id);
+                if (money >= upgrade.price && !upgrade.bought) {
+                    console.log('buy upgrade');
                     this.store.dispatch(unlockMowingUpgradeAction({ id }));
                     this.store.dispatch(EarningAction.earnMoney({ money: -upgrade.price }));
                 }

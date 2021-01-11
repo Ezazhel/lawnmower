@@ -1,7 +1,7 @@
 import { $ } from 'protractor';
 
 export type UpgradeType = 'global' | 'mowing';
-
+export type AffectType = 'speed' | 'gain';
 export class Upgrade {
     id: string;
     name: string;
@@ -11,6 +11,7 @@ export class Upgrade {
     bought: boolean = false;
     description: string;
     effectDescription: string;
+    affect: AffectType;
     currency: string = '$';
 
     constructor(
@@ -20,6 +21,7 @@ export class Upgrade {
         type: UpgradeType,
         description: string,
         effectDescription: string,
+        affectType: AffectType,
         effect: Function,
     ) {
         this.id = id;
@@ -28,6 +30,7 @@ export class Upgrade {
         this.type = type;
         this.description = description;
         this.effectDescription = effectDescription;
+        this.affect = affectType;
         this.effect = effect;
     }
 }
