@@ -5,6 +5,9 @@ import { interval, animationFrameScheduler, combineLatest, Subject } from 'rxjs'
 import { map, sampleTime, scan, withLatestFrom } from 'rxjs/operators';
 import { getAllNeighboorsWhereCompletionGtOne, getAllNeighboors } from '../../root-store/neighboor/neighboor-selector';
 import { selectMowingGainModifier } from '../../root-store/upgrades/upgrades-selector';
+import { Achievements } from '../data/achievement-data';
+import { selectAchievementsNotUnlock } from '../../root-store/achievements/achievements-selector';
+import { unlockAchievementAction } from '../../root-store/achievements/achievements-action';
 @Injectable({
     providedIn: 'root',
 })
@@ -46,4 +49,12 @@ export class IdlingService {
             ),
         )
         .subscribe();
+
+    unlockAchievement$ = combineLatest([this.timer$, this.store, this.store.select(selectAchievementsNotUnlock)])
+        .pipe(sampleTime(1000))
+        .subscribe(([, state, achievements]) => {
+            achievements.forEach((a) => {
+                if (a.canUnlock(state)) this.store.dispatch(unlockAchievementAction({ id: a.id }));
+            });
+        });
 }

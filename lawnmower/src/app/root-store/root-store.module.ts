@@ -5,9 +5,18 @@ import { StoreModule } from '@ngrx/store';
 import { EarningModule } from './earning/earning.module';
 import { NeighboorModule } from './neighboor/neighboor.module';
 import { UpgradeModule } from './upgrades/uprades.module';
+import { AchievementsModule } from './achievements/achievements.module';
 
 @NgModule({
     declarations: [],
-    imports: [CommonModule, NeighboorModule, EarningModule, StatsModule, UpgradeModule, StoreModule.forRoot({})],
+    imports: [
+        CommonModule,
+        NeighboorModule,
+        EarningModule,
+        StatsModule,
+        UpgradeModule,
+        AchievementsModule,
+        StoreModule.forRoot({}),
+    ],
 })
 export class RootStoreModule {}

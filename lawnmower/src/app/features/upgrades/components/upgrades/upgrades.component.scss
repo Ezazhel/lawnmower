@@ -1,6 +1,6 @@
 .notUnlocked {
     background: rgba(235, 47, 6, 0.6);
-    transition-duration: 0.7s;
+    transition-duration: 1s;
     transition-property: background-color;
     &:hover {
         background: rgba(120, 224, 143, 1);

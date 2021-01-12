@@ -4,4 +4,5 @@ export * from './stats';
 export * from './neighboor';
 export * from './earning';
 export * from './upgrades';
+export * from './achievements';
 export { RootStoreState, RootStoreModule };

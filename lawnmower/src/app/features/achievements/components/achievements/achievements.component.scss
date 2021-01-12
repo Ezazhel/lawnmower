@@ -1,0 +1,15 @@
+.achievements {
+    display: flex;
+    flex-flow: row wrap;
+    .achievement {
+        cursor: unset;
+        margin: 4px;
+        flex: 0 1 calc(20% - 40px);
+        &.unlocked {
+            background: rgba(120, 224, 143, 1);
+        }
+        &.notUnlocked {
+            background-color: rgba(60, 99, 130, 0.6);
+        }
+    }
+}

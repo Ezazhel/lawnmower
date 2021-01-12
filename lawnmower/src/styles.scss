@@ -20,12 +20,6 @@ mat-sidenav-container {
     width: 100%;
 }
 
-.upgrades {
-    display: grid;
-    grid-gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-}
-
 .neighboors {
     display: flex;
     justify-content: center;
