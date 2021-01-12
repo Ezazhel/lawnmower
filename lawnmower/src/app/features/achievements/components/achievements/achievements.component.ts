@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Achievements } from '@core/data/achievement-data';
 import { Achievement } from '@core/models/achievement';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';

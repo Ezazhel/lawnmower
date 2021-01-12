@@ -9,7 +9,7 @@
             {{ upgrade.name }}
         </mat-card-title>
         <mat-card-subtitle class="price" *ngIf="!upgrade.bought">
-            Price : {{ upgrade.price }}{{ upgrade.currency }}
+            Price : {{ upgrade.price | exponential }}{{ upgrade.currency }}
         </mat-card-subtitle>
         <mat-card-content>
             <div>{{ upgrade.description }}</div>

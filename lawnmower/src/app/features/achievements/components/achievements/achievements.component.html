@@ -1,5 +1,6 @@
 <div class="achievements">
     <mat-card
+        [matTooltip]="achievement.description"
         class="achievement"
         [ngClass]="achievement.isUnlock ? 'unlocked' : 'notUnlocked'"
         *ngFor="let achievement of achievements$ | async; index as i; trackBy: trackByFunction"
@@ -7,8 +8,5 @@
         <mat-card-title>
             {{ achievement.name }}
         </mat-card-title>
-        <mat-card-content>
-            <div>{{ achievement.description }}</div>
-        </mat-card-content>
     </mat-card>
 </div>

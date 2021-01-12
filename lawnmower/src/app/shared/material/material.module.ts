@@ -11,23 +11,25 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTooltipModule } from '@angular/material/tooltip';
 const Material = [
-  MatButtonModule,
-  MatCheckboxModule,
-  MatToolbarModule,
-  MatGridListModule,
-  MatTableModule,
-  MatTabsModule,
-  MatCardModule,
-  MatSidenavModule,
-  MatIconModule,
-  MatProgressBarModule,
-  MatExpansionModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatToolbarModule,
+    MatGridListModule,
+    MatTableModule,
+    MatTabsModule,
+    MatCardModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatExpansionModule,
+    MatTooltipModule,
 ];
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, ...Material],
-  providers: [MatIconRegistry],
-  exports: Material,
+    declarations: [],
+    imports: [CommonModule, ...Material],
+    providers: [MatIconRegistry],
+    exports: Material,
 })
 export class MaterialModule {}

@@ -1,5 +1,6 @@
 .achievements {
     display: flex;
+    justify-content: center;
     flex-flow: row wrap;
     .achievement {
         cursor: unset;

@@ -13,7 +13,7 @@ export const Achievements = {
         'a2',
         'Little worker',
         'Have a city with more than 10 completion',
-        () => {},
+        (state: RootStoreState.State) => Object.values(state.neighboor.completions).some((c) => c > 10),
         () => {},
     ),
 };
