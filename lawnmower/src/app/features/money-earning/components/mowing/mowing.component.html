@@ -14,15 +14,15 @@
                 </mat-card-subtitle>
                 <mat-card-content>
                     <mat-tab-group mat-align-tabs="center">
-                        <mat-tab label="description">
-                            <div [innerHTML]="neighboor.content"></div>
+                        <mat-tab label="Description">
+                                <div [innerHTML]="neighboor.content"></div>
                         </mat-tab>
-                        <mat-tab label="informations">
-                            <p>
-                                Income : {{ neighboor.income }}$, <br />
-                                Regrow Time : {{ neighboor.regrowTime }}s, <br />
-                                Cutting Time : {{ neighboor.time }}s,
-                            </p>
+                        <mat-tab label="Informations">
+                                <p>
+                                    Income : {{ neighboor.income }}$, <br />
+                                    Regrow Time : {{ neighboor.regrowTime }}s, <br />
+                                    Cutting Time : {{ neighboor.time }}s,
+                                </p>                            
                         </mat-tab>
                     </mat-tab-group>
                 </mat-card-content>

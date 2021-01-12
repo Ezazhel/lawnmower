@@ -26,13 +26,11 @@ export class MowingComponent implements OnInit {
     ngOnInit(): void {}
 
     cut = (neighboor: Neighboor) => {
-        console.log(neighboor.cutting);
         if (!neighboor.cutting) {
             neighboor.cutting = true;
             const cut$ = combineLatest([this.idlingService.timer$, this.store.select(selectMowingSpeedUpgradeModifier)])
                 .pipe(sampleTime(60))
                 .subscribe(([timer, speedModifier]) => {
-                    console.log(speedModifier);
                     neighboor.cut(timer.deltaTime, speedModifier);
                     if (neighboor.cutPercent >= 100) {
                         this.store.dispatch(NeighboorAction.cutAction({ id: neighboor.id, modifier: 1 }));

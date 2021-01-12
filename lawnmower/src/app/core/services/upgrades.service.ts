@@ -4,7 +4,6 @@ import { RootStoreState, EarningAction } from 'app/root-store';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { withLatestFrom } from 'rxjs/operators';
 import { selectMoney } from '../../root-store/earning/earning-selector';
-import { MowingUpgrade } from '../data/upgrade-data';
 import { Upgrade } from '../models/upgrade';
 import { unlockMowingUpgradeAction } from '../../root-store/upgrades/upgrades-action';
 import { selectMowingUpgradeBoughtValue } from '../../root-store/upgrades/upgrades-selector';

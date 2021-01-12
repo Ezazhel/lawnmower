@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { menuLink } from '@shared/menu/menuLink';
 
@@ -17,8 +18,7 @@ export class FooterComponent implements OnInit {
     return `${tab.path}/${subTab.path}`;
   }
 
-  navigate(path: string) {
-    console.log(path);
-    this.router.navigateByUrl(path);
+  navigate(event: MatTabChangeEvent) {
+    this.router.navigateByUrl(menuLink[event.index].path);
   }
 }

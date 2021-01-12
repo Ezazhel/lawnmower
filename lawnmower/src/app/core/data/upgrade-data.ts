@@ -1,5 +1,4 @@
 import { Upgrade } from '@core/models/upgrade';
-import { AffectType } from '../models/upgrade';
 
 export const MowingUpgrade = {
     ['sharpen']: new Upgrade(

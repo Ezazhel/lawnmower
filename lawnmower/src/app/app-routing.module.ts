@@ -9,6 +9,10 @@ const routes: Routes = [
         (m) => m.MoneyEarningModule
       ),
   },
+  {
+    path: 'achievements',
+    loadChildren: () => import('./features/achievements/achievements.module').then(m => m.AchievementsModule)
+  },
   { path: '', redirectTo: 'earning', pathMatch: 'full' },
   { path: '**', redirectTo: 'earning', pathMatch: 'full' },
 ];
