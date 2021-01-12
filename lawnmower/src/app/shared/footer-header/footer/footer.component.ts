@@ -9,7 +9,7 @@ import { filter, take } from 'rxjs/operators';
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss'],
 })
-export class FooterComponent implements OnInit, AfterViewInit {
+export class FooterComponent {
     routes = menuLink;
     indexForTabPrincipal = 0;
     @ViewChild('tabPrincipal')
@@ -27,10 +27,6 @@ export class FooterComponent implements OnInit, AfterViewInit {
                 this.tabPrincipal.selectedIndex = this.indexForTabPrincipal;
             });
     }
-
-    ngOnInit(): void {}
-
-    ngAfterViewInit(): void {}
 
     getPath(tab: { path: string }, subTab: { path: string }) {
         return `${tab.path}/${subTab.path}`;
