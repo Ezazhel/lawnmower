@@ -1,7 +1,6 @@
-import { $ } from 'protractor';
-
 export type UpgradeType = 'global' | 'mowing';
 export type AffectType = 'speed' | 'gain';
+
 export class Upgrade {
     id: string;
     name: string;
