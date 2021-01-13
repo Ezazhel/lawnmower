@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { RootStoreState, StatsSelector } from 'app/root-store';
+import { RootStoreState } from 'app/root-store';
 import { Observable } from 'rxjs';
 import { selectMoney } from '../../../root-store/earning/earning-selector';
 @Component({
@@ -14,7 +14,8 @@ import { selectMoney } from '../../../root-store/earning/earning-selector';
                     </button>
                 </div>
                 <div>Lawnmoner</div>
-                <span> money : {{ money$ | async | exponential }}$ </span>
+                <span fxFlex="1 1 auto"></span>
+                <label> {{ money$ | async | exponential }}$ </label>
             </mat-toolbar>
         </header>
     `,

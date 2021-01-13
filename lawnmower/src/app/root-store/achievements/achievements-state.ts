@@ -7,5 +7,6 @@ export const initialState: State = {
     achievements: {
         [Achievements.a1.id]: false,
         [Achievements.a2.id]: false,
+        [Achievements.a3.id]: false,
     },
 };

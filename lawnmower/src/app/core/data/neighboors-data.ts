@@ -14,7 +14,7 @@ export const Neighboors = {
         </p>
     `,
         5.0,
-        8.0,
+        8.5,
         0.0012,
     ),
     ['n2']: new Neighboor(
@@ -28,8 +28,8 @@ export const Neighboors = {
         income per neighbors : 0.0050$
         </p>
     `,
-        3.0,
-        10.0,
+        8.0,
+        10.5,
         0.005,
     ),
 };

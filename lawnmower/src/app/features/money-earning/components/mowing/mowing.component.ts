@@ -12,13 +12,14 @@ import {
 } from 'app/root-store/upgrades/upgrades-selector';
 import { IdlingService } from '@core/services/idling.service';
 import { sampleTime } from 'rxjs/operators';
+import { getAllNeighboors } from 'app/root-store/neighboor/neighboor-selector';
 @Component({
     selector: 'mowing',
     templateUrl: './mowing.component.html',
     styleUrls: ['./mowing.component.scss'],
 })
 export class MowingComponent implements OnInit {
-    neighboors = [...Object.values(Neighboors)];
+    neighboors$: Observable<Neighboor[]> = this.store.select(getAllNeighboors);
     cutInterval = null;
     upgrades$: Observable<Upgrade[]> = this.store.select(selectMowingUpgradeBoughtValue);
     constructor(private store: Store<RootStoreState.State>, private idlingService: IdlingService) {}

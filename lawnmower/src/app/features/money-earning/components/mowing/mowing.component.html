@@ -4,7 +4,7 @@
             <mat-card
                 class="neighboor"
                 (click)="cut(neighboor)"
-                *ngFor="let neighboor of neighboors; index as i; trackBy: trackByFunction"
+                *ngFor="let neighboor of neighboors$ | async; index as i; trackBy: trackByFunction"
             >
                 <mat-card-title>
                     {{ neighboor.title }}
@@ -19,7 +19,7 @@
                         </mat-tab>
                         <mat-tab label="Informations">
                                 <p>
-                                    Income : {{ neighboor.income }}$, <br />
+                                    Income : {{ neighboor.income | exponential }}$, <br />
                                     Regrow Time : {{ neighboor.regrowTime }}s, <br />
                                     Cutting Time : {{ neighboor.time }}s,
                                 </p>                            
