@@ -6,12 +6,12 @@
         mat-stretch-tabs
         (selectedTabChange)="navigate($event)"
     >
-        <mat-tab *ngFor="let tab of routes" [label]="tab.singleSymbol">
+        <mat-tab *ngFor="let tab of routes$ | async; trackBy: trackByFunctionMainTab" [label]="tab.singleSymbol">
             <ng-template matTabContent>
                 <nav mat-tab-nav-bar mat-stretch-tabs dynamicHeight *ngIf="tab.subPath">
                     <a
                         mat-tab-link
-                        *ngFor="let subTab of tab.subPath"
+                        *ngFor="let subTab of activeSubpath(tab); trackBy: trackByFunctionSubTab"
                         [routerLink]="getPath(tab, subTab)"
                         routerLinkActive
                         #rla="routerLinkActive"

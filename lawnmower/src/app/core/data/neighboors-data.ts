@@ -10,7 +10,6 @@ export const Neighboors = {
         `
       <p>
         First neighborhood, easy cleaning, slow income
-        income per neighbors : 0.0012$
         </p>
     `,
         5.0,
@@ -24,12 +23,11 @@ export const Neighboors = {
         1000,
         'Somewhere to continue',
         `<p>
-        Second neighborhood, more neighboor, slow cleaning, average income
-        income per neighbors : 0.0050$
+            Second neighborhood, more neighboor, slow cleaning, average income
         </p>
     `,
         8.0,
         10.5,
-        0.005,
+        0.0032,
     ),
 };

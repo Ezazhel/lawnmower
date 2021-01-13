@@ -6,6 +6,7 @@ import { EarningModule } from './earning/earning.module';
 import { NeighboorModule } from './neighboor/neighboor.module';
 import { UpgradeModule } from './upgrades/uprades.module';
 import { AchievementsModule } from './achievements/achievements.module';
+import { RouteModule } from './route/route.module';
 
 @NgModule({
     declarations: [],
@@ -16,6 +17,7 @@ import { AchievementsModule } from './achievements/achievements.module';
         StatsModule,
         UpgradeModule,
         AchievementsModule,
+        RouteModule,
         StoreModule.forRoot({}),
     ],
 })

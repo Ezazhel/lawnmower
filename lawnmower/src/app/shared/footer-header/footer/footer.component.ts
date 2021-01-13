@@ -1,38 +1,78 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { menuLink } from '@shared/menu/menuLink';
+import { NavigationEnd, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { RootStoreState } from 'app/root-store';
 import { filter, take } from 'rxjs/operators';
+import { selectAllRoute } from '../../../root-store/route/route-selector';
+import { routes } from '@core/data/route-data';
+import { menuLink } from '@shared/menu/menuLink';
+import { Route } from '@core/models/route';
+import * as Hammer from 'hammerjs';
+import { debounce } from '@core/utility/utility';
 
 @Component({
     selector: 'app-footer',
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss'],
 })
-export class FooterComponent {
-    routes = menuLink;
+export class FooterComponent implements AfterViewInit {
+    routes$ = this.store.select(selectAllRoute);
     indexForTabPrincipal = 0;
     @ViewChild('tabPrincipal')
     tabPrincipal: MatTabGroup;
-    constructor(private router: Router) {
+    constructor(private router: Router, private store: Store<RootStoreState.State>) {
         this.router.events
             .pipe(
                 filter((e) => e instanceof NavigationEnd),
                 take(1),
             )
             .subscribe((navEnd: NavigationEnd) => {
-                this.indexForTabPrincipal = this.routes.find(
+                this.indexForTabPrincipal = [...Object.values(routes)].find(
                     (r) => r.path == navEnd.urlAfterRedirects.split('/')[1],
                 ).index;
                 this.tabPrincipal.selectedIndex = this.indexForTabPrincipal;
             });
     }
 
+    ngAfterViewInit() {
+        const hammertime = new Hammer(window, {});
+        hammertime.on(
+            'panright',
+            debounce(() => this.switchTab(false), 100),
+        );
+        hammertime.on(
+            'panleft',
+            debounce(() => this.switchTab(true), 100),
+        );
+    }
+
+    switchTab(isLeft: boolean) {
+        const currentIndex = this.tabPrincipal.selectedIndex;
+        let nextIndex = 0;
+        if (isLeft) {
+            nextIndex = currentIndex == this.tabPrincipal._allTabs.length - 1 ? 0 : currentIndex + 1;
+        } else {
+            nextIndex = currentIndex == 0 ? this.tabPrincipal._allTabs.length - 1 : currentIndex - 1;
+        }
+        this.tabPrincipal.selectedIndex = nextIndex;
+    }
+    activeSubpath(tab: Route) {
+        return tab.subPath.filter((r) => r.isActive);
+    }
     getPath(tab: { path: string }, subTab: { path: string }) {
         return `${tab.path}/${subTab.path}`;
     }
 
     navigate(event: MatTabChangeEvent) {
         this.router.navigateByUrl(menuLink[event.index].path);
+    }
+
+    trackByFunctionMainTab(index: number, tab: Route) {
+        return tab;
+    }
+
+    trackByFunctionSubTab(index: number, subTab: Route) {
+        return subTab;
     }
 }
