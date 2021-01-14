@@ -64,7 +64,7 @@ export class IdlingService {
             achievements.forEach((a) => {
                 if (a.canUnlock(state)) {
                     this.store.dispatch(unlockAchievementAction({ id: a.id }));
-                    if (a.effect != null && a.type == 'feature') {
+                    if (a.type == 'feature') {
                         a.effect(this.store);
                     }
                 }

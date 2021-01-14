@@ -25,4 +25,24 @@ export const MowingUpgrade = {
             return 1.15;
         },
     ),
+    ['anti-fertilizer']: new Upgrade(
+        'anti-fertilizer',
+        'Anti Fertilizer',
+        1,
+        'mowing',
+        'What if you spray something on the grass ?',
+        'Grass regrow 5% slower',
+        'regrow',
+        ():number => {
+            return 0.9;
+        }
+    ),
+    ['robot']:new Upgrade('robot', 'Robot', 10,
+    'mowing',
+    'Hello there',
+    'You can cut one more grass before needing to click',
+    'cuttingLimit',
+    () => {
+        return 1;
+    })
 };

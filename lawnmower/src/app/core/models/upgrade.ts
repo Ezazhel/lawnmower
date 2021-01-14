@@ -1,5 +1,5 @@
 export type UpgradeType = 'global' | 'mowing';
-export type AffectType = 'speed' | 'gain';
+export type AffectType = 'speed' | 'gain' | 'regrow' | 'cuttingLimit';
 
 export class Upgrade {
     id: string;

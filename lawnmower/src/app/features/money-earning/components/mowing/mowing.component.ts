@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Neighboors } from '@core/data/neighboors-data';
 import { Store } from '@ngrx/store';
-import { RootStoreState } from 'app/root-store';
+import { RootStoreState, StatsAction } from 'app/root-store';
 import { NeighboorAction } from 'app/root-store/neighboor';
 import { Neighboor } from '@core/models/neighboor';
 import { Observable, combineLatest } from 'rxjs';
@@ -27,17 +27,20 @@ export class MowingComponent implements OnInit {
     ngOnInit(): void {}
 
     cut = (neighboor: Neighboor) => {
+        let cuttingLimit = 1; //get this from store
         if (!neighboor.cutting) {
             neighboor.cutting = true;
             const cut$ = combineLatest([this.idlingService.timer$, this.store.select(selectMowingSpeedUpgradeModifier)])
                 .pipe(sampleTime(60))
                 .subscribe(([timer, speedModifier]) => {
                     neighboor.cut(timer.deltaTime, speedModifier);
-                    if (neighboor.cutPercent >= 100) {
+                    if (neighboor.cutPercent >= 100 ) {
+                        cuttingLimit -= 1;
                         this.store.dispatch(NeighboorAction.cutAction({ id: neighboor.id, modifier: 1 }));
+                        this.store.dispatch(StatsAction.incrementTotalMowned({  mowned: 1 }));
                         neighboor.cutCompleted();
                         if (!neighboor.regrowing) this.regrow(neighboor);
-                        cut$.unsubscribe();
+                        if(cuttingLimit <= 0) cut$.unsubscribe();
                     }
                 });
         }

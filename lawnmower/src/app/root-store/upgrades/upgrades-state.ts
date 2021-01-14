@@ -9,5 +9,6 @@ export const initialState: State = {
     mowing: {
         [MowingUpgrade.sharpen.id]: false,
         [MowingUpgrade['rich-grass'].id]: false,
+        [MowingUpgrade['anti-fertilizer'].id]: false
     },
 };

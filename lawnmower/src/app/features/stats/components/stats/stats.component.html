@@ -1,0 +1,4 @@
+<section *ngIf="stats$ | async as stat" fxLayout="column" fxLayoutAlign="space-around center">
+    <label>Total money : {{stat.totalMoney | exponential}}</label>
+    <label>Total mowned : {{stat.totalMowned}}</label>
+</section>
