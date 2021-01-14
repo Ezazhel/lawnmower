@@ -1,4 +1,7 @@
 import { Upgrade } from '@core/models/upgrade';
+import { Store } from '@ngrx/store';
+import { RootStoreState } from 'app/root-store';
+import { increaseCuttingLimit } from 'app/root-store/neighboor/neighboor-action';
 
 export const MowingUpgrade = {
     ['sharpen']: new Upgrade(
@@ -33,16 +36,20 @@ export const MowingUpgrade = {
         'What if you spray something on the grass ?',
         'Grass regrow 5% slower',
         'regrow',
-        ():number => {
+        (): number => {
             return 0.9;
-        }
+        },
     ),
-    ['robot']:new Upgrade('robot', 'Robot', 10,
-    'mowing',
-    'Hello there',
-    'You can cut one more grass before needing to click',
-    'cuttingLimit',
-    () => {
-        return 1;
-    })
+    ['robot']: new Upgrade(
+        'robot',
+        'Robot',
+        7.5,
+        'mowing',
+        'Hello there',
+        'You can cut one more grass before needing to click',
+        'cuttingLimit',
+        () => {
+            return 1;
+        },
+    ),
 };

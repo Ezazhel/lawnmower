@@ -8,7 +8,7 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "deploy": "ng b --prod --base-href https://ezazhel.github.io/lawnmower/ && npx ngh --dir=dist/lawnmower"
+        "deploy": "ng b --prod --base-href https://ezazhel.github.io/lawnmower/ && npx ngh --dir=dist"
     },
     "private": true,
     "dependencies": {

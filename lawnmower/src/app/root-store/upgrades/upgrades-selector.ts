@@ -13,6 +13,15 @@ const getMowingSpeedUpgradeModifier = (state: State): number =>
     getMowingUpgradeBoughtOnly(state)
         .filter((u) => u.affect == 'speed')
         .reduce((acc, current) => acc * current.effect(), 1);
+const getMowingRegrowSpeedUpgradeModifier = (state: State): number =>
+    getMowingUpgradeBoughtOnly(state)
+        .filter((u) => u.affect == 'regrow')
+        .reduce((acc, current) => acc * current.effect(), 1);
+
+const getMowingCuttingLimit = (state: State): number =>
+    getMowingUpgradeBoughtOnly(state)
+        .filter((u) => (u.affect = 'cuttingLimit'))
+        .reduce((acc, current) => acc + current.effect(), 0);
 
 export const selectUpgradeState: MemoizedSelector<object, State> = createFeatureSelector('upgrades');
 
@@ -28,3 +37,10 @@ export const selectMowingGainModifier = createSelector(selectUpgradeState, (stat
         .filter((u) => u.affect == 'gain' && u.bought)
         .reduce((acc, current) => acc * current.effect(), 1);
 });
+
+export const selectCuttingLimitModifier = createSelector(selectUpgradeState, getMowingCuttingLimit);
+
+export const selectMowingRegrowSpeedUpgradeModifier = createSelector(
+    selectUpgradeState,
+    getMowingRegrowSpeedUpgradeModifier,
+);

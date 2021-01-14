@@ -21,7 +21,6 @@ export class UpgradesService {
             withLatestFrom(this.store.select(selectMowingUpgradeBoughtValue), this.money$, (id, upgrades, money) => {
                 const upgrade: Upgrade = upgrades.find((u) => u.id == id);
                 if (money >= upgrade.price && !upgrade.bought) {
-                    console.log('buy upgrade');
                     this.store.dispatch(unlockMowingUpgradeAction({ id }));
                     this.store.dispatch(EarningAction.earnMoney({ money: -upgrade.price }));
                 }

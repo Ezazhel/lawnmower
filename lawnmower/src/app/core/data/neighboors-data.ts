@@ -5,11 +5,12 @@ export const Neighboors = {
         'n1',
         'MowingTown',
         0,
-        100,
+        25,
         'Somewhere to start',
         `
-      <p>
-        First neighborhood, easy cleaning, slow income
+        <p>
+            Kenny, this is your hometown, daddy told you to go make some money.
+            It's soon mom's day, mommy will be happy
         </p>
     `,
         5.0,
@@ -20,10 +21,11 @@ export const Neighboors = {
         'n2',
         'MowingTown 2',
         0,
-        1000,
+        75,
         'Somewhere to continue',
         `<p>
-            Second neighborhood, more neighboor, slow cleaning, average income
+            Wow ! Your daddy is impress by your performance ! 
+            You still doesn't have enough money for your mommy...
         </p>
     `,
         8.0,

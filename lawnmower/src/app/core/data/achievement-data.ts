@@ -4,7 +4,7 @@ import { Neighboors } from './neighboors-data';
 import { Store } from '@ngrx/store';
 import { activateSubroute } from '../../root-store/route/route-action';
 import { routes } from './route-data';
-import { addMowingUpgradeAction, unlockMowingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
+import { addMowingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
 import { MowingUpgrade } from './upgrade-data';
 
 export const Achievements = {
@@ -27,7 +27,7 @@ export const Achievements = {
     ['a3']: new Achievement(
         'a3',
         'Small steps, big profit',
-        'Earn twenty total dollar in total. Wow ! Little Kenny is rich !',
+        'Earn twenty dollar in total. Wow ! Little Kenny is rich !',
         'feature',
         (state: RootStoreState.State) => state.stats.totalMoney > 20,
         (store: Store<RootStoreState.State>) => {
@@ -39,10 +39,10 @@ export const Achievements = {
         'Cutting grasses suck',
         'Cut 20 plot in total',
         'feature',
-        (state: RootStoreState.State) => state.stats.totalMowned >= 2,
+        (state: RootStoreState.State) => state.stats.totalMowned >= 20,
         (store: Store<RootStoreState.State>) => {
-            store.dispatch(addMowingUpgradeAction({id: MowingUpgrade.robot.id}))
-        }
+            store.dispatch(addMowingUpgradeAction({ id: MowingUpgrade.robot.id }));
+        },
     ),
     ['a5']: new Achievement(
         'a5',

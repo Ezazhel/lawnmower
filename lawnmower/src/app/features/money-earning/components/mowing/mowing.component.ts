@@ -7,12 +7,14 @@ import { Neighboor } from '@core/models/neighboor';
 import { Observable, combineLatest } from 'rxjs';
 import { Upgrade } from '@core/models/upgrade';
 import {
+    selectCuttingLimitModifier,
+    selectMowingRegrowSpeedUpgradeModifier,
     selectMowingSpeedUpgradeModifier,
     selectMowingUpgradeBoughtValue,
 } from 'app/root-store/upgrades/upgrades-selector';
 import { IdlingService } from '@core/services/idling.service';
-import { sampleTime } from 'rxjs/operators';
-import { getAllNeighboors } from 'app/root-store/neighboor/neighboor-selector';
+import { sampleTime, switchMap } from 'rxjs/operators';
+import { getAllNeighboors, selectCuttingLimit } from 'app/root-store/neighboor/neighboor-selector';
 @Component({
     selector: 'mowing',
     templateUrl: './mowing.component.html',
@@ -27,31 +29,40 @@ export class MowingComponent implements OnInit {
     ngOnInit(): void {}
 
     cut = (neighboor: Neighboor) => {
-        let cuttingLimit = 1; //get this from store
         if (!neighboor.cutting) {
-            neighboor.cutting = true;
-            const cut$ = combineLatest([this.idlingService.timer$, this.store.select(selectMowingSpeedUpgradeModifier)])
-                .pipe(sampleTime(60))
-                .subscribe(([timer, speedModifier]) => {
-                    neighboor.cut(timer.deltaTime, speedModifier);
-                    if (neighboor.cutPercent >= 100 ) {
-                        cuttingLimit -= 1;
-                        this.store.dispatch(NeighboorAction.cutAction({ id: neighboor.id, modifier: 1 }));
-                        this.store.dispatch(StatsAction.incrementTotalMowned({  mowned: 1 }));
-                        neighboor.cutCompleted();
-                        if (!neighboor.regrowing) this.regrow(neighboor);
-                        if(cuttingLimit <= 0) cut$.unsubscribe();
+            let _cuttingLimit = null;
+            const cut$ = combineLatest([
+                this.idlingService.timer$,
+                this.store.select(selectMowingSpeedUpgradeModifier),
+                this.store.select(selectCuttingLimit),
+                this.store.select(selectCuttingLimitModifier),
+            ]).subscribe(([timer, speedModifier, cuttingLimit, cuttingLimitModifier]) => {
+                neighboor.cutting = true;
+                if (_cuttingLimit == null) _cuttingLimit = cuttingLimit + cuttingLimitModifier;
+                neighboor.cut(timer.deltaTime, speedModifier);
+                if (neighboor.cutPercent >= 100) {
+                    _cuttingLimit -= 1;
+                    this.store.dispatch(NeighboorAction.cutAction({ id: neighboor.id, modifier: 1 }));
+                    this.store.dispatch(StatsAction.incrementTotalMowned({ mowned: 1 }));
+                    neighboor.cutCompleted();
+                    if (!neighboor.regrowing) this.regrow(neighboor);
+                    if (_cuttingLimit <= 0) {
+                        cut$.unsubscribe();
                     }
-                });
+                }
+            });
         }
     };
 
     regrow = (neighboor: Neighboor) => {
         neighboor.regrowing = true;
-        const regrow$ = combineLatest([this.idlingService.timer$, this.store.select(selectMowingSpeedUpgradeModifier)])
+        const regrow$ = combineLatest([
+            this.idlingService.timer$,
+            this.store.select(selectMowingRegrowSpeedUpgradeModifier),
+        ])
             .pipe(sampleTime(60))
-            .subscribe(([timer, speedModifier]) => {
-                neighboor.regrow(timer.deltaTime, speedModifier);
+            .subscribe(([timer, regrowSpeedModifier]) => {
+                neighboor.regrow(timer.deltaTime, regrowSpeedModifier);
                 if (neighboor.regrowPercent <= 0) {
                     this.store.dispatch(NeighboorAction.regrowAction({ id: neighboor.id, modifier: -1 }));
                     neighboor.regrowCompleted();
@@ -64,6 +75,6 @@ export class MowingComponent implements OnInit {
     };
 
     trackByFunction(index: number, object: any) {
-        return object;
+        return index;
     }
 }

@@ -23,3 +23,5 @@ export const getAllNeighboorsWhereCompletionGtOne = createSelector(selectNeighbo
         )
         .filter((n) => n.completion > 0),
 );
+
+export const selectCuttingLimit = createSelector(selectNeighboorState, (state) => state.cuttingLimit);

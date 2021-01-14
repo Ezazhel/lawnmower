@@ -40,3 +40,7 @@ main {
         display: none;
     }
 }
+
+.mat-progress-bar .mat-progress-bar-fill {
+    transition: transform 60ms ease !important;
+}
