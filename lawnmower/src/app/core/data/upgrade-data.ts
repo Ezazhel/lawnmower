@@ -7,7 +7,7 @@ export const MowingUpgrade = {
     ['sharpen']: new Upgrade(
         'sharpen',
         'Sharpen blade',
-        0.001,
+        0.025,
         'mowing',
         'Sharp blade will cut grass faster',
         'You cut grass 10% faster',

@@ -41,6 +41,6 @@ main {
     }
 }
 
-.mat-progress-bar .mat-progress-bar-fill {
-    transition: transform 60ms ease !important;
+.mat-progress-bar.mat-progress-bar-fill {
+    transition-duration: 50ms !important;
 }

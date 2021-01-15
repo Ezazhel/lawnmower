@@ -39,8 +39,8 @@ export class MowingComponent implements OnInit {
             ]).subscribe(([timer, speedModifier, cuttingLimit, cuttingLimitModifier]) => {
                 neighboor.cutting = true;
                 if (_cuttingLimit == null) _cuttingLimit = cuttingLimit + cuttingLimitModifier;
-                neighboor.cut(timer.deltaTime, speedModifier);
                 if (neighboor.cutPercent >= 100) {
+                    console.log(_cuttingLimit);
                     _cuttingLimit -= 1;
                     this.store.dispatch(NeighboorAction.cutAction({ id: neighboor.id, modifier: 1 }));
                     this.store.dispatch(StatsAction.incrementTotalMowned({ mowned: 1 }));
@@ -50,6 +50,8 @@ export class MowingComponent implements OnInit {
                         cut$.unsubscribe();
                     }
                 }
+                neighboor.cut(timer.deltaTime, speedModifier);
+              
             });
         }
     };
