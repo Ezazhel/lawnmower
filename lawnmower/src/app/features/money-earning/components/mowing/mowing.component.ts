@@ -40,7 +40,6 @@ export class MowingComponent implements OnInit {
                 neighboor.cutting = true;
                 if (_cuttingLimit == null) _cuttingLimit = cuttingLimit + cuttingLimitModifier;
                 if (neighboor.cutPercent >= 100) {
-                    console.log(_cuttingLimit);
                     _cuttingLimit -= 1;
                     this.store.dispatch(NeighboorAction.cutAction({ id: neighboor.id, modifier: 1 }));
                     this.store.dispatch(StatsAction.incrementTotalMowned({ mowned: 1 }));
@@ -49,8 +48,9 @@ export class MowingComponent implements OnInit {
                     if (_cuttingLimit <= 0) {
                         cut$.unsubscribe();
                     }
+                }else{
+                    neighboor.cut(timer.deltaTime, speedModifier);
                 }
-                neighboor.cut(timer.deltaTime, speedModifier);
               
             });
         }
