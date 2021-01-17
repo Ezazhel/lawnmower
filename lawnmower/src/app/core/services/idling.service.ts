@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState, EarningAction, StatsAction } from 'app/root-store';
 import { interval, animationFrameScheduler, combineLatest, Subject } from 'rxjs';
-import { map, sampleTime, scan, withLatestFrom } from 'rxjs/operators';
-import { getAllNeighboorsWhereCompletionGtOne, getAllNeighboors } from '../../root-store/neighboor/neighboor-selector';
+import { map, sampleTime, scan, share, withLatestFrom } from 'rxjs/operators';
+import { getAllNeighboorsWhereCompletionGtOne } from '../../root-store/neighboor/neighboor-selector';
 import { selectMowingGainModifier } from '../../root-store/upgrades/upgrades-selector';
-import { Achievements } from '../data/achievement-data';
 import {
     selectAchievementsNotUnlock,
     selectAchievementsUnlock,
@@ -15,7 +14,7 @@ import { unlockAchievementAction } from '../../root-store/achievements/achieveme
     providedIn: 'root',
 })
 export class IdlingService {
-    timer$ = interval(60, animationFrameScheduler).pipe(
+    timer$ = interval(1000 / 60, animationFrameScheduler).pipe(
         map(() => ({
             time: Date.now(),
             deltaTime: null,
@@ -24,6 +23,7 @@ export class IdlingService {
             time: current.time,
             deltaTime: (current.time - previous.time) / 1000,
         })),
+        share(),
     );
 
     constructor(private store: Store<RootStoreState.State>) {}
@@ -32,7 +32,7 @@ export class IdlingService {
         this.doEarnMoneyFromNeighboors$.next(ticker.deltaTime);
     };
 
-    loop$ = combineLatest([this.timer$]).pipe(sampleTime(60)).subscribe(this.doSomething);
+    loop$ = combineLatest([this.timer$]).subscribe(this.doSomething);
 
     doEarnMoneyFromNeighboors$: Subject<number> = new Subject<number>();
     earnMoneyFromNeighboors$ = this.doEarnMoneyFromNeighboors$

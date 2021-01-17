@@ -1,7 +1,7 @@
+import { Neighboors } from '@core/data/neighboors-data';
 import { createReducer, on } from '@ngrx/store';
 import { cutAction, regrowAction, increaseCuttingLimit } from './neighboor-action';
 import { initialState, State } from './neighboor-state';
-import { Neighboors } from '../../core/data/neighboors-data';
 
 export const reducer = createReducer(
     initialState,
@@ -10,14 +10,19 @@ export const reducer = createReducer(
 );
 
 function updateCompletion(state: State, id: string, modifier: number): State {
+    const completionAfterModifier =
+        modifier < 0
+            ? Math.max((state.neighboors[id].completion ?? 0) + modifier, 0)
+            : Math.min((state.neighboors[id].completion ?? 0) + modifier, Neighboors[id].maxCompletion);
     return {
         ...state,
-        completions: {
-            ...state.completions,
-            [id]:
-                modifier < 0
-                    ? Math.max((state.completions[id] ?? 0) + modifier, 0)
-                    : Math.min((state.completions[id] ?? 0) + modifier, Neighboors[id].maxCompletion),
+        neighboors: {
+            ...state.neighboors,
+            [id]: {
+                completion: completionAfterModifier,
+                completedOnce:
+                    state.neighboors[id].completedOnce || completionAfterModifier == Neighboors[id].maxCompletion,
+            },
         },
     };
 }

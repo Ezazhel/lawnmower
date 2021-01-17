@@ -6,13 +6,13 @@ export const reducer = createReducer(
     initialState,
     on(unlockMowingUpgradeAction, (state, { id }) => updateMowingUpgrade(state, id)),
     on(unlockGlobalUpgradeAction, (state, { id }) => unlockGlobalUpgrade(state, id)),
-    on(addMowingUpgradeAction, (state, { id }) => updateMowingUpgrade(state, id, false)),
+    on(addMowingUpgradeAction, (state, { id }) => updateMowingUpgrade(state, id, 0)),
 );
 
-function updateMowingUpgrade(state: State, id: string, isUnlock = true): State {
-    return { ...state, mowing: { ...state.mowing, [id]: isUnlock } };
+function updateMowingUpgrade(state: State, id: string, level: number = null): State {
+    return { ...state, mowing: { ...state.mowing, [id]: level ?? state.mowing[id] + 1 } };
 }
 
-function unlockGlobalUpgrade(state: State, id: string): State {
-    return { ...state, global: { ...state.global, [id]: true } };
+function unlockGlobalUpgrade(state: State, id: string, level: number = undefined): State {
+    return { ...state, global: { ...state.global, [id]: level ?? state.mowing[id] + 1 } };
 }

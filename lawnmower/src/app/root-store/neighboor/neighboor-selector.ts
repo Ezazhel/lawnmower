@@ -3,22 +3,23 @@ import { State } from './neighboor-state';
 import { Neighboors } from '@core/data/neighboors-data';
 import { Neighboor } from '@core/models/neighboor';
 
-const getNeighboorCompletion = (state: State, neighboorId: number): number => state.completions[neighboorId];
+const getNeighboorCompletion = (state: State, neighboorId: number): number => state.neighboors[neighboorId].completion;
 
 export const selectNeighboorState: MemoizedSelector<object, State> = createFeatureSelector('neighboor');
 
 export const getCompletion = createSelector(selectNeighboorState, getNeighboorCompletion);
 
 export const getAllNeighboors: MemoizedSelector<object, Neighboor[]> = createSelector(selectNeighboorState, (state) =>
-    Object.keys(state.completions).map((key) => Object.assign(Neighboors[key], state.completions[key])),
+    Object.keys(state.neighboors).map((key) => Object.assign(Neighboors[key], state.neighboors[key])),
 );
 
 export const getAllNeighboorsWhereCompletionGtOne = createSelector(selectNeighboorState, (state) =>
-    Object.keys(state.completions)
+    Object.keys(state.neighboors)
         .map(
             (key): Neighboor =>
                 Object.assign<Neighboor, Partial<Neighboor>>(Neighboors[key], {
-                    completion: state.completions[key],
+                    completion: state.neighboors[key].completion,
+                    completedOnce: state.neighboors[key].completedOnce,
                 }),
         )
         .filter((n) => n.completion > 0),

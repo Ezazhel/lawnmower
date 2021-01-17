@@ -3,6 +3,7 @@ export class Neighboor {
     title: string;
     completion: number;
     maxCompletion: number;
+    completedOnce: boolean = false;
     subTitle: string;
     content: string;
     lastTimeCut: number = null;

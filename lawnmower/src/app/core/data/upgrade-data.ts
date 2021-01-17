@@ -1,55 +1,52 @@
 import { Upgrade } from '@core/models/upgrade';
-import { Store } from '@ngrx/store';
-import { RootStoreState } from 'app/root-store';
-import { increaseCuttingLimit } from 'app/root-store/neighboor/neighboor-action';
 
 export const MowingUpgrade = {
     ['sharpen']: new Upgrade(
         'sharpen',
         'Sharpen blade',
-        0.025,
+        (level) => 0.025 * Math.pow(1.25, level),
         'mowing',
         'Sharp blade will cut grass faster',
-        'You cut grass 10% faster',
+        0,
+        5,
+        'You cut grass 5% faster per level',
         'speed',
-        (): number => {
-            return 1.1;
-        },
+        (level: number): number => Math.pow(1.05, level),
     ),
     ['rich-grass']: new Upgrade(
         'rich-grass',
         'Rich grass',
-        0.1,
+        () => 0.1,
         'mowing',
         'It seems that your neighboor money come from their grasses !',
+        0,
+        1,
         '15% more money from cutting grass',
         'gain',
-        (): number => {
-            return 1.15;
-        },
+        (): number => 1.15,
     ),
     ['anti-fertilizer']: new Upgrade(
         'anti-fertilizer',
         'Anti Fertilizer',
-        1,
+        (level) => 1 * Math.pow(1.4, level),
         'mowing',
         'What if you spray something on the grass ?',
+        0,
+        3,
         'Grass regrow 5% slower',
         'regrow',
-        (): number => {
-            return 0.9;
-        },
+        (level: number): number => Math.pow(0.9, level),
     ),
     ['robot']: new Upgrade(
         'robot',
         'Robot',
-        7.5,
+        () => 4.2,
         'mowing',
         'Hello there',
+        0,
+        1,
         'You can cut one more grass before needing to click',
         'cuttingLimit',
-        () => {
-            return 1;
-        },
+        () => 1,
     ),
 };

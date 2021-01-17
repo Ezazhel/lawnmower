@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Neighboors } from '@core/data/neighboors-data';
 import { Store } from '@ngrx/store';
 import { RootStoreState, StatsAction } from 'app/root-store';
 import { NeighboorAction } from 'app/root-store/neighboor';
@@ -10,10 +9,9 @@ import {
     selectCuttingLimitModifier,
     selectMowingRegrowSpeedUpgradeModifier,
     selectMowingSpeedUpgradeModifier,
-    selectMowingUpgradeBoughtValue,
+    selectMowingUpgradeLevelValue,
 } from 'app/root-store/upgrades/upgrades-selector';
 import { IdlingService } from '@core/services/idling.service';
-import { sampleTime, switchMap } from 'rxjs/operators';
 import { getAllNeighboors, selectCuttingLimit } from 'app/root-store/neighboor/neighboor-selector';
 @Component({
     selector: 'mowing',
@@ -23,13 +21,13 @@ import { getAllNeighboors, selectCuttingLimit } from 'app/root-store/neighboor/n
 export class MowingComponent implements OnInit {
     neighboors$: Observable<Neighboor[]> = this.store.select(getAllNeighboors);
     cutInterval = null;
-    upgrades$: Observable<Upgrade[]> = this.store.select(selectMowingUpgradeBoughtValue);
+    upgrades$: Observable<Upgrade[]> = this.store.select(selectMowingUpgradeLevelValue);
     constructor(private store: Store<RootStoreState.State>, private idlingService: IdlingService) {}
 
     ngOnInit(): void {}
 
     cut = (neighboor: Neighboor) => {
-        if (!neighboor.cutting) {
+        if (neighboor.cutPercent == 0) {
             let _cuttingLimit = null;
             const cut$ = combineLatest([
                 this.idlingService.timer$,
@@ -37,7 +35,6 @@ export class MowingComponent implements OnInit {
                 this.store.select(selectCuttingLimit),
                 this.store.select(selectCuttingLimitModifier),
             ]).subscribe(([timer, speedModifier, cuttingLimit, cuttingLimitModifier]) => {
-                neighboor.cutting = true;
                 if (_cuttingLimit == null) _cuttingLimit = cuttingLimit + cuttingLimitModifier;
                 if (neighboor.cutPercent >= 100) {
                     _cuttingLimit -= 1;
@@ -48,10 +45,11 @@ export class MowingComponent implements OnInit {
                     if (_cuttingLimit <= 0) {
                         cut$.unsubscribe();
                     }
-                }else{
+                } else {
+                    if (neighboor.cutPercent == 0) neighboor.cut(timer.deltaTime, speedModifier);
+
                     neighboor.cut(timer.deltaTime, speedModifier);
                 }
-              
             });
         }
     };
@@ -61,19 +59,19 @@ export class MowingComponent implements OnInit {
         const regrow$ = combineLatest([
             this.idlingService.timer$,
             this.store.select(selectMowingRegrowSpeedUpgradeModifier),
-        ])
-            .pipe(sampleTime(60))
-            .subscribe(([timer, regrowSpeedModifier]) => {
-                neighboor.regrow(timer.deltaTime, regrowSpeedModifier);
-                if (neighboor.regrowPercent <= 0) {
-                    this.store.dispatch(NeighboorAction.regrowAction({ id: neighboor.id, modifier: -1 }));
-                    neighboor.regrowCompleted();
-                    if (neighboor.completion <= 0) {
-                        neighboor.regrowing = false;
-                        regrow$.unsubscribe();
-                    }
+        ]).subscribe(([timer, regrowSpeedModifier]) => {
+            if (neighboor.regrowPercent == 100) neighboor.regrow(timer.deltaTime, regrowSpeedModifier);
+            neighboor.regrow(timer.deltaTime, regrowSpeedModifier);
+            if (neighboor.regrowPercent <= 0) {
+                this.store.dispatch(NeighboorAction.regrowAction({ id: neighboor.id, modifier: -1 }));
+                neighboor.regrowCompleted();
+                if (neighboor.completedOnce) this.cut(neighboor);
+                if (neighboor.completion <= 0) {
+                    neighboor.regrowing = false;
+                    regrow$.unsubscribe();
                 }
-            });
+            }
+        });
     };
 
     trackByFunction(index: number, object: any) {

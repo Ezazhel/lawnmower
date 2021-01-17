@@ -21,7 +21,7 @@ export const Achievements = {
         'Little worker',
         'Have a town with more than 10 freshly cut plot',
         'goal',
-        (state: RootStoreState.State) => Object.values(state.neighboor.completions).some((c) => c > 10),
+        (state: RootStoreState.State) => Object.values(state.neighboor.neighboors).some((c) => c.completion > 10),
         null,
     ),
     ['a3']: new Achievement(
@@ -49,7 +49,7 @@ export const Achievements = {
         'One down',
         'Complete the first town !',
         'feature',
-        (state: RootStoreState.State) => state.neighboor.completions[Neighboors.n1.id] == Neighboors.n1.maxCompletion,
+        (state: RootStoreState.State) => state.neighboor.neighboors[Neighboors.n1.id].completedOnce,
         () => {
             console.log('unlock a shop to buy part for your machine');
         },

@@ -1,15 +1,16 @@
 <div class="neighboors">
     <mat-card
         class="neighboor"
-        [ngClass]="upgrade.bought ? 'unlocked' : 'notUnlocked'"
-        *ngFor="let upgrade of upgrades; index as i; trackBy: trackByFunction"
+        [ngClass]="upgrade.level == upgrade.maxLevel ? 'unlocked' : 'notUnlocked'"
+        *ngFor="let upgrade of upgrades; trackBy: trackByFunction"
         (click)="unlock(upgrade.id)"
     >
         <mat-card-title>
             {{ upgrade.name }}
+            <span *ngIf="upgrade.maxLevel != 1">{{ upgrade.level }} / {{ upgrade.maxLevel }} </span>
         </mat-card-title>
-        <mat-card-subtitle class="price" *ngIf="!upgrade.bought">
-            Price : {{ upgrade.price | exponential }}{{ upgrade.currency }}
+        <mat-card-subtitle class="price" *ngIf="upgrade.level < upgrade.maxLevel">
+            Price : {{ upgrade.price(upgrade.level) | exponential }}{{ upgrade.currency }}
         </mat-card-subtitle>
         <mat-card-content>
             <div>{{ upgrade.description }}</div>

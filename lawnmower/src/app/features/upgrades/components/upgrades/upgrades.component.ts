@@ -18,7 +18,7 @@ export class UpgradesComponent implements OnInit {
         this.upgradeService.doUnlockUpgrade$.next(id);
     }
 
-    trackByFunction(index: number, object: Upgrade) {
-        return index;
+    trackByFunction(index: number, upgrade: Upgrade) {
+        return upgrade;
     }
 }

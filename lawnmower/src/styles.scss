@@ -42,5 +42,5 @@ main {
 }
 
 .mat-progress-bar.mat-progress-bar-fill {
-    transition-duration: 50ms !important;
+    transition-duration: 1000/60ms !important;
 }
