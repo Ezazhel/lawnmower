@@ -1,4 +1,4 @@
-export type UpgradeType = 'global' | 'mowing';
+export type UpgradeType = 'global' | 'mowing' | 'blogging';
 export type AffectType = 'speed' | 'gain' | 'regrow' | 'cuttingLimit';
 
 export class Upgrade {

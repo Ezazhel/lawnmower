@@ -3,6 +3,7 @@
             Use mat-tab for blogging / upgrades
             Blogging is just : post message, post picture, goal is to amass fans. I need to find idea in order to not make it boring. After sometime it'll be playable by itself and player won't need to come back.
             Think about upgrades, achievements related to blogging.
+            Add a shop in blogging to unlock better part for your computer. More post at once, more creativity / imagination gain.
 
 
 Test this for cut$ : 

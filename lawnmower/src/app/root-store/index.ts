@@ -6,4 +6,5 @@ export * from './earning';
 export * from './upgrades';
 export * from './achievements';
 export * from './route';
+export * from './blogging';
 export { RootStoreState, RootStoreModule };
