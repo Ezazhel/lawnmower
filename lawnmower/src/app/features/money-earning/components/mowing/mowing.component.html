@@ -3,6 +3,7 @@
         <div class="neighboors">
             <mat-card
                 class="neighboor"
+                [ngClass]="neighboor.completedOnce ? '' : ''"
                 (click)="cut(neighboor)"
                 *ngFor="let neighboor of neighboors$ | async; index as i; trackBy: trackByFunction"
             >
@@ -16,7 +17,6 @@
                     <mat-tab-group mat-align-tabs="center">
                         <mat-tab label="Description">
                             <div [innerHTML]="neighboor.content"></div>
-                            <span> {{ neighboor.completedOnce }}</span>
                         </mat-tab>
                         <mat-tab label="Informations">
                             <p>

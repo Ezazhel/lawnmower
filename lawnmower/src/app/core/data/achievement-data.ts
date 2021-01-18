@@ -31,6 +31,7 @@ export const Achievements = {
         'feature',
         (state: RootStoreState.State) => state.stats.totalMoney > 20,
         (store: Store<RootStoreState.State>) => {
+            //that achievement will unlock shop
             store.dispatch(activateSubroute({ mainRoute: routes['earning'], subRoute: routes['earning'].subPath[1] }));
         },
     ),
@@ -50,8 +51,8 @@ export const Achievements = {
         'Complete the first town !',
         'feature',
         (state: RootStoreState.State) => state.neighboor.neighboors[Neighboors.n1.id].completedOnce,
-        () => {
-            console.log('unlock a shop to buy part for your machine');
+        (store: Store<RootStoreState.State>) => {
+            store.dispatch(activateSubroute({ mainRoute: routes['earning'], subRoute: routes['earning'].subPath[1] }));
         },
     ),
 };
