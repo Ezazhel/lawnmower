@@ -5,6 +5,8 @@
             Think about upgrades, achievements related to blogging.
             Add a shop in blogging to unlock better part for your computer. More post at once, more creativity / imagination gain.
 
+19/01 : Repercusion ->
+            Need to repercut Object.assign({}, Objets, Partial<Object>) as Object // everywhere i do assign.
 
 Test this for cut$ : 
 https://www.learnrxjs.io/learn-rxjs/recipes/click-ninja-game
