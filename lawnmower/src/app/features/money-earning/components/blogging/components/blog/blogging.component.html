@@ -1,9 +1,8 @@
-<mat-tab-group>
+<mat-tab-group mat-align-tabs="center">
     <mat-tab label="Blog">
         <section class="blog" *ngIf="blogging$ | async as blogging">
             <post [post]="blogging.post.message"></post>
         </section>
     </mat-tab>
-    <mat-tab label="Upgrades">
-    </mat-tab>
+    <mat-tab label="Upgrades"> </mat-tab>
 </mat-tab-group>

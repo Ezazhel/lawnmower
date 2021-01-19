@@ -6,26 +6,27 @@ import { activateSubroute } from '../../root-store/route/route-action';
 import { routes } from './route-data';
 import { addMowingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
 import { MowingUpgrade } from './upgrade-data';
+import { addAchievements } from '../../root-store/achievements/achievements-action';
 
-export const Achievements = {
-    ['a1']: new Achievement(
-        'a1',
+export const MowingAchievements = {
+    ['ma1']: new Achievement(
+        'ma1',
         'Small fortune',
         'Have a dollar on you',
         'goal',
         (state: RootStoreState.State) => state.earning.money >= 1,
         null,
     ),
-    ['a2']: new Achievement(
-        'a2',
+    ['ma2']: new Achievement(
+        'ma2',
         'Little worker',
         'Have a town with more than 10 freshly cut plot',
         'goal',
         (state: RootStoreState.State) => Object.values(state.neighboor.neighboors).some((c) => c.completion > 10),
         null,
     ),
-    ['a3']: new Achievement(
-        'a3',
+    ['ma3']: new Achievement(
+        'ma3',
         'Small steps, big profit',
         'Earn twenty dollar in total. Wow ! Little Kenny is rich !',
         'feature',
@@ -35,8 +36,8 @@ export const Achievements = {
             store.dispatch(activateSubroute({ mainRoute: routes['earning'], subRoute: routes['earning'].subPath[1] }));
         },
     ),
-    ['a4']: new Achievement(
-        'a4',
+    ['ma4']: new Achievement(
+        'ma4',
         'Cutting grasses suck',
         'Cut 20 plot in total',
         'feature',
@@ -45,14 +46,37 @@ export const Achievements = {
             store.dispatch(addMowingUpgradeAction({ id: MowingUpgrade.robot.id }));
         },
     ),
-    ['a5']: new Achievement(
-        'a5',
+    ['ma5']: new Achievement(
+        'ma5',
         'One down',
         'Complete the first town !',
         'feature',
         (state: RootStoreState.State) => state.neighboor.neighboors[Neighboors.n1.id].completedOnce,
         (store: Store<RootStoreState.State>) => {
             store.dispatch(activateSubroute({ mainRoute: routes['earning'], subRoute: routes['earning'].subPath[1] }));
+            store.dispatch(addAchievements({ Achievements: BloggingAchievements }));
         },
+    ),
+};
+
+export const BloggingAchievements = {
+    ['ba1']: new Achievement(
+        'ba1',
+        'Ads are bad but...',
+        "You'll get rich faster",
+        'goal',
+        (state: RootStoreState.State) => state.blogging.blogging.adsRevenu > 0,
+        null,
+    ),
+    ['ba2']: new Achievement(
+        'ba2',
+        'Every kind of post',
+        'Here come the spam...',
+        'goal',
+        (state: RootStoreState.State) => {
+            const post = state.blogging.blogging.post;
+            return post.message > 0 && post.picture > 0 && post.topic > 0 && post.video > 0;
+        },
+        null,
     ),
 };

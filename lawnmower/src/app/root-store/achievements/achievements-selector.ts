@@ -1,15 +1,16 @@
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import { State } from './achievements-state';
-import { Achievements } from '@core/data/achievement-data';
 import { Achievement } from '@core/models/achievement';
+import { MowingAchievements, BloggingAchievements } from '@core/data/achievement-data';
+
+const AllAchievements = { ...MowingAchievements, ...BloggingAchievements };
 
 export const selectAchievementState: MemoizedSelector<object, State> = createFeatureSelector('achievements');
 
 export const selectAchievements = createSelector(selectAchievementState, (state) => {
-    debugger;
-    const ach = Object.keys(state.achievements).map((k) =>
-    Object.assign<Achievement, Partial<Achievement>>(Achievements[k], { isUnlock: state.achievements[k] }),
-    )
+    let ach = Object.keys(state.achievements).map(
+        (k) => Object.assign({}, AllAchievements[k], { isUnlock: state.achievements[k] }) as Achievement,
+    );
     return ach;
 });
 
