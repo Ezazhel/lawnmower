@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MowingComponent } from './components/mowing/mowing.component';
-import { BloggingComponent } from './components/blogging/blogging.component';
 import { SharedModule } from '@shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { UpgradesModule } from '../upgrades/upgrades.module';
 
 @NgModule({
-  declarations: [MowingComponent, BloggingComponent],
+  declarations: [MowingComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -22,13 +21,13 @@ import { UpgradesModule } from '../upgrades/upgrades.module';
           },
           {
             path: 'blogging',
-            component: BloggingComponent,
+            loadChildren: () => import('./components/blogging/blogging.module').then(m => m.BloggingModule)
           },
           { path: '**', redirectTo: 'mowing' },
         ],
       },
     ]),
   ],
-  exports: [MowingComponent, BloggingComponent],
+  exports: [MowingComponent],
 })
 export class MoneyEarningModule {}

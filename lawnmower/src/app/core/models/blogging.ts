@@ -10,16 +10,16 @@ class Fan extends Currency {
 class Creativity extends Currency {}
 class Imagination extends Currency {}
 
-class Post {
-    message: number;
-    video: number;
-    picture: number;
-    topic: number;
+export class Post {
+    message: number = 0;
+    video: number = 0;
+    picture: number = 0;
+    topic: number = 0;
 }
 export class Blogging {
     fans: Fan;
     creativity: Creativity;
     imagination: Imagination;
     adsRevenu: number = 0;
-    post: Post;
+    post: Post = new Post();
 }
