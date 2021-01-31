@@ -8,6 +8,13 @@
 19/01 : Repercusion ->
             Need to repercut Object.assign({}, Objets, Partial<Object>) as Object // everywhere i do assign.
 
+27/01 : Lawn with stat, buy part to increase perf of lawn. 
+        Power (cut/s), 
+        Tank (neighboor cutable before stop), 
+        RefillTime (time to wait between each cut),
+        Accesories (more money, power bonus, etc ?)
+
+
 Test this for cut$ : 
 https://www.learnrxjs.io/learn-rxjs/recipes/click-ninja-game
 https://www.learnrxjs.io/learn-rxjs/operators/utility/finalize
