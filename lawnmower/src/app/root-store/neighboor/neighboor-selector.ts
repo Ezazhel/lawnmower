@@ -26,3 +26,7 @@ export const getAllNeighboorsWhereCompletionGtOne = createSelector(selectNeighbo
 );
 
 export const selectCuttingLimit = createSelector(selectNeighboorState, (state) => state.cuttingLimit);
+
+export const selectEquippedTool = createSelector(selectNeighboorState, (state) =>
+    Object.values(state.tools).find((t) => t.equipped),
+);

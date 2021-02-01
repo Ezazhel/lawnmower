@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { RootStoreState } from 'app/root-store';
+import { selectEquippedTool } from '../../../../../../root-store/neighboor/neighboor-selector';
 
 @Component({
-  selector: 'app-tools',
-  templateUrl: './tools.component.html',
-  styleUrls: ['./tools.component.scss']
+    selector: 'tools',
+    templateUrl: './tools.component.html',
+    styleUrls: ['./tools.component.scss'],
 })
 export class ToolsComponent implements OnInit {
+    equippedTool$ = this.store.select(selectEquippedTool);
+    constructor(private store: Store<RootStoreState.State>) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    ngOnInit(): void {}
 }
