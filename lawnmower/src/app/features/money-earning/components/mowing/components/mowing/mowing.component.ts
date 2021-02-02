@@ -13,6 +13,7 @@ import {
 } from 'app/root-store/upgrades/upgrades-selector';
 import { IdlingService } from '@core/services/idling.service';
 import { getAllNeighboors, selectCuttingLimit } from 'app/root-store/neighboor/neighboor-selector';
+import { selectEquippedTool } from '../../../../../../root-store/neighboor/neighboor-selector';
 @Component({
     selector: 'mowing',
     templateUrl: './mowing.component.html',
@@ -34,7 +35,8 @@ export class MowingComponent implements OnInit {
                 this.store.select(selectMowingSpeedUpgradeModifier),
                 this.store.select(selectCuttingLimit),
                 this.store.select(selectCuttingLimitModifier),
-            ]).subscribe(([timer, speedModifier, cuttingLimit, cuttingLimitModifier]) => {
+                this.store.select(selectEquippedTool),
+            ]).subscribe(([timer, speedModifier, cuttingLimit, cuttingLimitModifier, tool]) => {
                 if (_cuttingLimit == null) _cuttingLimit = cuttingLimit + cuttingLimitModifier;
                 if (neighboor.cutPercent >= 100) {
                     _cuttingLimit -= 1;
@@ -46,9 +48,8 @@ export class MowingComponent implements OnInit {
                         cut$.unsubscribe();
                     }
                 } else {
-                    if (neighboor.cutPercent == 0) neighboor.cut(timer.deltaTime, speedModifier);
-
-                    neighboor.cut(timer.deltaTime, speedModifier);
+                    if (neighboor.cutPercent == 0) neighboor.cut(timer.deltaTime, speedModifier * tool.power);
+                    neighboor.cut(timer.deltaTime, speedModifier * tool.power);
                 }
             });
         }
