@@ -1,19 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { Blogging } from '@core/models/blogging';
+import { Blogging, Creativity, Imagination } from '@core/models/blogging';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { getBlogging } from 'app/root-store/blogging/blogging-selector';
-import { Observable } from 'rxjs';
+import { selectBlogging, selectImagination } from 'app/root-store/blogging/blogging-selector';
+import { combineLatest, Observable } from 'rxjs';
+import { earnCreativity, earnImagination } from '../../../../../../root-store/blogging/blogging-action';
+import { IdlingService } from '../../../../../../core/services/idling.service';
+import { selectCreativity } from '../../../../../../root-store/blogging/blogging-selector';
 
 @Component({
-  selector: 'blogging',
-  templateUrl: './blogging.component.html',
-  styleUrls: ['./blogging.component.scss'],
+    selector: 'blogging',
+    templateUrl: './blogging.component.html',
+    styleUrls: ['./blogging.component.scss'],
 })
 export class BloggingComponent implements OnInit {
+    creation$: Observable<Creativity> = this.store.select(selectCreativity);
+    imagination$: Observable<Imagination> = this.store.select(selectImagination);
+    blogging$: Observable<Blogging> = this.store.select(selectBlogging);
+    constructor(private store: Store<RootStoreState.State>, private idlingService: IdlingService) {}
 
-  blogging$ : Observable<Blogging> = this.store.select(getBlogging);
-  constructor(private store: Store<RootStoreState.State>) {}
+    ngOnInit(): void {}
 
-  ngOnInit(): void {}
+    think() {
+        const think$ = combineLatest([this.idlingService.timer$]).subscribe(([timer]) => {
+            console.log(timer);
+            this.store.dispatch(earnImagination({ amount: timer.deltaTime }));
+        });
+    }
+    create() {
+        const create$ = combineLatest([this.idlingService.timer$]).subscribe(([timer]) => {
+            this.store.dispatch(earnCreativity({ amount: timer.deltaTime }));
+        });
+    }
 }

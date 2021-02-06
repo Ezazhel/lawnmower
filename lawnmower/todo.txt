@@ -13,7 +13,13 @@
         Tank (neighboor cutable before stop), 
         RefillTime (time to wait between each cut),
         Accesories (more money, power bonus, etc ?)
+        
+02/02 : Continue blogging
 
+06/02 : Add creativity / imagination -> We gain imagination
+        Add upgrade from imagination to unlock creativity / boost creativity
+        Add upgrade from creativity to boost imagination and unlock post.
+        Add imagination / Creativity in header
 
 Test this for cut$ : 
 https://www.learnrxjs.io/learn-rxjs/recipes/click-ninja-game

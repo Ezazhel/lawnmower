@@ -7,8 +7,8 @@ class Fan extends Currency {
     gainChance: number = 0;
 }
 
-class Creativity extends Currency {}
-class Imagination extends Currency {}
+export class Creativity extends Currency {}
+export class Imagination extends Currency {}
 
 export class Post {
     message: number = 0;
@@ -18,8 +18,8 @@ export class Post {
 }
 export class Blogging {
     fans: Fan;
-    creativity: Creativity;
-    imagination: Imagination;
+    creativity: Creativity = new Creativity();
+    imagination: Imagination = new Imagination();
     adsRevenu: number = 0;
     post: Post = new Post();
 }
