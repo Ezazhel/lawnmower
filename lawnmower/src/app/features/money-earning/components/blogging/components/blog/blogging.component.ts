@@ -23,7 +23,6 @@ export class BloggingComponent implements OnInit {
 
     think() {
         const think$ = combineLatest([this.idlingService.timer$]).subscribe(([timer]) => {
-            console.log(timer);
             this.store.dispatch(earnImagination({ amount: timer.deltaTime }));
         });
     }

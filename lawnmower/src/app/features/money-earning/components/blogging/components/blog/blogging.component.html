@@ -2,11 +2,8 @@
     <mat-tab label="Blog">
         In order to post something you'll need to think what you want to publish !
         <button mat-raised-button (click)="think()">Think</button>
-        Imagination : {{ (imagination$ | async)?.amount }}
         <br />
-        Now you just need to create !
-        <button mat-raised-button (click)="create()">Create</button>
-        Creation : {{ (creation$ | async)?.amount }}
+        Now you just need to create !<button mat-raised-button (click)="create()">Create</button>
         <section class="blog" *ngIf="blogging$ | async as blogging">
             <post [post]="blogging.post.message"></post>
         </section>
