@@ -7,6 +7,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { earnCreativity, earnImagination } from '../../../../../../root-store/blogging/blogging-action';
 import { IdlingService } from '../../../../../../core/services/idling.service';
 import { selectCreativity } from '../../../../../../root-store/blogging/blogging-selector';
+import { incrementTotalImagination, incrementTotalCreativity } from '../../../../../../root-store/stats/stats-action';
 
 @Component({
     selector: 'blogging',
@@ -24,11 +25,13 @@ export class BloggingComponent implements OnInit {
     think() {
         const think$ = combineLatest([this.idlingService.timer$]).subscribe(([timer]) => {
             this.store.dispatch(earnImagination({ amount: timer.deltaTime }));
+            this.store.dispatch(incrementTotalImagination({ imagination: timer.deltaTime }));
         });
     }
     create() {
         const create$ = combineLatest([this.idlingService.timer$]).subscribe(([timer]) => {
             this.store.dispatch(earnCreativity({ amount: timer.deltaTime }));
+            this.store.dispatch(incrementTotalCreativity({ creativity: timer.deltaTime }));
         });
     }
 }

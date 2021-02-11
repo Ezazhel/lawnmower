@@ -21,6 +21,9 @@
         Add upgrade from creativity to boost imagination and unlock post.
         Add imagination / Creativity in header
 
+09/02 : add NgIf on imagination / creativity, base on total
+        add Total earn i/c in stats.
+
 Test this for cut$ : 
 https://www.learnrxjs.io/learn-rxjs/recipes/click-ninja-game
 https://www.learnrxjs.io/learn-rxjs/operators/utility/finalize

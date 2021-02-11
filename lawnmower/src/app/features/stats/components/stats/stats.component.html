@@ -1,4 +1,6 @@
 <section *ngIf="stats$ | async as stat" fxLayout="column" fxLayoutAlign="space-around center">
-    <label>Total money : {{stat.totalMoney | exponential}}</label>
-    <label>Total mowned : {{stat.totalMowned}}</label>
+    <label>Total money : {{ stat.totalMoney | exponential }}</label>
+    <label>Total mowned : {{ stat.totalMowned | exponential }}</label>
+    <label>Total imagination : {{ stat.totalImagination | exponential }}</label>
+    <label>Total creativity : {{ stat.totalCreativity | exponential }}</label>
 </section>

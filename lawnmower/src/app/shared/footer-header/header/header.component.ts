@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { selectMoney } from '../../../root-store/earning/earning-selector';
 import { selectImagination, selectCreativity } from '../../../root-store/blogging/blogging-selector';
 import { Imagination, Creativity } from '../../../core/models/blogging';
+import { selectStatsState } from 'app/root-store/stats/stats-selector';
 @Component({
     selector: 'app-header',
     template: `
@@ -18,8 +19,14 @@ import { Imagination, Creativity } from '../../../core/models/blogging';
                 <div>Lawnmoner</div>
                 <span fxFlex="1 1 auto"></span>
                 <label> {{ money$ | async | exponential }}$ </label>
-                <label> imagination : {{ (imagination$ | async).amount | exponential }} </label>
-                <label> creativity : {{ (creativity$ | async).amount | exponential }} </label>
+                <div *ngIf="stats$ | async as stats">
+                    <label *ngIf="stats.totalImagination > 0">
+                        imagination : {{ (imagination$ | async).amount | exponential }}
+                    </label>
+                    <label *ngIf="stats.totalCreativity > 0">
+                        creativity : {{ (creativity$ | async).amount | exponential }}
+                    </label>
+                </div>
             </mat-toolbar>
         </header>
     `,
@@ -28,7 +35,7 @@ import { Imagination, Creativity } from '../../../core/models/blogging';
 export class HeaderComponent implements OnInit {
     @Output() public sidenavToggle = new EventEmitter();
     public money$: Observable<number> = this.store.pipe(select(selectMoney));
-
+    public stats$ = this.store.select(selectStatsState);
     public imagination$: Observable<Imagination> = this.store.select(selectImagination);
     public creativity$: Observable<Creativity> = this.store.select(selectCreativity);
 
