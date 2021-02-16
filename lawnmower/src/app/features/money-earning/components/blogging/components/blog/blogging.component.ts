@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Blogging, Creativity, Imagination } from '@core/models/blogging';
+import { Blogging } from '@core/models/blogging';
+import { Creativity, Imagination } from '@core/models/currency';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { selectBlogging, selectImagination } from 'app/root-store/blogging/blogging-selector';
 import { combineLatest, Observable } from 'rxjs';
 import { earnCreativity, earnImagination } from '../../../../../../root-store/blogging/blogging-action';
-import { IdlingService } from '../../../../../../core/services/idling.service';
+import { IdlingService } from '@core/services/idling.service';
 import { selectCreativity } from '../../../../../../root-store/blogging/blogging-selector';
 import { incrementTotalImagination, incrementTotalCreativity } from '../../../../../../root-store/stats/stats-action';
+import { Upgrade } from '@core/models/upgrade';
+import { selectBloggingUpgradeLevelValue } from 'app/root-store/upgrades/upgrades-selector';
 
 @Component({
     selector: 'blogging',
@@ -18,6 +21,9 @@ export class BloggingComponent implements OnInit {
     creation$: Observable<Creativity> = this.store.select(selectCreativity);
     imagination$: Observable<Imagination> = this.store.select(selectImagination);
     blogging$: Observable<Blogging> = this.store.select(selectBlogging);
+
+    upgrades$: Observable<Upgrade[]> = this.store.select(selectBloggingUpgradeLevelValue);
+
     constructor(private store: Store<RootStoreState.State>, private idlingService: IdlingService) {}
 
     ngOnInit(): void {}

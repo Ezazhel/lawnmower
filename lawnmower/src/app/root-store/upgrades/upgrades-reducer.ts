@@ -1,11 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
-import { unlockMowingUpgradeAction, unlockGlobalUpgradeAction, addMowingUpgradeAction } from './upgrades-action';
+import {
+    unlockMowingUpgradeAction,
+    unlockGlobalUpgradeAction,
+    addMowingUpgradeAction,
+    unlockBloggingUpgradeAction,
+} from './upgrades-action';
 import { initialState, State } from './upgrades-state';
 
 export const reducer = createReducer(
     initialState,
     on(unlockMowingUpgradeAction, (state, { id }) => updateMowingUpgrade(state, id)),
     on(unlockGlobalUpgradeAction, (state, { id }) => unlockGlobalUpgrade(state, id)),
+    on(unlockBloggingUpgradeAction, (state, { id }) => unlockBloggingUpgrade(state, id)),
     on(addMowingUpgradeAction, (state, { id }) => updateMowingUpgrade(state, id, 0)),
 );
 
@@ -14,5 +20,9 @@ function updateMowingUpgrade(state: State, id: string, level: number = null): St
 }
 
 function unlockGlobalUpgrade(state: State, id: string, level: number = undefined): State {
-    return { ...state, global: { ...state.global, [id]: level ?? state.mowing[id] + 1 } };
+    return { ...state, global: { ...state.global, [id]: level ?? state.global[id] + 1 } };
+}
+
+function unlockBloggingUpgrade(state: State, id: string, level: number = undefined): State {
+    return { ...state, blogging: { ...state.blogging, [id]: level ?? state.blogging[id] + 1 } };
 }

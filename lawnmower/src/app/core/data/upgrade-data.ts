@@ -50,3 +50,19 @@ export const MowingUpgrade = {
         () => 1,
     ),
 };
+
+export const BloggingUpgrade = {
+    ['paper_pencils']: new Upgrade(
+        'paper_pencils',
+        'Paper & Pencils',
+        () => 10,
+        'blogging',
+        'What should you do with paper and pencil ? Draw !',
+        0,
+        1,
+        'Unlock creativity !',
+        null,
+        () => {},
+        'I',
+    ),
+};

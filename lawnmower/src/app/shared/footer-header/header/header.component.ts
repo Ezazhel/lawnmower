@@ -4,7 +4,7 @@ import { RootStoreState } from 'app/root-store';
 import { Observable } from 'rxjs';
 import { selectMoney } from '../../../root-store/earning/earning-selector';
 import { selectImagination, selectCreativity } from '../../../root-store/blogging/blogging-selector';
-import { Imagination, Creativity } from '../../../core/models/blogging';
+import { Imagination, Creativity } from '@core/models/currency';
 import { selectStatsState } from 'app/root-store/stats/stats-selector';
 @Component({
     selector: 'app-header',

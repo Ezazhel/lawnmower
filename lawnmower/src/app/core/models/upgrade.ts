@@ -1,3 +1,4 @@
+import { CurrencySymbol } from './currency';
 export type UpgradeType = 'global' | 'mowing' | 'blogging';
 export type AffectType = 'speed' | 'gain' | 'regrow' | 'cuttingLimit';
 
@@ -10,7 +11,7 @@ export class Upgrade {
     description: string;
     effectDescription: string;
     affect: AffectType;
-    currency: string = '$';
+    currency: CurrencySymbol = '$';
     level: number = 0;
     maxLevel: number;
 
@@ -25,6 +26,7 @@ export class Upgrade {
         effectDescription: string,
         affectType: AffectType,
         effect: Function,
+        currency?: CurrencySymbol,
     ) {
         this.id = id;
         this.name = name;
@@ -36,5 +38,6 @@ export class Upgrade {
         this.effectDescription = effectDescription;
         this.affect = affectType;
         this.effect = effect;
+        this.currency = currency ?? '$';
     }
 }

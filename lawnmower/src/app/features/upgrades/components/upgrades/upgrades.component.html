@@ -3,7 +3,7 @@
         class="neighboor"
         [ngClass]="upgrade.level == upgrade.maxLevel ? 'unlocked' : 'notUnlocked'"
         *ngFor="let upgrade of upgrades; trackBy: trackByFunction"
-        (click)="unlock(upgrade.id)"
+        (click)="unlock(upgrade)"
     >
         <mat-card-title>
             {{ upgrade.name }}

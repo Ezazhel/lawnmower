@@ -4,3 +4,4 @@ export const unlockMowingUpgradeAction = createAction('[Upgrade] Unlock mowing u
 export const unlockBloggingUpgradeAction = createAction('[Upgrade] Unlock blogging upgrade', props<{ id: string }>());
 
 export const addMowingUpgradeAction = createAction('[Upgrade] Add mowing upgrade', props<{ id: string }>());
+export const addBloggingUpgradeAction = createAction('[Upgrade] Add blogging upgrade', props<{ id: string }>());

@@ -8,5 +8,5 @@
             <post [post]="blogging.post.message"></post>
         </section>
     </mat-tab>
-    <mat-tab label="Upgrades"> </mat-tab>
+    <mat-tab label="Upgrades"> <upgrades [upgrades]="upgrades$ | async"></upgrades> </mat-tab>
 </mat-tab-group>

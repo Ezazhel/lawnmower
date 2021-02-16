@@ -14,8 +14,8 @@ export class UpgradesComponent implements OnInit {
 
     ngOnInit(): void {}
 
-    unlock(id: string) {
-        this.upgradeService.doUnlockUpgrade$.next(id);
+    unlock(upgrade: Upgrade) {
+        this.upgradeService.doUnlockUpgrade$.next(upgrade);
     }
 
     trackByFunction(index: number, upgrade: Upgrade) {
