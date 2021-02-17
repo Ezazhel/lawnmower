@@ -24,6 +24,9 @@
 09/02 : add NgIf on imagination / creativity, base on total
         add Total earn i/c in stats.
 
+16/02 : Complete Upgrade Imagination to unlock Creativity
+
+
 Test this for cut$ : 
 https://www.learnrxjs.io/learn-rxjs/recipes/click-ninja-game
 https://www.learnrxjs.io/learn-rxjs/operators/utility/finalize

@@ -65,4 +65,17 @@ export const BloggingUpgrade = {
         () => {},
         'I',
     ),
+    ['handy']: new Upgrade(
+        'handy',
+        'Lefty or Righty ?',
+        () => 10,
+        'blogging',
+        'What should you do with paper and pencil ? Draw !',
+        0,
+        1,
+        'Improve imagination gain !',
+        null,
+        () => {},
+        'C',
+    ),
 };

@@ -1,8 +1,9 @@
-<div class="neighboors">
+<div class="neighboors" *ngFor="let currency of currencySymbolArray()">
+    {{ currency }}
     <mat-card
         class="neighboor"
         [ngClass]="upgrade.level == upgrade.maxLevel ? 'unlocked' : 'notUnlocked'"
-        *ngFor="let upgrade of upgrades; trackBy: trackByFunction"
+        *ngFor="let upgrade of upgradeArray(currency); trackBy: trackByFunction"
         (click)="unlock(upgrade)"
     >
         <mat-card-title>
