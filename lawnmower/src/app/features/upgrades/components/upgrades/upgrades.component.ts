@@ -30,6 +30,9 @@ export class UpgradesComponent implements OnInit {
         this.upgradeService.doUnlockUpgrade$.next(upgrade);
     }
 
+    trackByCurrency(index: number, currency: CurrencySymbol) {
+        return currency;
+    }
     trackByFunction(index: number, upgrade: Upgrade) {
         return upgrade;
     }

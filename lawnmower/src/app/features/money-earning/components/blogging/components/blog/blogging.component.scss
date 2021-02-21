@@ -1,0 +1,12 @@
+.blogs-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .mat-card {
+        flex: 1 1 100%;
+        margin: 5px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
