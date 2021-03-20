@@ -31,10 +31,10 @@ export class UpgradesComponent implements OnInit {
     }
 
     trackByCurrency(index: number, currency: CurrencySymbol) {
-        return currency;
+        return index;
     }
     trackByFunction(index: number, upgrade: Upgrade) {
-        return upgrade;
+        return index;
     }
 
     currencySymbolArray() {

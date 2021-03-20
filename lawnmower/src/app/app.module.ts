@@ -23,6 +23,7 @@ import { Exponential } from './shared/pipes/exponential.pipe';
         RootStoreModule,
         StoreDevtoolsModule.instrument({
             name: 'lawnmoner',
+            maxAge: 10,
         }),
     ],
     providers: [],

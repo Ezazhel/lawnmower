@@ -1,12 +1,7 @@
-<mat-sidenav-container>
-  <mat-sidenav #sidenav mode="over" opened="false" role="navigation"
-    >La sidenav
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+<div class="container">
+    <app-header></app-header>
     <main id="mainContainer">
-      <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
     </main>
     <app-footer></app-footer>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+</div>

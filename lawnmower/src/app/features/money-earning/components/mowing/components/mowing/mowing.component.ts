@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState, StatsAction } from 'app/root-store';
 import { NeighboorAction } from 'app/root-store/neighboor';

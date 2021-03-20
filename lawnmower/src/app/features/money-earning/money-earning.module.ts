@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '@shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { UpgradesModule } from '../upgrades/upgrades.module';
-
 @NgModule({
     declarations: [],
     imports: [

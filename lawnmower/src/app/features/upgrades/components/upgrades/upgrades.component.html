@@ -5,8 +5,8 @@
     <div class="unlock-list">
         <mat-card
             class="unlock"
-            [ngClass]="upgrade.level == upgrade.maxLevel ? 'unlocked' : 'notUnlocked'"
             *ngFor="let upgrade of upgradeArray(currency); trackBy: trackByFunction"
+            [ngClass]="upgrade.level == upgrade.maxLevel ? 'unlocked' : 'notUnlocked'"
             (click)="unlock(upgrade)"
         >
             <mat-card-title>

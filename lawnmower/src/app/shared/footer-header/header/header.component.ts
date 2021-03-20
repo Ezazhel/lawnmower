@@ -10,22 +10,18 @@ import { selectStatsState } from 'app/root-store/stats/stats-selector';
     selector: 'app-header',
     template: `
         <header>
-            <mat-toolbar color="primary">
-                <div fxHide.gt-xs>
-                    <button mat-icon-button (click)="onToggleSideNav()">
-                        <mat-icon>menu</mat-icon>
-                    </button>
-                </div>
+            <mat-toolbar color="primary" fxLayout="column">
                 <div>Lawnmoner</div>
-                <span fxFlex="1 1 auto"></span>
-                <label> {{ money$ | async | exponential }}$ </label>
-                <div *ngIf="stats$ | async as stats">
-                    <label *ngIf="stats.totalImagination > 0">
-                        imagination : {{ (imagination$ | async).amount | exponential }}
-                    </label>
-                    <label *ngIf="stats.totalCreativity > 0">
-                        creativity : {{ (creativity$ | async).amount | exponential }}
-                    </label>
+                <div fxLayout="row" fxLayoutAlign="space-evenly center" class="w-100">
+                    <label> {{ money$ | async | exponential }}$ </label>
+                    <ng-container *ngIf="stats$ | async as stats">
+                        <label *ngIf="stats.totalImagination > 0">
+                            imagination : {{ (imagination$ | async).amount | exponential }}
+                        </label>
+                        <label *ngIf="stats.totalCreativity > 0">
+                            creativity : {{ (creativity$ | async).amount | exponential }}
+                        </label>
+                    </ng-container>
                 </div>
             </mat-toolbar>
         </header>
