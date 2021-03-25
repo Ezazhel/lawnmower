@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../../../shared/shared.module';
 import { UpgradesModule } from '../../../upgrades/upgrades.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NeighboorComponent } from './components/neighboor/neighboor.component';
 
 const routes: Routes = [
     {
@@ -15,7 +14,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [...fromComponents.components, NeighboorComponent],
+    declarations: [...fromComponents.components],
     imports: [CommonModule, SharedModule, UpgradesModule, RouterModule.forChild(routes), FlexLayoutModule],
 })
 export class MowingModule {}

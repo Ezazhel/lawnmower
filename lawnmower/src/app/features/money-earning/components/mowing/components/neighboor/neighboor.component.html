@@ -1,4 +1,4 @@
-<mat-card class="neighboor" [ngClass]="neighboor.completedOnce ? '' : ''">
+<!-- <mat-card class="neighboor" [ngClass]="neighboor.completedOnce ? '' : ''">
     <mat-card-title>
         {{ neighboor.title }}
     </mat-card-title>
@@ -28,4 +28,30 @@
             color="warn"
         ></mat-progress-bar>
     </mat-card-actions>
-</mat-card>
+</mat-card> -->
+<div fxLayout="row" class="container">
+    <span class="progress cut"></span>
+<div fxLayout="column" class="neighboorContainer" >
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <h3> {{neighboor.title}}</h3>
+        <span>
+            {{ neighboor.subTitle }}, freshly cut : {{ neighboor.completion }}/{{ neighboor.maxCompletion }}
+        </span>
+    </div>
+    <span [innerHTML]="neighboor.content">
+    </span>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span>
+            Income : {{ neighboor.income | exponential }}$
+        </span>
+        <span>
+            Cutting Time : {{ neighboor.time }}s
+        </span>
+        <span>
+            Regrow Time : {{ neighboor.regrowTime }}s
+        </span>
+    </div>
+</div>
+<span class="progress regrow"></span>
+</div>
+
