@@ -1,7 +1,7 @@
 import { CurrencySymbol } from './currency';
 export type UpgradeType = 'global' | 'mowing' | 'blogging';
 export type AffectType = 'speed' | 'gain' | 'regrow' | 'cuttingLimit';
-
+export type UpgradeTabsAffected = 'mowing' | 'blogging';
 export class Upgrade {
     id: string;
     name: string;

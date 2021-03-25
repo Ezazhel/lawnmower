@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Upgrade } from '@core/models/upgrade';
-import { UpgradesService } from '@core/services/upgrades.service';
-import { CurrencySymbol } from '../../../../core/models/currency';
+import { CurrencySymbol } from '@core/models/currency';
+import { UpgradeTabsAffected } from '../../../../core/models/upgrade';
+import { Store } from '@ngrx/store';
+import { RootStoreState } from 'app/root-store';
+import { selectSpecificUpgradeCurrency } from 'app/root-store/upgrades/upgrades-selector';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'upgrades',
@@ -10,37 +13,17 @@ import { CurrencySymbol } from '../../../../core/models/currency';
 })
 export class UpgradesComponent implements OnInit {
     @Input()
-    set upgrades(upgrades: Upgrade[]) {
-        const map = new Map<CurrencySymbol, Upgrade[]>();
-        upgrades.forEach((item) => {
-            const key = item.currency;
-            const collection = map.get(key);
-            if (!collection) map.set(key, [item]);
-            else collection.push(item);
-        });
-        this.MappedUpgrades = map;
-    }
-    public MappedUpgrades: Map<CurrencySymbol, Upgrade[]>;
+    upgradeTab: UpgradeTabsAffected;
 
-    constructor(private upgradeService: UpgradesService) {}
+    currencies$: Observable<CurrencySymbol[]> = null;
 
-    ngOnInit(): void {}
+    constructor(private store: Store<RootStoreState.State>) {}
 
-    unlock(upgrade: Upgrade) {
-        this.upgradeService.doUnlockUpgrade$.next(upgrade);
+    ngOnInit(): void {
+        this.currencies$ = this.store.select(selectSpecificUpgradeCurrency, this.upgradeTab);
     }
 
     trackByCurrency(index: number, currency: CurrencySymbol) {
         return index;
-    }
-    trackByFunction(index: number, upgrade: Upgrade) {
-        return index;
-    }
-
-    currencySymbolArray() {
-        return [...this.MappedUpgrades.keys()];
-    }
-    upgradeArray(key: CurrencySymbol) {
-        return this.MappedUpgrades.get(key);
     }
 }

@@ -3,12 +3,15 @@ import { State } from './upgrades-state';
 import { MowingUpgrade } from '@core/data/upgrade-data';
 import { Upgrade } from '@core/models/upgrade';
 import { BloggingUpgrade } from '../../core/data/upgrade-data';
+import { UpgradeType, UpgradeTabsAffected } from '../../core/models/upgrade';
+import { CurrencySymbol } from '../../core/models/currency';
 
 export const selectUpgradeState: MemoizedSelector<object, State> = createFeatureSelector('upgrades');
 
 const reduceEffect = (acc: number, current: Upgrade) => acc * current.effect(current.level);
 
 const sortByCompleted = (a: Upgrade, b: Upgrade) => (a.level == a.maxLevel ? 1 : 0) - (b.level == b.maxLevel ? 1 : 0);
+
 //#region  Mowing
 
 const getMowingUpgradeLevelValue = (state: State): Upgrade[] =>
@@ -64,3 +67,27 @@ const getBloggingUpgradeLevelValue = (state: State): Upgrade[] =>
 export const selectBloggingUpgradeLevelValue = createSelector(selectUpgradeState, getBloggingUpgradeLevelValue);
 
 //#endregion
+
+export const selectSpecificUpgradeCurrency = createSelector(
+    selectUpgradeState,
+    (state, upgradeType: UpgradeTabsAffected) => {
+        switch (upgradeType) {
+            case 'mowing':
+                return [...new Set(getMowingUpgradeLevelValue(state).map((u) => u.currency))];
+            case 'blogging':
+                return [...new Set(getBloggingUpgradeLevelValue(state).map((u) => u.currency))];
+        }
+    },
+);
+
+export const selectUpgradeForCurrencyAndTabs = createSelector(
+    selectUpgradeState,
+    (state, props: { symbol: CurrencySymbol; tabs: UpgradeTabsAffected }) => {
+        switch (props.tabs) {
+            case 'mowing':
+                return getMowingUpgradeLevelValue(state).filter((u) => u.currency == props.symbol);
+            case 'blogging':
+                return getBloggingUpgradeLevelValue(state).filter((u) => u.currency == props.symbol);
+        }
+    },
+);

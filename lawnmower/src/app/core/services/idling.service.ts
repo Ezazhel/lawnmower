@@ -14,10 +14,10 @@ import { unlockAchievementAction } from '../../root-store/achievements/achieveme
     providedIn: 'root',
 })
 export class IdlingService {
-    timer$ = interval(1000 / 60, animationFrameScheduler).pipe(
+    timer$ = interval(1000 / 30, animationFrameScheduler).pipe(
         map(() => ({
             time: Date.now(),
-            deltaTime: null,
+            deltaTime: 0,
         })),
         scan((previous, current) => ({
             time: current.time,
@@ -35,6 +35,7 @@ export class IdlingService {
     loop$ = combineLatest([this.timer$]).subscribe(this.doSomething);
 
     doEarnMoneyFromNeighboors$: Subject<number> = new Subject<number>();
+
     earnMoneyFromNeighboors$ = this.doEarnMoneyFromNeighboors$
         .pipe(
             withLatestFrom(

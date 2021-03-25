@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState, StatsAction } from 'app/root-store';
 import { NeighboorAction } from 'app/root-store/neighboor';
@@ -14,15 +14,16 @@ import {
 import { IdlingService } from '@core/services/idling.service';
 import { getAllNeighboors, selectCuttingLimit } from 'app/root-store/neighboor/neighboor-selector';
 import { selectEquippedTool } from '../../../../../../root-store/neighboor/neighboor-selector';
+import { UpgradeTabsAffected } from '../../../../../../core/models/upgrade';
 @Component({
     selector: 'mowing',
     templateUrl: './mowing.component.html',
     styleUrls: ['./mowing.component.scss'],
 })
 export class MowingComponent implements OnInit {
+    upgradeTab: UpgradeTabsAffected = 'mowing';
     neighboors$: Observable<Neighboor[]> = this.store.select(getAllNeighboors);
     cutInterval = null;
-    upgrades$: Observable<Upgrade[]> = this.store.select(selectMowingUpgradeLevelValue);
     constructor(private store: Store<RootStoreState.State>, private idlingService: IdlingService) {}
 
     ngOnInit(): void {}

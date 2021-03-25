@@ -11,6 +11,7 @@ import { selectCreativity } from '../../../../../../root-store/blogging/blogging
 import { incrementTotalImagination, incrementTotalCreativity } from '../../../../../../root-store/stats/stats-action';
 import { Upgrade } from '@core/models/upgrade';
 import { selectBloggingUpgradeLevelValue } from 'app/root-store/upgrades/upgrades-selector';
+import { UpgradeTabsAffected } from '../../../../../../core/models/upgrade';
 
 @Component({
     selector: 'blogging',
@@ -18,6 +19,7 @@ import { selectBloggingUpgradeLevelValue } from 'app/root-store/upgrades/upgrade
     styleUrls: ['./blogging.component.scss'],
 })
 export class BloggingComponent implements OnInit {
+    upgradeTab: UpgradeTabsAffected = 'blogging';
     creation$: Observable<Creativity> = this.store.select(selectCreativity);
     imagination$: Observable<Imagination> = this.store.select(selectImagination);
     blogging$: Observable<Blogging> = this.store.select(selectBlogging);

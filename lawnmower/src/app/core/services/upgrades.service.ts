@@ -54,6 +54,7 @@ export class UpgradesService {
             ? BloggingAction.earnCreativity({ amount })
             : BloggingAction.earnImagination({ amount });
     }
+
     private getUnlockCurrency(symbol: CurrencySymbol): Observable<number> {
         switch (symbol) {
             case '$':

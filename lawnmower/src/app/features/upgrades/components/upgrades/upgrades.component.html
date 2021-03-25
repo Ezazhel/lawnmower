@@ -1,25 +1,5 @@
-<div class="unlocks" *ngFor="let currency of currencySymbolArray(); trackBy: trackByCurrency">
-    <label class="currency-label">
-        {{ currency }}
-    </label>
-    <div class="unlock-list">
-        <mat-card
-            class="unlock"
-            *ngFor="let upgrade of upgradeArray(currency); trackBy: trackByFunction"
-            [ngClass]="upgrade.level == upgrade.maxLevel ? 'unlocked' : 'notUnlocked'"
-            (click)="unlock(upgrade)"
-        >
-            <mat-card-title>
-                {{ upgrade.name }}
-                <span *ngIf="upgrade.maxLevel != 1">{{ upgrade.level }} / {{ upgrade.maxLevel }} </span>
-            </mat-card-title>
-            <mat-card-subtitle class="price" *ngIf="upgrade.level < upgrade.maxLevel">
-                Price : {{ upgrade.price(upgrade.level) | exponential }}{{ upgrade.currency }}
-            </mat-card-subtitle>
-            <mat-card-content>
-                <div>{{ upgrade.description }}</div>
-                <div>{{ upgrade.effectDescription }}</div>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</div>
+<app-upgrade-currency
+    *ngFor="let currency of currencies$ | async"
+    [currency]="currency"
+    [upgradeTab]="upgradeTab"
+></app-upgrade-currency>

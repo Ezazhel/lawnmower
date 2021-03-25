@@ -1,0 +1,4 @@
+<label class="currency-label">
+    {{ currency }}
+</label>
+<app-upgrade *ngFor="let upgrade of upgrades$ | async" [upgrade]="upgrade" (click)="unlock(upgrade)"></app-upgrade>

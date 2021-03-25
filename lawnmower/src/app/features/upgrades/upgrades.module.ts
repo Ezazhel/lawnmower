@@ -1,16 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UpgradesComponent } from './components/upgrades/upgrades.component';
 import { SharedModule } from '@shared/shared.module';
-
-
-
+import * as fromComponents from './components';
 @NgModule({
-  declarations: [UpgradesComponent],
-  imports: [
-    CommonModule,
-    SharedModule
-  ],
-  exports:[UpgradesComponent]
+    declarations: [...fromComponents.components],
+    imports: [CommonModule, SharedModule],
+    exports: [fromComponents.UpgradesComponent],
 })
-export class UpgradesModule { }
+export class UpgradesModule {}

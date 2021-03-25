@@ -8,14 +8,6 @@ body {
     padding: 0;
 }
 
-mat-sidenav-container {
-    height: 100%;
-    mat-sidenav-content {
-        height: inherit !important;
-        display: grid !important;
-        grid-template-rows: auto 1fr auto;
-    }
-}
 .w-100 {
     width: 100%;
 }
@@ -32,6 +24,7 @@ mat-sidenav-container {
         }
     }
 }
+
 main {
     overflow: auto;
     -ms-overflow-style: none; /* IE and Edge */

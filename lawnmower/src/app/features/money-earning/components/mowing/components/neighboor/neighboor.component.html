@@ -1,57 +1,22 @@
-<!-- <mat-card class="neighboor" [ngClass]="neighboor.completedOnce ? '' : ''">
-    <mat-card-title>
-        {{ neighboor.title }}
-    </mat-card-title>
-    <mat-card-subtitle>
-        {{ neighboor.subTitle }}, freshly cut : {{ neighboor.completion }}/{{ neighboor.maxCompletion }}
-    </mat-card-subtitle>
-    <mat-card-content>
-        <mat-tab-group mat-align-tabs="center">
-            <mat-tab label="Description">
-                <div [innerHTML]="neighboor.content"></div>
-            </mat-tab>
-            <mat-tab label="Informations">
-                <p>
-                    Income : {{ neighboor.income | exponential }}$, <br />
-                    Regrow Time : {{ neighboor.regrowTime }}s, <br />
-                    Cutting Time : {{ neighboor.time }}s,
-                </p>
-            </mat-tab>
-        </mat-tab-group>
-    </mat-card-content>
-    <mat-card-actions>
-        <mat-progress-bar mode="determinate" [value]="neighboor.cutPercent"></mat-progress-bar>
-        <mat-progress-bar
-            *ngIf="neighboor.completion > 0"
-            mode="determinate"
-            [value]="neighboor.regrowPercent"
-            color="warn"
-        ></mat-progress-bar>
-    </mat-card-actions>
-</mat-card> -->
 <div fxLayout="row" class="container">
-    <span class="progress cut"></span>
-<div fxLayout="column" class="neighboorContainer" >
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-        <h3> {{neighboor.title}}</h3>
-        <span>
-            {{ neighboor.subTitle }}, freshly cut : {{ neighboor.completion }}/{{ neighboor.maxCompletion }}
-        </span>
+    <div fxLayout="row">
+        <div class="progress cut" fxFlexAlign="end" style.height="{{ neighboor.cutPercent }}%"></div>
     </div>
-    <span [innerHTML]="neighboor.content">
-    </span>
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-        <span>
-            Income : {{ neighboor.income | exponential }}$
-        </span>
-        <span>
-            Cutting Time : {{ neighboor.time }}s
-        </span>
-        <span>
-            Regrow Time : {{ neighboor.regrowTime }}s
-        </span>
+    <div fxLayout="column" class="neighboorContainer">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <h3>{{ neighboor.title }}</h3>
+            <span>
+                {{ neighboor.subTitle }}, freshly cut : {{ neighboor.completion }}/{{ neighboor.maxCompletion }}
+            </span>
+        </div>
+        <span [innerHTML]="neighboor.content"> </span>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span> Income : {{ neighboor.income | exponential }}$ </span>
+            <span> Cutting Time : {{ neighboor.time }}s </span>
+            <span> Regrow Time : {{ neighboor.regrowTime }}s </span>
+        </div>
+    </div>
+    <div fxLayout="row">
+        <div class="progress regrow" fxFlexAlign="end" style.height="{{ neighboor.regrowPercent }}%"></div>
     </div>
 </div>
-<span class="progress regrow"></span>
-</div>
-
