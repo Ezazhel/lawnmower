@@ -9,8 +9,13 @@ export const selectNeighboorState: MemoizedSelector<object, State> = createFeatu
 
 export const getCompletion = createSelector(selectNeighboorState, getNeighboorCompletion);
 
-export const getAllNeighboors: MemoizedSelector<object, Neighboor[]> = createSelector(selectNeighboorState, (state) =>
-    Object.keys(state.neighboors).map((key) => Object.assign(Neighboors[key], state.neighboors[key])),
+export const getAllNeighboors: MemoizedSelector<object, Neighboor[]> = createSelector(selectNeighboorState, (state) => {
+    console.log("[Getall N] : state.n",state.neighboors['n1']);
+   let t = Object.keys(state.neighboors).map(
+       (key) => Object.assign(Neighboors[key], {...state.neighboors[key]}) as Neighboor);
+   console.log("neighboor selector ",t[0].cutPercent, t[0].regrowPercent, t);
+   return t;
+}
 );
 
 export const getAllNeighboorsWhereCompletionGtOne = createSelector(selectNeighboorState, (state) =>

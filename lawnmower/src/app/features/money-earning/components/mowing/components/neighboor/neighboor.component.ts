@@ -11,7 +11,8 @@ export class NeighboorComponent implements OnInit {
     @Input()
     neighboor: Neighboor;
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) {}
+    constructor() {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {        
+    }
 }

@@ -3,7 +3,7 @@
     <div fxLayout="row" fxLayoutAlign="center start">
         <div class="neighboors" fxFlex="60">
             <app-neighboor
-                *ngFor="let neighboor of neighboors$ | async; index as i; trackBy: trackByFunction"
+                *ngFor="let neighboor of neighboors$ | async; trackBy: trackByFunction"
                 [neighboor]="neighboor"
                 (click)="cut(neighboor)"
             ></app-neighboor>

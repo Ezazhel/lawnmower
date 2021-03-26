@@ -5,6 +5,8 @@ import { tools as toolsData } from '@core/data/tools-data';
 export interface StateNeighboor {
     completion: number;
     completedOnce: boolean;
+    cutPercent: number;
+    regrowPercent: number;
 }
 export interface State {
     cuttingLimit: number;
@@ -19,7 +21,7 @@ export interface State {
 export const initialState: State = {
     cuttingLimit: 1,
     neighboors: {
-        [Neighboors['n1'].id]: { completion: Neighboors['n1'].completion, completedOnce: false },
+        [Neighboors['n1'].id]: { completion: Neighboors['n1'].completion, completedOnce: false, cutPercent: Neighboors['n1'].cutPercent, regrowPercent: Neighboors['n1'].regrowPercent },
     },
     tools: {
         [toolsData.hands.id]: toolsData.hands,
