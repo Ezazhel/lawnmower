@@ -8,10 +8,9 @@ const AllAchievements = { ...MowingAchievements, ...BloggingAchievements };
 export const selectAchievementState: MemoizedSelector<object, State> = createFeatureSelector('achievements');
 
 export const selectAchievements = createSelector(selectAchievementState, (state) => {
-    let ach = Object.keys(state.achievements).map(
+    return Object.keys(state.achievements).map(
         (k) => Object.assign({}, AllAchievements[k], { isUnlock: state.achievements[k] }) as Achievement,
     );
-    return ach;
 });
 
 export const selectAchievementsNotUnlock = createSelector(selectAchievements, (achievements) =>

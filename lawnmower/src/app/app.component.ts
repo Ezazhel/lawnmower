@@ -14,19 +14,7 @@ export class AppComponent {
 
     title = 'lawnmower';
 
-    constructor(private _idlingService: IdlingService, elementRef: ElementRef) {
-        const hammertime = new Hammer(elementRef.nativeElement, {});
-        hammertime.on('panright', (event) => {
-            if (event.center.x >= 1 && event.center.x <= 50) this.sidenav.open();
-        });
-        hammertime.on('panleft', (event) => {
-            this.sidenav.close();
-        });
-    }
+    constructor(private _idlingService: IdlingService, elementRef: ElementRef) {}
 
     ngOnInit() {}
-
-    onToggleSideNav() {
-        this.sidenav.toggle();
-    }
 }

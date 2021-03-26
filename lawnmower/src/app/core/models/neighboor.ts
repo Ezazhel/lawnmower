@@ -15,16 +15,17 @@ export class Neighboor {
     time: number;
     regrowTime: number;
     income: number;
+
     constructor(
-        id: string,
-        title: string,
-        completion: number,
-        maxCompletion: number,
-        subTitle: string,
-        content: string,
-        time: number,
-        regrowTime: number,
-        income: number,
+        id?: string,
+        title?: string,
+        completion?: number,
+        maxCompletion?: number,
+        subTitle?: string,
+        content?: string,
+        time?: number,
+        regrowTime?: number,
+        income?: number,
     ) {
         this.id = id;
         this.title = title;
@@ -41,17 +42,17 @@ export class Neighboor {
         this.cutPercent += ((deltaTime * modifier) / this.time) * 100;
     };
 
-    cutCompleted = () => {
+    cutCompleted() {
         this.cutting = false;
         this.cutPercent = 0;
         this.lastTimeCut = null;
-    };
+    }
 
-    regrow = (deltaTime: number, modifier: number) => {
+    regrow(deltaTime: number, modifier: number) {
         this.regrowPercent -= ((deltaTime * modifier) / this.regrowTime) * 100;
-    };
+    }
 
-    regrowCompleted = () => {
+    regrowCompleted() {
         this.regrowPercent = 100;
-    };
+    }
 }
