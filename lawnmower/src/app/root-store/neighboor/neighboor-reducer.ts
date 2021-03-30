@@ -1,13 +1,30 @@
 import { Neighboors } from '@core/data/neighboors-data';
 import { createReducer, on } from '@ngrx/store';
-import { cutActionCompleted as cutActionCompleted, regrowActionCompleted as regrowActionCompleted, increaseCuttingLimit, regrowAction, cutAction } from './neighboor-action';
+import {
+    cutActionCompleted as cutActionCompleted,
+    regrowActionCompleted as regrowActionCompleted,
+    increaseCuttingLimit,
+    regrowAction,
+    cutAction,
+    insertOrUpdateNeighboorToCut,
+    insertNeighboorToRegrow,
+    removeNeighboorFromCuttingList,
+} from './neighboor-action';
 import { initialState, State } from './neighboor-state';
+import { removeNeighboorFromRegrowList } from './neighboor-action';
 
 export const reducer = createReducer(
     initialState,
     on(cutActionCompleted, regrowActionCompleted, (state, { id, modifier }) => updateCompletion(state, id, modifier)),
-    on(regrowAction, (state, {id, regrowPercent}) => updateRegrow(state, id, regrowPercent)),
-    on(cutAction, (state,{id, cutPercent})=> updateCut(state,id, cutPercent)),
+    on(regrowAction, (state, { id, regrowPercent }) => updateRegrow(state, id, regrowPercent)),
+    on(cutAction, (state, { id, cutPercent }) => updateCut(state, id, cutPercent)),
+    on(insertNeighboorToRegrow, (state, { id }) => ({ ...state, neighboorToRegrow: [...state.neighboorToRegrow, id] })),
+    on(insertOrUpdateNeighboorToCut, (state, { id, cutted }) => insertOrUpdateCut(state, id, cutted)),
+    on(removeNeighboorFromCuttingList, (state, { id }) => removeFromCuttingList(state, id)),
+    on(removeNeighboorFromRegrowList, (state, { id }) => ({
+        ...state,
+        neighboorToRegrow: state.neighboorToRegrow.filter((n) => n != id),
+    })),
     on(increaseCuttingLimit, (state, { modifier }) => ({ ...state, cuttingLimit: state.cuttingLimit + modifier })),
 );
 
@@ -30,29 +47,44 @@ function updateCompletion(state: State, id: string, modifier: number): State {
     };
 }
 
-function updateRegrow(state:State, id:string, regrowPercent: number): State{
+function updateRegrow(state: State, id: string, regrowPercent: number): State {
     return {
         ...state,
         neighboors: {
             ...state.neighboors,
-            [id]:{
+            [id]: {
                 ...state.neighboors[id],
-                regrowPercent: regrowPercent
-            }
-        }
-    }
+                regrowPercent: regrowPercent,
+            },
+        },
+    };
 }
 
-function updateCut(state:State, id:string, cutPercent: number):State{
-    return  {
+function updateCut(state: State, id: string, cutPercent: number): State {
+    return {
         ...state,
         neighboors: {
             ...state.neighboors,
-            [id]:
-            {
+            [id]: {
                 ...state.neighboors[id],
-                cutPercent: cutPercent
-            }
-        }
-    }
+                cutPercent: cutPercent,
+            },
+        },
+    };
+}
+
+function insertOrUpdateCut(state: State, id: string, cutted: number) {
+    return {
+        ...state,
+        neighboorToCutAndCuttedTime: {
+            ...state.neighboorToCutAndCuttedTime,
+            [id]: state.neighboorToCutAndCuttedTime[id] ?? 0 + cutted,
+        },
+    };
+}
+
+function removeFromCuttingList(state: State, id: string) {
+    const remove = { ...state.neighboorToCutAndCuttedTime };
+    delete remove[id];
+    return { ...state, neighboorToCutAndCuttedTime: remove };
 }

@@ -32,3 +32,18 @@ export const selectCuttingLimit = createSelector(selectNeighboorState, (state) =
 export const selectEquippedTool = createSelector(selectNeighboorState, (state) =>
     Object.values(state.tools).find((t) => t.equipped),
 );
+
+export const selectNeighboorToCut = createSelector(selectNeighboorState, (state) => {
+    return Object.keys(state.neighboorToCutAndCuttedTime).map(
+        (key) =>
+            Object.assign(new Neighboor(), Neighboors[key], state.neighboors[key], {
+                cuttedTime: state.neighboorToCutAndCuttedTime[key],
+            }) as Neighboor,
+    );
+});
+
+export const selectNeighboorToRegrow = createSelector(selectNeighboorState, (state) => {
+    return state.neighboorToRegrow.map(
+        (key) => Object.assign(new Neighboor(), Neighboors[key], state.neighboors[key]) as Neighboor,
+    );
+});

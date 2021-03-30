@@ -23,17 +23,41 @@ import { Tools } from '@core/models/tools';
 export class MowingComponent implements OnInit {
     upgradeTab: UpgradeTabsAffected = 'mowing';
     neighboors$: Observable<Neighboor[]> = this.store.select(getAllNeighboors);
-    cut$: Subject<Neighboor> = new Subject();
-
-    cutInterval = null;
+    selectedNeighboor$: Subject<Neighboor> = new Subject();
+    timer$: Observable<{ time: number; deltaTime: number }>;
     constructor(private store: Store<RootStoreState.State>, private idlingService: IdlingService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.timer$ = this.idlingService.timer$;
+        this.idlingService.timer$
+            .pipe(
+                withLatestFrom(
+                    this.selectedNeighboor$,
+                    this.store.select(selectMowingSpeedUpgradeModifier),
+                    this.store.select(selectCuttingLimit),
+                    this.store.select(selectCuttingLimitModifier),
+                    this.store.select(selectEquippedTool),
+                ),
+                filter(([_, n]) => n != null && n.cutPercent <= 100),
+                map(([timer, neighboor, speedModifier, cuttingLimit, cuttingLimitModifier, tool]) =>
+                    this.cut(timer, neighboor, speedModifier, cuttingLimit, cuttingLimitModifier, tool),
+                ),
+            )
+            .subscribe();
+
+        this.idlingService.timer$
+            .pipe(
+                withLatestFrom(this.selectedNeighboor$, this.store.select(selectMowingRegrowSpeedUpgradeModifier)),
+                filter(([_, n]) => n.completion > 0),
+                map(([timer, neighboor, regrowSpeed]) => this.regrow(timer, neighboor, regrowSpeed)),
+            )
+            .subscribe();
+    }
 
     cuttt = this.idlingService.timer$
         .pipe(
             withLatestFrom(
-                this.cut$,
+                this.selectedNeighboor$,
                 this.store.select(selectMowingSpeedUpgradeModifier),
                 this.store.select(selectCuttingLimit),
                 this.store.select(selectCuttingLimitModifier),
@@ -45,7 +69,8 @@ export class MowingComponent implements OnInit {
             ),
         )
         .subscribe();
-    docut = this.cut$.pipe(tap((n) => console.log(n))).subscribe();
+    docut = this.selectedNeighboor$.pipe(tap((n) => console.log(n))).subscribe();
+
     cut = (
         timer: { time: number; deltaTime: number },
         neighboor: Neighboor,
@@ -54,14 +79,12 @@ export class MowingComponent implements OnInit {
         cuttingLimitModifier: number,
         tool: Tools,
     ) => {
-        let _cuttingLimit = cuttingLimit + cuttingLimitModifier;
         if (neighboor.cutPercent >= 100) {
-            _cuttingLimit -= 1;
             this.store.dispatch(NeighboorAction.cutActionCompleted({ id: neighboor.id, modifier: 1 }));
             this.store.dispatch(StatsAction.incrementTotalMowned({ mowned: 1 }));
-            this.store.dispatch(NeighboorAction.cutAction({ id: neighboor.id, cutPercent: 0 }));
-            if (!neighboor.regrowing) this.regrow(neighboor);
-            this.cut$.next(null);
+            neighboor.cutPercent = 0;
+            this.store.dispatch(NeighboorAction.cutAction({ id: neighboor.id, cutPercent: neighboor.cutPercent }));
+            this.selectedNeighboor$.next(neighboor);
         } else {
             this.store.dispatch(
                 NeighboorAction.cutAction({
@@ -71,32 +94,20 @@ export class MowingComponent implements OnInit {
             );
         }
     };
-    regrow = (neighboor: Neighboor) => {
-        neighboor.regrowing = true;
-        const regrow$ = combineLatest([
-            this.idlingService.timer$,
-            this.store.select(selectMowingRegrowSpeedUpgradeModifier),
-        ]).subscribe(([timer, regrowSpeedModifier]) => {
-            neighboor.regrowPercent -= ((timer.deltaTime * regrowSpeedModifier) / neighboor.regrowTime) * 100;
+
+    regrow = (timer: { time: number; deltaTime: number }, neighboor: Neighboor, regrowSpeed: number) => {
+        neighboor.regrowPercent -= ((timer.deltaTime * regrowSpeed) / neighboor.regrowTime) * 100;
+        this.store.dispatch(NeighboorAction.regrowAction({ id: neighboor.id, regrowPercent: neighboor.regrowPercent }));
+        if (neighboor.regrowPercent <= 0) {
+            this.store.dispatch(NeighboorAction.regrowActionCompleted({ id: neighboor.id, modifier: -1 }));
+            neighboor.regrowCompleted();
             this.store.dispatch(
                 NeighboorAction.regrowAction({ id: neighboor.id, regrowPercent: neighboor.regrowPercent }),
             );
-            if (neighboor.regrowPercent <= 0) {
-                this.store.dispatch(NeighboorAction.regrowActionCompleted({ id: neighboor.id, modifier: -1 }));
-                neighboor.regrowCompleted();
-                this.store.dispatch(
-                    NeighboorAction.regrowAction({ id: neighboor.id, regrowPercent: neighboor.regrowPercent }),
-                );
-                if (neighboor.completedOnce) this.cut$.next(neighboor);
-                if (neighboor.completion <= 0) {
-                    neighboor.regrowing = false;
-                    regrow$.unsubscribe();
-                }
-            }
-        });
+        }
     };
 
     trackByFunction(index: number, object: Neighboor) {
-        return object;
+        return object.id;
     }
 }

@@ -15,7 +15,7 @@ export class Neighboor {
     time: number;
     regrowTime: number;
     income: number;
-
+    cuttedTime: number;
     constructor(
         id?: string,
         title?: string,

@@ -26,6 +26,8 @@
 
 16/02 : Complete Upgrade Imagination to unlock Creativity
 
+27/03 : https://www.learnrxjs.io/learn-rxjs/recipes/gameloop / https://medium.com/@pirminmehr/implementing-a-simple-progress-bar-with-rxjs-4273594271d8
+pipe on timer, withLatestFrom Neighboor, cut/regrow function like "UPdate" method...
 
 Test this for cut$ : 
 https://www.learnrxjs.io/learn-rxjs/recipes/click-ninja-game
