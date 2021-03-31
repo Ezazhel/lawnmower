@@ -14,12 +14,6 @@ export class NeighboorComponent implements OnInit {
     @Input()
     neighboor: Neighboor;
 
-    @Input()
-    timer: { time: number; deltaTime: number };
-
-    @Output('onCut')
-    onCut: EventEmitter<Neighboor> = new EventEmitter();
-
     constructor(private store: Store<RootStoreState.State>) {}
 
     ngOnInit(): void {}

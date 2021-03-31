@@ -5,7 +5,7 @@ export const Neighboors = {
         'n1',
         'MowingTown',
         0,
-        2,
+        25,
         'Somewhere to start',
         `
         <p>

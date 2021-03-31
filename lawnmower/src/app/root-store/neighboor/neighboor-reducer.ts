@@ -33,7 +33,7 @@ function updateCompletion(state: State, id: string, modifier: number): State {
         modifier < 0
             ? Math.max((state.neighboors[id].completion ?? 0) + modifier, 0)
             : Math.min((state.neighboors[id].completion ?? 0) + modifier, Neighboors[id].maxCompletion);
-    return {
+    let newState = {
         ...state,
         neighboors: {
             ...state.neighboors,
@@ -45,6 +45,16 @@ function updateCompletion(state: State, id: string, modifier: number): State {
             },
         },
     };
+    if (modifier > 0) {
+        newState = {
+            ...newState,
+            neighboorToCutAndCuttedTime: {
+                ...newState.neighboorToCutAndCuttedTime,
+                [id]: state.neighboorToCutAndCuttedTime[id] + 1,
+            },
+        };
+    }
+    return newState;
 }
 
 function updateRegrow(state: State, id: string, regrowPercent: number): State {

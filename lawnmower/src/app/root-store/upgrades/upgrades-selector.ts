@@ -8,7 +8,8 @@ import { CurrencySymbol } from '../../core/models/currency';
 
 export const selectUpgradeState: MemoizedSelector<object, State> = createFeatureSelector('upgrades');
 
-const reduceEffect = (acc: number, current: Upgrade) => acc * current.effect(current.level);
+const reduceEffectMult = (acc: number, current: Upgrade) => acc * current.effect(current.level);
+const reduceEffectAdd = (acc: number, current: Upgrade) => acc + current.effect(current.level);
 
 const sortByCompleted = (a: Upgrade, b: Upgrade) => (a.level == a.maxLevel ? 1 : 0) - (b.level == b.maxLevel ? 1 : 0);
 
@@ -25,17 +26,17 @@ const getMowingUpgradeLeveledUpOnly = (state: State): Upgrade[] =>
 const getMowingSpeedUpgradeModifier = (state: State): number =>
     getMowingUpgradeLeveledUpOnly(state)
         .filter((u) => u.affect == 'speed')
-        .reduce(reduceEffect, 1);
+        .reduce(reduceEffectMult, 1);
 
 const getMowingRegrowSpeedUpgradeModifier = (state: State): number =>
     getMowingUpgradeLeveledUpOnly(state)
         .filter((u) => u.affect == 'regrow')
-        .reduce(reduceEffect, 1);
+        .reduce(reduceEffectMult, 1);
 
 const getMowingCuttingLimit = (state: State): number =>
     getMowingUpgradeLeveledUpOnly(state)
         .filter((u) => u.affect == 'cuttingLimit')
-        .reduce(reduceEffect, 0);
+        .reduce(reduceEffectAdd, 0);
 
 export const selectMowingUpgradeLevelValue = createSelector(selectUpgradeState, getMowingUpgradeLevelValue);
 
@@ -47,7 +48,7 @@ export const selectMowingGainModifier = createSelector(selectUpgradeState, (stat
     return Object.keys(state.mowing)
         .map((key) => Object.assign(MowingUpgrade[key], { level: state.mowing[key] }) as Upgrade)
         .filter((u) => u.affect == 'gain' && u.level > 0)
-        .reduce(reduceEffect, 1);
+        .reduce(reduceEffectMult, 1);
 });
 export const selectCuttingLimitModifier = createSelector(selectUpgradeState, getMowingCuttingLimit);
 

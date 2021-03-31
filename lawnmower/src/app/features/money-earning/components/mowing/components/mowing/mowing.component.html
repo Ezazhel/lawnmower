@@ -5,8 +5,6 @@
             <app-neighboor
                 *ngFor="let neighboor of neighboors$ | async; trackBy: trackByFunction"
                 [neighboor]="neighboor"
-                (onCut)="selectedNeighboor$.next($event)"
-                [timer]="timer$ | async"
             ></app-neighboor>
         </div>
         <upgrades fxFlex [upgradeTab]="upgradeTab"></upgrades>
