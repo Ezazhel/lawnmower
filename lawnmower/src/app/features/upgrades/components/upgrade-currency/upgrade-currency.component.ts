@@ -3,6 +3,7 @@ import { Upgrade } from '@core/models/upgrade';
 import { UpgradesService } from '@core/services/upgrades.service';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
+import { selectMoney } from 'app/root-store/earning/earning-selector';
 import { selectUpgradeForCurrencyAndTabs } from 'app/root-store/upgrades/upgrades-selector';
 import { Observable } from 'rxjs';
 import { CurrencySymbol } from '../../../../core/models/currency';
@@ -22,7 +23,7 @@ export class UpgradeCurrencyComponent implements OnInit {
     upgradeTab: UpgradeTabsAffected;
 
     upgrades$: Observable<Upgrade[]>;
-
+    money$ : Observable<number> = this.store.select(selectMoney);
     constructor(private store: Store<RootStoreState.State>, private upgradeService: UpgradesService) {}
 
     ngOnInit(): void {

@@ -1,4 +1,11 @@
-<mat-card class="unlock" [ngClass]="upgrade.level == upgrade.maxLevel ? 'unlocked' : 'notUnlocked'">
+<mat-card
+    class="unlock"
+    [ngClass]="{
+        unlocked: upgrade.level == upgrade.maxLevel,
+        notUnlocked: upgrade.level != upgrade.maxLevel,
+        canBuy: money >= upgrade.price(upgrade.level)
+    }"
+>
     <mat-card-title>
         {{ upgrade.name }}
         <span *ngIf="upgrade.maxLevel != 1">{{ upgrade.level }} / {{ upgrade.maxLevel }} </span>

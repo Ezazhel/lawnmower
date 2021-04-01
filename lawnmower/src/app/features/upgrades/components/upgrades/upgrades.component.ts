@@ -16,7 +16,6 @@ export class UpgradesComponent implements OnInit {
     upgradeTab: UpgradeTabsAffected;
 
     currencies$: Observable<CurrencySymbol[]> = null;
-
     constructor(private store: Store<RootStoreState.State>) {}
 
     ngOnInit(): void {

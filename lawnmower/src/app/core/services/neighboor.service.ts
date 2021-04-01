@@ -56,12 +56,15 @@ export class NeighboorService {
 
     regrowSubscription = this.idlingService.timer$
         .pipe(
-            withLatestFrom(this.neighboorToRegrow$, this.store.select(selectMowingRegrowSpeedUpgradeModifier)),
+            withLatestFrom(this.neighboorToRegrow$, 
+                this.store.select(selectMowingRegrowSpeedUpgradeModifier)),
             filter(([_, neighboors]) => neighboors.length > 0),
         )
         .subscribe(([timer, neighboors, regrowModifier]) => {
             neighboors.forEach((neighboor) => {
+                console.log(timer.deltaTime);
                 timer.deltaTime /= regrowModifier;
+                console.log(timer.deltaTime);
                 this.regrowNeighboor(neighboor, timer);
             });
         });

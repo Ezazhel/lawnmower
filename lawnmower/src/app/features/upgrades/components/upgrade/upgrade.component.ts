@@ -11,6 +11,9 @@ export class UpgradeComponent implements OnInit {
     @Input()
     upgrade: Upgrade;
 
+    @Input()
+    money: number;
+
     constructor() {}
 
     ngOnInit(): void {}

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 import { Neighboor } from '@core/models/neighboor';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { insertOrUpdateNeighboorToCut } from '../../../../../../root-store/neighboor/neighboor-action';
+import { insertOrUpdateNeighboorToCut, removeNeighboorFromCuttingList } from '../../../../../../root-store/neighboor/neighboor-action';
 
 @Component({
     selector: 'app-neighboor',
@@ -21,8 +21,12 @@ export class NeighboorComponent implements OnInit {
 
     cut() {
         this.wasClicked = !this.wasClicked;
-        if (this.neighboor.cutPercent == 0) {
+        
+        if(this.wasClicked){
             this.store.dispatch(insertOrUpdateNeighboorToCut({ id: this.neighboor.id, cutted: 0 }));
+            return;
         }
+        
+        this.store.dispatch(removeNeighboorFromCuttingList({ id: this.neighboor.id }));
     }
 }

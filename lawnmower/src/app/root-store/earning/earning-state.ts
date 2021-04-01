@@ -3,5 +3,5 @@ export interface State {
 }
 
 export const initialState: State = {
-    money: 0,
+    money: 0.05,
 };

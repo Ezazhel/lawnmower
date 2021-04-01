@@ -4,7 +4,7 @@ export const MowingUpgrade = {
     ['sharpen']: new Upgrade(
         'sharpen',
         'Sharpen blade',
-        (level) => 0.0175 * Math.pow(1.25, level),
+        (level) => 0.0425 * Math.pow(1.20, level),
         'mowing',
         'Sharp blade will cut grass faster',
         0,
