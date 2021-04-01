@@ -19,4 +19,11 @@
             background-color: red;
         }
     }
+    &.clicked{
+        box-shadow: 0 0 5px 5px blue;
+    }
+    &.notclicked{
+        box-shadow: 0 0 5px 5px red;
+
+    }
 }
