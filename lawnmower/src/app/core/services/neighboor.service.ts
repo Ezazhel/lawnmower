@@ -1,30 +1,29 @@
 import { Injectable } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { NeighboorAction, RootStoreState, StatsAction } from 'app/root-store';
 import { IdlingService } from './idling.service';
 import { Neighboor } from '../models/neighboor';
-import { Observable, Subject } from 'rxjs';
-import { filter, map, takeUntil, takeWhile, withLatestFrom } from 'rxjs/operators';
-import { selectCuttingLimit, selectEquippedTool } from '../../root-store/neighboor/neighboor-selector';
+import { Observable } from 'rxjs';
+import { filter, withLatestFrom } from 'rxjs/operators';
+import { Tools } from '../models/tools';
 import {
     selectCuttingLimitModifier,
     selectMowingSpeedUpgradeModifier,
+    selectMowingRegrowSpeedUpgradeModifier,
 } from '../../root-store/upgrades/upgrades-selector';
-import { tools } from '../data/tools-data';
-import { Tools } from '../models/tools';
 import {
-    getAllNeighboors,
     selectNeighboorToCut,
     selectNeighboorToRegrow,
+    selectCuttingLimit,
+    selectEquippedTool,
 } from '../../root-store/neighboor/neighboor-selector';
+
 import {
+    insertNeighboorToCut,
     insertNeighboorToRegrow,
     removeNeighboorFromCuttingList,
     removeNeighboorFromRegrowList,
 } from '../../root-store/neighboor/neighboor-action';
-import { HIGH_CONTRAST_MODE_ACTIVE_CSS_CLASS } from '@angular/cdk/a11y/high-contrast-mode/high-contrast-mode-detector';
-import { insertOrUpdateNeighboorToCut } from '../../root-store/neighboor/neighboor-action';
-import { selectMowingRegrowSpeedUpgradeModifier } from '../../root-store/upgrades/upgrades-selector';
 
 @Injectable({
     providedIn: 'root',
@@ -56,15 +55,12 @@ export class NeighboorService {
 
     regrowSubscription = this.idlingService.timer$
         .pipe(
-            withLatestFrom(this.neighboorToRegrow$, 
-                this.store.select(selectMowingRegrowSpeedUpgradeModifier)),
+            withLatestFrom(this.neighboorToRegrow$, this.store.select(selectMowingRegrowSpeedUpgradeModifier)),
             filter(([_, neighboors]) => neighboors.length > 0),
         )
         .subscribe(([timer, neighboors, regrowModifier]) => {
             neighboors.forEach((neighboor) => {
-                console.log(timer.deltaTime);
                 timer.deltaTime /= regrowModifier;
-                console.log(timer.deltaTime);
                 this.regrowNeighboor(neighboor, timer);
             });
         });
@@ -77,9 +73,9 @@ export class NeighboorService {
             neighboor.cuttedTime += 1; //Needed in order to reflect change on store. (I really should use effect);
 
             if (!neighboor.completedOnce && neighboor.cuttedTime == cuttingLimit) {
-                this.store.dispatch(removeNeighboorFromCuttingList({ id: neighboor.id }));
+                this.store.dispatch(removeNeighboorFromCuttingList({ id: neighboor.id, unselect: false }));
                 setTimeout(
-                    () => this.store.dispatch(insertOrUpdateNeighboorToCut({ id: neighboor.id, cutted: 0 })),
+                    () => this.store.dispatch(insertNeighboorToCut({ id: neighboor.id, cutted: 0 })),
                     tool.refill * 1000,
                 );
             }

@@ -1,5 +1,6 @@
 :host {
     display: flex;
+    text-align: center;
     flex-flow: row wrap;
     .unlock {
         flex: 1 1 250px;
@@ -15,15 +16,17 @@
         z-index: 10;
         box-shadow: 0px 0px 5px 1.5px grey;
         &:hover {
-            background: rgba(120, 224, 143, 0.4);
+            background: rgba(235, 47, 6, 0.3);
+            cursor: not-allowed;
         }
         .price {
             color: rgb(246, 174, 48);
         }
         &.canBuy {
+            cursor: pointer;
             background: rgba(246, 174, 48, 0.2);
             &:hover {
-                background: rgba(246, 174, 48, 0.4);
+                background: rgba(120, 224, 143, 0.4);
             }
         }
     }
@@ -31,6 +34,6 @@
         background: rgba(120, 224, 143, 0.4);
         cursor: not-allowed !important;
         z-index: 0;
-        box-shadow: inset 0px 0px 5px 0.25px grey;
+        box-shadow: inset 0px 0px 4px 1.25px grey;
     }
 }

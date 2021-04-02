@@ -2,7 +2,10 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 import { Neighboor } from '@core/models/neighboor';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { insertOrUpdateNeighboorToCut, removeNeighboorFromCuttingList } from '../../../../../../root-store/neighboor/neighboor-action';
+import {
+    insertNeighboorToCut,
+    removeNeighboorFromCuttingList,
+} from '../../../../../../root-store/neighboor/neighboor-action';
 
 @Component({
     selector: 'app-neighboor',
@@ -15,18 +18,20 @@ export class NeighboorComponent implements OnInit {
     neighboor: Neighboor;
     constructor(private store: Store<RootStoreState.State>) {}
 
-    wasClicked:  boolean = false;
-
     ngOnInit(): void {}
 
+    textToDisplay = () => {
+        if (this.neighboor.cutPercent == 0 && !this.neighboor.selected) return '(click me)';
+        if (this.neighboor.cutPercent > 0 && !this.neighboor.selected) return '(paused)';
+        if (this.neighboor.cutPercent > 0) return '(cutting)';
+        if (this.neighboor.cutPercent == 0 && this.neighboor.selected) return '(will cut or click)';
+    };
+
     cut() {
-        this.wasClicked = !this.wasClicked;
-        
-        if(this.wasClicked){
-            this.store.dispatch(insertOrUpdateNeighboorToCut({ id: this.neighboor.id, cutted: 0 }));
+        if (!this.neighboor.selected || (this.neighboor.selected && this.neighboor.cutPercent == 0)) {
+            this.store.dispatch(insertNeighboorToCut({ id: this.neighboor.id, cutted: 0 }));
             return;
         }
-        
-        this.store.dispatch(removeNeighboorFromCuttingList({ id: this.neighboor.id }));
+        this.store.dispatch(removeNeighboorFromCuttingList({ id: this.neighboor.id, unselect: true }));
     }
 }

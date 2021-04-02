@@ -10,7 +10,6 @@ import { menuLink } from '@shared/menu/menuLink';
 import { Route } from '@core/models/route';
 import * as Hammer from 'hammerjs';
 import { debounce } from '@core/utility/utility';
-
 @Component({
     selector: 'app-footer',
     templateUrl: './footer.component.html',
@@ -36,7 +35,8 @@ export class FooterComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        const hammertime = new Hammer(window, {});
+        const hammertime = new Hammer(document.documentElement);
+        hammertime.get('pan').set({ threshold: 300 });
         hammertime.on(
             'panright',
             debounce(() => this.switchTab(false), 100),

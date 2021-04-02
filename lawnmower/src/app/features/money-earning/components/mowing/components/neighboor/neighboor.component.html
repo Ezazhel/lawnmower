@@ -1,4 +1,9 @@
-<div fxLayout="row" class="container" (click)="cut()" [ngClass]="wasClicked ? 'clicked': 'notclicked'">
+<div
+    fxLayout="row"
+    class="container"
+    (click)="cut()"
+    [ngClass]="{ cutting: neighboor.cutPercent > 0, selected: neighboor.selected }"
+>
     <div fxLayout="row">
         <div class="progress cut" fxFlexAlign="end" style.height="{{ neighboor.cutPercent }}%"></div>
     </div>
@@ -9,6 +14,8 @@
                 {{ neighboor.subTitle }}, freshly cut : {{ neighboor.completion }}/{{ neighboor.maxCompletion }}
             </span>
         </div>
+        <span class="cutting-state">{{ textToDisplay() }}</span>
+
         <span [innerHTML]="neighboor.content"> </span>
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <span> Income : {{ neighboor.income | exponential }}$ </span>

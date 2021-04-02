@@ -5,6 +5,17 @@
     border-radius: 5px;
     margin: 5px;
     z-index: 10;
+    box-shadow: 0 0 4px 1px rgba(235, 47, 6, 0.2);
+    &.selected {
+        box-shadow: inset 0px 0px 1px 2px rgba(246, 174, 48, 0.2);
+    }
+    &.cutting {
+        box-shadow: inset 0px 0px 1px 2px rgba(120, 224, 143, 0.2);
+    }
+    .cutting-state {
+        font-weight: 200;
+        color: hsl(0, 0, 32%);
+    }
     .neighboorContainer {
         padding: 0.5rem;
         font-size: 1rem;
@@ -20,11 +31,5 @@
         &.regrow {
             background-color: rgba(235, 47, 6, 0.6);
         }
-    }
-    &.clicked {
-        box-shadow: inset 0px 0px 1px 2px rgba(120, 224, 143, 0.2);
-    }
-    &.notclicked {
-        box-shadow: 0 0 4px 1px rgba(235, 47, 6, 0.2);
     }
 }

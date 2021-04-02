@@ -6,7 +6,7 @@ import {
     increaseCuttingLimit,
     regrowAction,
     cutAction,
-    insertOrUpdateNeighboorToCut,
+    insertNeighboorToCut,
     insertNeighboorToRegrow,
     removeNeighboorFromCuttingList,
 } from './neighboor-action';
@@ -19,8 +19,8 @@ export const reducer = createReducer(
     on(regrowAction, (state, { id, regrowPercent }) => updateRegrow(state, id, regrowPercent)),
     on(cutAction, (state, { id, cutPercent }) => updateCut(state, id, cutPercent)),
     on(insertNeighboorToRegrow, (state, { id }) => ({ ...state, neighboorToRegrow: [...state.neighboorToRegrow, id] })),
-    on(insertOrUpdateNeighboorToCut, (state, { id, cutted }) => insertOrUpdateCut(state, id, cutted)),
-    on(removeNeighboorFromCuttingList, (state, { id }) => removeFromCuttingList(state, id)),
+    on(insertNeighboorToCut, (state, { id, cutted }) => insertCut(state, id, cutted)),
+    on(removeNeighboorFromCuttingList, (state, { id, unselect }) => removeFromCuttingList(state, id, unselect)),
     on(removeNeighboorFromRegrowList, (state, { id }) => ({
         ...state,
         neighboorToRegrow: state.neighboorToRegrow.filter((n) => n != id),
@@ -83,18 +83,26 @@ function updateCut(state: State, id: string, cutPercent: number): State {
     };
 }
 
-function insertOrUpdateCut(state: State, id: string, cutted: number) {
+function insertCut(state: State, id: string, cutted: number) {
     return {
         ...state,
         neighboorToCutAndCuttedTime: {
             ...state.neighboorToCutAndCuttedTime,
             [id]: state.neighboorToCutAndCuttedTime[id] ?? 0 + cutted,
         },
+        neighboors: { ...state.neighboors, [id]: { ...state.neighboors[id], selected: true } },
     };
 }
 
-function removeFromCuttingList(state: State, id: string) {
+function removeFromCuttingList(state: State, id: string, unselect: boolean) {
     const remove = { ...state.neighboorToCutAndCuttedTime };
     delete remove[id];
-    return { ...state, neighboorToCutAndCuttedTime: remove };
+    return {
+        ...state,
+        neighboorToCutAndCuttedTime: remove,
+        neighboors: {
+            ...state.neighboors,
+            [id]: { ...state.neighboors[id], selected: !unselect },
+        },
+    };
 }

@@ -1,3 +1,11 @@
-<p *ngIf="equippedTool$ | async as equippedTool">
-    Tool : [{{ equippedTool.name }}] {{ equippedTool.power }}Power {{ equippedTool.refill }}Cooldown
-</p>
+<div *ngIf="equippedTool$ | async as equippedTool" class="tool" fxLayout="column">
+    <span class="name"> {{ equippedTool.name }} </span>
+    <div class="effect" fxLayout="row" fxLayoutAlign="space-between center">
+        <span matTooltip="Cut completion when cut completed" matTooltipPosition="left"
+            >Mown : {{ equippedTool.power }}</span
+        >
+        <span matTooltip="Time before auto-cut, if not cutting" matTooltipPosition="right"
+            >Cut each : {{ equippedTool.refill }}s</span
+        >
+    </div>
+</div>

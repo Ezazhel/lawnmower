@@ -7,6 +7,7 @@ export interface StateNeighboor {
     completedOnce: boolean;
     cutPercent: number;
     regrowPercent: number;
+    selected: boolean;
 }
 export interface State {
     cuttingLimit: number;
@@ -30,6 +31,7 @@ export const initialState: State = {
             completedOnce: false,
             cutPercent: Neighboors['n1'].cutPercent,
             regrowPercent: Neighboors['n1'].regrowPercent,
+            selected: false,
         },
     },
     neighboorToCutAndCuttedTime: {},
