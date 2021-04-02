@@ -4,14 +4,14 @@ import { RootStoreState, EarningAction, BloggingAction } from 'app/root-store';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { selectMoney } from '../../root-store/earning/earning-selector';
-import { Upgrade, UpgradeType } from '../models/upgrade';
+import { Upgrade } from '@core/models/upgrade';
 import { unlockMowingUpgradeAction, unlockBloggingUpgradeAction } from '../../root-store/upgrades/upgrades-action';
 import {
-    selectMowingUpgradeLevelValue,
-    selectBloggingUpgradeLevelValue,
-} from '../../root-store/upgrades/upgrades-selector';
-import { selectImagination, selectCreativity } from '../../root-store/blogging/blogging-selector';
-import { CurrencySymbol } from '../models/currency';
+    selectImagination,
+    selectCreativity,
+    selectBloggingCurrencies,
+} from '../../root-store/blogging/blogging-selector';
+import { Currency, CurrencySymbol } from '@core/models/currency';
 
 @Injectable({
     providedIn: 'root',
@@ -23,10 +23,10 @@ export class UpgradesService {
     private _unlockMowingUpgradeSubscription: Subscription = this.doUnlockUpgrade$
         .pipe(
             filter((u) => u.type === 'mowing'),
-            withLatestFrom(this.getUnlockCurrency('$'), (upgrade, currency) => {
+            withLatestFrom(this.store.select(selectMoney), (upgrade, currency) => {
                 this.projectUnlockUpgrade(
                     upgrade,
-                    currency,
+                    currency.amount,
                     unlockMowingUpgradeAction({ id: upgrade.id }),
                     EarningAction.earnMoney({ money: -upgrade.price(upgrade.level - 1) }),
                 );
@@ -37,10 +37,10 @@ export class UpgradesService {
     private _unlockBlogginUpgradeSubscription: Subscription = this.doUnlockUpgrade$
         .pipe(
             filter((u) => u.type === 'blogging'),
-            withLatestFrom(this.getUnlockCurrency('I'), (upgrade, currency) =>
+            withLatestFrom(this.store.select(selectBloggingCurrencies), (upgrade, currencies: Currency[]) =>
                 this.projectUnlockUpgrade(
                     upgrade,
-                    currency,
+                    currencies.find((c) => c.type == upgrade.currency).amount,
                     unlockBloggingUpgradeAction({ id: upgrade.id }),
                     this.getActionLoseCurrencyForBlogging(upgrade),
                 ),
@@ -53,17 +53,6 @@ export class UpgradesService {
         return upgrade.currency == 'C'
             ? BloggingAction.earnCreativity({ amount })
             : BloggingAction.earnImagination({ amount });
-    }
-
-    private getUnlockCurrency(symbol: CurrencySymbol): Observable<number> {
-        switch (symbol) {
-            case '$':
-                return this.store.select(selectMoney);
-            case 'I':
-                return this.store.select(selectImagination).pipe(map((i) => i.amount));
-            case 'C':
-                return this.store.select(selectCreativity).pipe(map((c) => c.amount));
-        }
     }
 
     private projectUnlockUpgrade(upgrade: Upgrade, currency: number, UnlockAction: Action, LoseMoneyAction: Action) {

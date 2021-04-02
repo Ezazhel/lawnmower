@@ -6,6 +6,7 @@ import { selectMoney } from '../../../root-store/earning/earning-selector';
 import { selectImagination, selectCreativity } from '../../../root-store/blogging/blogging-selector';
 import { Imagination, Creativity } from '@core/models/currency';
 import { selectStatsState } from 'app/root-store/stats/stats-selector';
+import { map } from 'rxjs/operators';
 @Component({
     selector: 'app-header',
     template: `
@@ -30,7 +31,10 @@ import { selectStatsState } from 'app/root-store/stats/stats-selector';
 })
 export class HeaderComponent implements OnInit {
     @Output() public sidenavToggle = new EventEmitter();
-    public money$: Observable<number> = this.store.pipe(select(selectMoney));
+    public money$: Observable<number> = this.store.pipe(
+        select(selectMoney),
+        map((money) => money.amount),
+    );
     public stats$ = this.store.select(selectStatsState);
     public imagination$: Observable<Imagination> = this.store.select(selectImagination);
     public creativity$: Observable<Creativity> = this.store.select(selectCreativity);

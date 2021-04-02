@@ -3,9 +3,9 @@ import { initialState } from './earning-state';
 import { earnMoney } from './earning-action';
 
 export const reducer = createReducer(
-  initialState,
-  on(earnMoney, (state, { money }) => ({
-    ...state,
-    money: state.money + money,
-  }))
+    initialState,
+    on(earnMoney, (state, { money }) => ({
+        ...state,
+        money: { ...state.money, amount: state.money.amount + money },
+    })),
 );

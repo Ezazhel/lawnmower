@@ -1,11 +1,13 @@
+import { Currency } from '@core/models/currency';
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Upgrade } from '@core/models/upgrade';
 import { UpgradesService } from '@core/services/upgrades.service';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { selectMoney } from 'app/root-store/earning/earning-selector';
+import { selectAllCurrencies, selectMoney } from 'app/root-store/earning/earning-selector';
 import { selectUpgradeForCurrencyAndTabs } from 'app/root-store/upgrades/upgrades-selector';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CurrencySymbol } from '../../../../core/models/currency';
 import { UpgradeTabsAffected } from '../../../../core/models/upgrade';
 
@@ -17,18 +19,22 @@ import { UpgradeTabsAffected } from '../../../../core/models/upgrade';
 })
 export class UpgradeCurrencyComponent implements OnInit {
     @Input()
-    currency: CurrencySymbol;
+    currencySymbol: CurrencySymbol;
 
     @Input()
     upgradeTab: UpgradeTabsAffected;
 
     upgrades$: Observable<Upgrade[]>;
-    money$ : Observable<number> = this.store.select(selectMoney);
+
+    currency$: Observable<number> = this.store.pipe(
+        select(selectAllCurrencies),
+        map((currencies) => currencies.find((c) => c.type == this.currencySymbol).amount),
+    );
     constructor(private store: Store<RootStoreState.State>, private upgradeService: UpgradesService) {}
 
     ngOnInit(): void {
         this.upgrades$ = this.store.select(selectUpgradeForCurrencyAndTabs, {
-            symbol: this.currency,
+            symbol: this.currencySymbol,
             tabs: this.upgradeTab,
         });
     }

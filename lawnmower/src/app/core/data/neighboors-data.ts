@@ -14,8 +14,8 @@ export const Neighboors = {
         </p>
     `,
         5.0,
-        8.5,
-        0.00187,
+        9,
+        0.00125,
     ),
     ['n2']: new Neighboor(
         'n2',

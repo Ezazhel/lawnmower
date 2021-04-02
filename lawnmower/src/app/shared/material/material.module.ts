@@ -12,6 +12,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRippleModule } from '@angular/material/core';
 const Material = [
     MatButtonModule,
     MatCheckboxModule,
@@ -25,6 +26,7 @@ const Material = [
     MatProgressBarModule,
     MatExpansionModule,
     MatTooltipModule,
+    MatRippleModule,
 ];
 @NgModule({
     declarations: [],

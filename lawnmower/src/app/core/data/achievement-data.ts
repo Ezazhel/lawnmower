@@ -14,7 +14,7 @@ export const MowingAchievements = {
         'Small fortune',
         'Have a dollar on you',
         'goal',
-        (state: RootStoreState.State) => state.earning.money >= 1,
+        (state: RootStoreState.State) => state.earning.money.amount >= 1,
         null,
     ),
     ['ma2']: new Achievement(

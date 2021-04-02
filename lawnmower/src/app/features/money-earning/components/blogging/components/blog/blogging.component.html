@@ -1,12 +1,8 @@
 <div fxLayout="row" fxLayoutAlign="center start">
     <div fxFlex="80">
         <div class="blogs-action">
-            <mat-card (click)="think()">
-                <mat-card-title> Think </mat-card-title>
-            </mat-card>
-            <mat-card (click)="create()">
-                <mat-card-title> Create </mat-card-title>
-            </mat-card>
+            <button mat-button mat-fab color="warn" (click)="think()">Think</button>
+            <button mat-button mat-fab color="primary" (click)="create()">Create</button>
         </div>
         <section class="blog" *ngIf="blogging$ | async as blogging">
             <post [post]="blogging.post.message"></post>

@@ -1,3 +1,4 @@
+@import 'variable.scss';
 .container {
     user-select: none;
     cursor: pointer;
@@ -5,12 +6,12 @@
     border-radius: 5px;
     margin: 5px;
     z-index: 10;
-    box-shadow: 0 0 4px 1px rgba(235, 47, 6, 0.2);
+    box-shadow: 0 1px 0px 1px transparentize($red, 0.8);
     &.selected {
-        box-shadow: inset 0px 0px 1px 2px rgba(246, 174, 48, 0.2);
+        box-shadow: inset 0px 0px 1px 2px transparentize($color: $orange, $amount: 0.8);
     }
     &.cutting {
-        box-shadow: inset 0px 0px 1px 2px rgba(120, 224, 143, 0.2);
+        box-shadow: inset 0px 0px 2px 1px transparentize($color: $green, $amount: 0.8);
     }
     .cutting-state {
         font-weight: 200;
@@ -21,15 +22,15 @@
         font-size: 1rem;
     }
     .progress {
-        width: 4px;
+        width: 2px;
         max-height: 100%;
         border-radius: 5px;
         height: 0%;
         &.cut {
-            background-color: rgba(120, 224, 143, 1);
+            background-color: $green;
         }
         &.regrow {
-            background-color: rgba(235, 47, 6, 0.6);
+            background-color: transparentize($color: $red, $amount: 0.4);
         }
     }
 }

@@ -1,7 +1,5 @@
 :host {
-    display: flex;
     text-align: center;
-    flex-flow: row wrap;
     .unlock {
         flex: 1 1 250px;
         margin: 0.5rem;
@@ -14,7 +12,7 @@
         transition-duration: 0.6s;
         transition-property: background-color;
         z-index: 10;
-        box-shadow: 0px 0px 5px 1.5px grey;
+        box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%);
         &:hover {
             background: rgba(235, 47, 6, 0.3);
             cursor: not-allowed;

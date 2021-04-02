@@ -7,3 +7,8 @@ export const selectBlogging = createSelector(selectBlogFeature, (state) => state
 
 export const selectImagination = createSelector(selectBlogFeature, (state) => state.blogging.imagination);
 export const selectCreativity = createSelector(selectBlogFeature, (state) => state.blogging.creativity);
+
+export const selectBloggingCurrencies = createSelector(selectBlogFeature, (state) => [
+    state.blogging.creativity,
+    state.blogging.imagination,
+]);

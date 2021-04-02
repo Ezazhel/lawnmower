@@ -12,9 +12,12 @@ export class UpgradeComponent implements OnInit {
     upgrade: Upgrade;
 
     @Input()
-    money: number;
+    currency: number;
 
     constructor() {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        console.log(this.currency);
+        console.log(this.currency >= this.upgrade.price(this.upgrade.level));
+    }
 }

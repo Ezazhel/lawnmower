@@ -1,7 +1,9 @@
+import { Money } from '@core/models/currency';
+
 export interface State {
-    money: number;
+    money: Money;
 }
 
 export const initialState: State = {
-    money: 0.05,
+    money: new Money(0.05),
 };
