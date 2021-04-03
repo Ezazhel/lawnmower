@@ -16,8 +16,5 @@ export class UpgradeComponent implements OnInit {
 
     constructor() {}
 
-    ngOnInit(): void {
-        console.log(this.currency);
-        console.log(this.currency >= this.upgrade.price(this.upgrade.level));
-    }
+    ngOnInit(): void {}
 }

@@ -1,11 +1,18 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialState } from './earning-state';
-import { earnMoney } from './earning-action';
+import { earnCurrency } from './earning-action';
 
 export const reducer = createReducer(
     initialState,
-    on(earnMoney, (state, { money }) => ({
+    on(earnCurrency, (state, { currency }) => ({
         ...state,
-        money: { ...state.money, amount: state.money.amount + money },
+        currencies: {
+            ...state.currencies,
+            [currency.id]: {
+                ...currency,
+                ...state.currencies[currency.id],
+                amount: (state.currencies[currency.id]?.amount ?? 0) + currency.amount,
+            },
+        },
     })),
 );

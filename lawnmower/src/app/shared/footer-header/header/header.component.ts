@@ -2,9 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { Observable } from 'rxjs';
-import { selectMoney } from '../../../root-store/earning/earning-selector';
-import { selectImagination, selectCreativity } from '../../../root-store/blogging/blogging-selector';
-import { Imagination, Creativity } from '@core/models/currency';
+import { selectMoney, selectImagination, selectCreativity } from '../../../root-store/earning/earning-selector';
+import { Imagination, Creativity, Money } from '@core/models/currency';
 import { selectStatsState } from 'app/root-store/stats/stats-selector';
 import { map } from 'rxjs/operators';
 @Component({
@@ -14,7 +13,7 @@ import { map } from 'rxjs/operators';
             <mat-toolbar color="primary" fxLayout="column">
                 <div>Lawnmoner</div>
                 <div fxLayout="row" fxLayoutAlign="space-evenly center" class="w-100">
-                    <label> {{ money$ | async | exponential }}$ </label>
+                    <label> {{ (money$ | async).amount | exponential }}$ </label>
                     <ng-container *ngIf="stats$ | async as stats">
                         <label *ngIf="stats.totalImagination > 0">
                             imagination : {{ (imagination$ | async).amount | exponential }}
@@ -31,10 +30,7 @@ import { map } from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit {
     @Output() public sidenavToggle = new EventEmitter();
-    public money$: Observable<number> = this.store.pipe(
-        select(selectMoney),
-        map((money) => money.amount),
-    );
+    public money$: Observable<Money> = this.store.select(selectMoney);
     public stats$ = this.store.select(selectStatsState);
     public imagination$: Observable<Imagination> = this.store.select(selectImagination);
     public creativity$: Observable<Creativity> = this.store.select(selectCreativity);

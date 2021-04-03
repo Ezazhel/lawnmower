@@ -1,9 +1,13 @@
-import { Money } from '@core/models/currency';
+import { Money, Currency, Imagination } from '@core/models/currency';
 
 export interface State {
-    money: Money;
+    currencies: {
+        [symbol: string]: Currency;
+    };
 }
 
 export const initialState: State = {
-    money: new Money(0.05),
+    currencies: {
+        [new Money().id]: new Money(0.05),
+    },
 };

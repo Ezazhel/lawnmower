@@ -51,7 +51,7 @@ export class IdlingService {
                         );
                     }, 0);
                     if (money != 0) {
-                        this.store.dispatch(EarningAction.earnMoney({ money }));
+                        this.store.dispatch(EarningAction.earnCurrency({ currency: { amount: money, id: '$' } }));
                         this.store.dispatch(StatsAction.incrementTotalMoney({ money }));
                     }
                 },

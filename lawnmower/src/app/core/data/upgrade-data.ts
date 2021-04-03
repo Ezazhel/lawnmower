@@ -1,10 +1,14 @@
+import { Creativity } from '@core/models/currency';
 import { Upgrade } from '@core/models/upgrade';
+import { Store } from '@ngrx/store';
+import { RootStoreState } from 'app/root-store';
+import { earnCurrency } from 'app/root-store/earning/earning-action';
 
 export const MowingUpgrade = {
     ['sharpen']: new Upgrade(
         'sharpen',
         'Sharpen blade',
-        (level) => 0.0425 * Math.pow(1.20, level),
+        (level) => 0.0425 * Math.pow(1.2, level),
         'mowing',
         'Sharp blade will cut grass faster',
         0,
@@ -55,14 +59,16 @@ export const BloggingUpgrade = {
     ['paper_pencils']: new Upgrade(
         'paper_pencils',
         'Paper & Pencils',
-        () => 10,
+        () => 5,
         'blogging',
         'What should you do with paper and pencil ? Draw !',
         0,
         1,
         'Unlock creativity !',
-        null,
-        () => {},
+        'feature',
+        (store: Store<RootStoreState.State>) => {
+            store.dispatch(earnCurrency({ currency: { ...new Creativity() } }));
+        },
         'I',
     ),
     ['handy']: new Upgrade(
@@ -70,7 +76,7 @@ export const BloggingUpgrade = {
         'Lefty or Righty ?',
         () => 10,
         'blogging',
-        'What should you do with paper and pencil ? Draw !',
+        "It's time to know Kenny...!",
         0,
         1,
         'Improve imagination gain !',

@@ -1,3 +1,5 @@
+import { NeighboorService } from './core/services/neighboor.service';
+import { BloggingService } from './core/services/blogging.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '@shared/material/material.module';

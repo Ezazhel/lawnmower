@@ -28,7 +28,7 @@ export class UpgradeCurrencyComponent implements OnInit {
 
     currency$: Observable<number> = this.store.pipe(
         select(selectAllCurrencies),
-        map((currencies) => currencies.find((c) => c.type == this.currencySymbol).amount),
+        map((currencies) => currencies.find((c) => c.type == this.currencySymbol)?.amount ?? 0),
     );
     constructor(private store: Store<RootStoreState.State>, private upgradeService: UpgradesService) {}
 

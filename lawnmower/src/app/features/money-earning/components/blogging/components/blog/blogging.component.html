@@ -1,8 +1,18 @@
 <div fxLayout="row" fxLayoutAlign="center start">
     <div fxFlex="80">
         <div class="blogs-action">
-            <button mat-button mat-fab color="warn" (click)="think()">Think</button>
-            <button mat-button mat-fab color="primary" (click)="create()">Create</button>
+            <button
+                [ngClass]="{
+                    think: true,
+                    clicked: isThinking$ | async
+                }"
+                (click)="think()"
+            >
+                Think
+            </button>
+            <button *ngIf="(creation$ | async) !== undefined" mat-button mat-fab color="primary" (click)="create()">
+                Create
+            </button>
         </div>
         <section class="blog" *ngIf="blogging$ | async as blogging">
             <post [post]="blogging.post.message"></post>

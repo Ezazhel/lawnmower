@@ -1,3 +1,4 @@
+import { BloggingService } from './core/services/blogging.service';
 import { Component } from '@angular/core';
 import { IdlingService } from './core/services/idling.service';
 import { NeighboorService } from './core/services/neighboor.service';
@@ -10,7 +11,11 @@ import { NeighboorService } from './core/services/neighboor.service';
 export class AppComponent {
     title = 'lawnmower';
 
-    constructor(private _idlingService: IdlingService, private neighboorService: NeighboorService) {}
+    constructor(
+        private _idlingService: IdlingService,
+        private neighboorService: NeighboorService,
+        private bloggingService: BloggingService,
+    ) {}
 
     ngOnInit() {}
 }
