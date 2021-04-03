@@ -37,3 +37,11 @@ https://www.learnrxjs.io/learn-rxjs/operators/utility/repeat
 https://www.learnrxjs.io/learn-rxjs/operators/filtering/takewhile
 ou 
 https://www.learnrxjs.io/learn-rxjs/operators/filtering/takeuntil
+
+
+
+Ask reddit math for how i do a formula like
+
+Base : Y + 0.5 * Math.Pow(1.25, X)
+X < 5 : Base;
+X > 5 : 5 + 0.5 * Math.Pow(1.25, X)
