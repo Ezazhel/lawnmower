@@ -10,11 +10,18 @@
             >
                 Think
             </button>
-            <div fxLayout="column" *ngIf="idea$ | async as idea">
+            <div fxLayout="column" fxFlexAlign="center" *ngIf="idea$ | async as idea" id="ideas">
                 <span> {{ idea.own }} Ideas</span>
-                <button matTooltip="buff imagination generation, used to create" (click)="doGetIdea$.next()">
-                    Get 1 Idea for : {{ idea.price() | exponential }} I
-                </button>
+                <span
+                    matTooltip="buff imagination generation, used to create"
+                    [ngClass]="{
+                        canGetIdea: (imagination$ | async)?.amount >= idea.price(),
+                        cantGetIdea: (imagination$ | async)?.amount <= idea.price()
+                    }"
+                    (click)="doGetIdea$.next()"
+                >
+                    1 Idea : {{ idea.price() | exponential }} I
+                </span>
             </div>
 
             <button *ngIf="(creation$ | async) !== undefined" mat-button mat-fab color="primary" (click)="create()">

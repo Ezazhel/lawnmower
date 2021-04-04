@@ -59,7 +59,7 @@ export const MowingUpgrade = {
     ['flower']: new Upgrade(
         'flower',
         'Flower',
-        () => 15,
+        () => 5,
         'mowing',
         'For mommy',
         0,

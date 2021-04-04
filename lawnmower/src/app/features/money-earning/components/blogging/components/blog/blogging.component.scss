@@ -40,4 +40,24 @@
             @include button-action($color: $green);
         }
     }
+    #ideas {
+        line-height: 16px;
+        span {
+            margin: 5px;
+            text-align: center;
+            padding: 5px;
+            &.canGetIdea {
+                border-radius: 10px;
+                background-color: transparentize($color: $green, $amount: 0.95);
+                box-shadow: 0px 1px 2px $green;
+                cursor: pointer;
+            }
+            &.cantGetIdea {
+                border-radius: 10px;
+                background-color: transparentize($color: $red, $amount: 0.95);
+                box-shadow: 0px 1px 2px $red;
+                cursor: not-allowed;
+            }
+        }
+    }
 }

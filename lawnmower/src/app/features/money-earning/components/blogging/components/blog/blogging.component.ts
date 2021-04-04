@@ -42,8 +42,6 @@ export class BloggingComponent implements OnInit {
     getIdeaSubscription = this.doGetIdea$
         .pipe(
             withLatestFrom(this.imagination$, this.idea$, (_, imagination, idea) => {
-                console.log(idea);
-                console.log(idea.price());
                 if ((imagination?.amount ?? 0) <= idea.price()) return;
                 this.store.dispatch(getIdea());
                 this.store.dispatch(earnCurrency({ currency: { ...imagination, amount: -idea.price() } }));

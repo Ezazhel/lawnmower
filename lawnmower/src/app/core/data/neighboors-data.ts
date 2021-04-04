@@ -5,7 +5,7 @@ export const Neighboors = {
         'n1',
         'MowingTown',
         0,
-        25,
+        15,
         'Somewhere to start',
         `
         <p>
@@ -21,7 +21,7 @@ export const Neighboors = {
         'n2',
         'MowingTown 2',
         0,
-        75,
+        35,
         'Somewhere to continue',
         `<p>
             Wow ! Your daddy is impress by your performance ! 

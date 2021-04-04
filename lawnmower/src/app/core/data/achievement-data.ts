@@ -54,6 +54,7 @@ export const MowingAchievements = {
         (state: RootStoreState.State) => state.neighboor.neighboors[Neighboors.n1.id].completedOnce,
         (store: Store<RootStoreState.State>) => {
             store.dispatch(addAchievements({ Achievements: BloggingAchievements }));
+            store.dispatch(addMowingUpgradeAction({ id: MowingUpgrade.flower.id }));
         },
     ),
 };
