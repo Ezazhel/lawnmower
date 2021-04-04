@@ -8,3 +8,6 @@ export const postPicture = createAction('[Blogging] Post picture');
 export const setIsThinking = createAction('[Blogging] Think !');
 export const setIsGettingIdea = createAction('[Blogging] Get Idea !');
 export const setIsCreating = createAction('[Blogging]  Create !');
+
+export const getIdea = createAction('[Blogging] Get an idea');
+export const unlockIdea = createAction('[Blogging] Unlock Idea');

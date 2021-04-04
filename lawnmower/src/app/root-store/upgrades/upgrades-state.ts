@@ -16,5 +16,6 @@ export const initialState: State = {
     blogging: {
         [BloggingUpgrade.paper_pencils.id]: BloggingUpgrade.paper_pencils.level,
         [BloggingUpgrade.handy.id]: BloggingUpgrade.handy.level,
+        [BloggingUpgrade.ideas.id]: BloggingUpgrade.ideas.level,
     },
 };

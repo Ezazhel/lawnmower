@@ -1,4 +1,4 @@
-import { selectIsCreating } from './../../root-store/blogging/blogging-selector';
+import { selectIdea, selectIsCreating } from './../../root-store/blogging/blogging-selector';
 import { IdlingService } from '@core/services/idling.service';
 import { Injectable } from '@angular/core';
 import { RootStoreState } from 'app/root-store';
@@ -18,16 +18,20 @@ export class BloggingService {
 
     thinkSubscription = this._idlingService.timer$
         .pipe(
-            withLatestFrom(this._store.select(selectIsThinking), this._store.select(selectImagination)),
+            withLatestFrom(
+                this._store.select(selectIsThinking),
+                this._store.select(selectImagination),
+                this._store.select(selectIdea),
+            ),
             filter(([_, isThinking]) => isThinking),
         )
-        .subscribe(([timer, _, imagination]) => {
+        .subscribe(([timer, _, imagination, idea]) => {
             imagination ??= new Imagination();
             this._store.dispatch(
                 earnCurrency({
                     currency: {
                         ...imagination,
-                        amount: timer.deltaTime * imagination.gain,
+                        amount: timer.deltaTime * imagination.gain * (idea?.bonusToImagination() ?? 1),
                     },
                 }),
             );

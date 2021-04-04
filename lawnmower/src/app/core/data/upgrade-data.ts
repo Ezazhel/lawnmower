@@ -2,6 +2,7 @@ import { Creativity } from '@core/models/currency';
 import { Upgrade } from '@core/models/upgrade';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
+import { getIdea, unlockIdea } from 'app/root-store/blogging/blogging-action';
 import { earnCurrency } from 'app/root-store/earning/earning-action';
 import { activateSubroute } from 'app/root-store/route/route-action';
 import { routes } from './route-data';
@@ -85,6 +86,19 @@ export const BloggingUpgrade = {
         (store: Store<RootStoreState.State>) => {
             store.dispatch(earnCurrency({ currency: { ...new Creativity() } }));
         },
+        'I',
+    ),
+    ['ideas']: new Upgrade(
+        'ideas',
+        'Ideas !',
+        () => 1,
+        'blogging',
+        'Ok ok, you think a lot',
+        0,
+        1,
+        'Unlock ideas',
+        'feature',
+        (store: Store<RootStoreState.State>) => store.dispatch(unlockIdea()),
         'I',
     ),
     ['handy']: new Upgrade(

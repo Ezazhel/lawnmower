@@ -10,10 +10,10 @@
             >
                 Think
             </button>
-            <div fxLayout="column">
-                <span> Ideas</span>
-                <button matTooltip="buff imagination generation, used to create" (click)="getIdea()">
-                    Get X Idea for : xI
+            <div fxLayout="column" *ngIf="idea$ | async as idea">
+                <span> {{ idea.own }} Ideas</span>
+                <button matTooltip="buff imagination generation, used to create" (click)="doGetIdea$.next()">
+                    Get 1 Idea for : {{ idea.price() | exponential }} I
                 </button>
             </div>
 
