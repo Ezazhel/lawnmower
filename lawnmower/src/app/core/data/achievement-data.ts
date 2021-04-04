@@ -33,7 +33,7 @@ export const MowingAchievements = {
         (state: RootStoreState.State) => state.stats.totalMoney > 20,
         (store: Store<RootStoreState.State>) => {
             //that achievement will unlock shop
-            store.dispatch(activateSubroute({ mainRoute: routes['earning'], subRoute: routes['earning'].subPath[1] }));
+            //store.dispatch(activateSubroute({ mainRoute: routes['earning'], subRoute: routes['earning'].subPath[1] }));
         },
     ),
     ['ma4']: new Achievement(
@@ -53,7 +53,6 @@ export const MowingAchievements = {
         'feature',
         (state: RootStoreState.State) => state.neighboor.neighboors[Neighboors.n1.id].completedOnce,
         (store: Store<RootStoreState.State>) => {
-            store.dispatch(activateSubroute({ mainRoute: routes['earning'], subRoute: routes['earning'].subPath[1] }));
             store.dispatch(addAchievements({ Achievements: BloggingAchievements }));
         },
     ),

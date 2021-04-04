@@ -3,6 +3,8 @@ import { Upgrade } from '@core/models/upgrade';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { earnCurrency } from 'app/root-store/earning/earning-action';
+import { activateSubroute } from 'app/root-store/route/route-action';
+import { routes } from './route-data';
 
 export const MowingUpgrade = {
     ['sharpen']: new Upgrade(
@@ -52,6 +54,20 @@ export const MowingUpgrade = {
         'You can cut one more grass before needing to click',
         'cuttingLimit',
         () => 1,
+    ),
+    ['flower']: new Upgrade(
+        'flower',
+        'Flower',
+        () => 15,
+        'mowing',
+        'For mommy',
+        0,
+        1,
+        'Unlock a new feature !',
+        'feature',
+        (store: Store<RootStoreState.State>) => {
+            store.dispatch(activateSubroute({ mainRoute: routes['earning'], subRoute: routes['earning'].subPath[1] }));
+        },
     ),
 };
 

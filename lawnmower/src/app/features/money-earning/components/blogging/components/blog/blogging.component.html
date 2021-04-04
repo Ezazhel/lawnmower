@@ -10,6 +10,13 @@
             >
                 Think
             </button>
+            <div fxLayout="column">
+                <span> Ideas</span>
+                <button matTooltip="buff imagination generation, used to create" (click)="getIdea()">
+                    Get X Idea for : xI
+                </button>
+            </div>
+
             <button *ngIf="(creation$ | async) !== undefined" mat-button mat-fab color="primary" (click)="create()">
                 Create
             </button>
