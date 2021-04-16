@@ -1,20 +1,22 @@
-<mat-card
-    class="unlock"
+<div
+    class="unlock upgradeWrapper"
     [ngClass]="{
         unlocked: upgrade.level == upgrade.maxLevel,
         notUnlocked: upgrade.level != upgrade.maxLevel,
         canBuy: currency >= upgrade.price(upgrade.level)
     }"
 >
-    <mat-card-title>
+    <div class="upgrade-title">
         {{ upgrade.name }}
         <span *ngIf="upgrade.maxLevel != 1">{{ upgrade.level }} / {{ upgrade.maxLevel }} </span>
-    </mat-card-title>
-    <mat-card-subtitle class="price" *ngIf="upgrade.level < upgrade.maxLevel">
-        Price : {{ upgrade.price(upgrade.level) | exponential }}{{ upgrade.currency }}
-    </mat-card-subtitle>
-    <mat-card-content>
-        <div>{{ upgrade.description }}</div>
+    </div>
+    <div class="upgrade-description">
+        {{ upgrade.description }}
+    </div>
+    <div class="upgrade-content">
         <div>{{ upgrade.effectDescription }}</div>
-    </mat-card-content>
-</mat-card>
+        <div class="price" *ngIf="upgrade.level < upgrade.maxLevel">
+            {{ upgrade.price(upgrade.level) | exponential }}{{ upgrade.currency }}
+        </div>
+    </div>
+</div>

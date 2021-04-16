@@ -5,6 +5,12 @@
     z-index: 5;
     margin: 0.5rem 0rem;
     border-radius: 5px;
+    .upgrade {
+        display: grid;
+        grid-gap: 0.5rem;
+        place-items: center;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
     .currency-label {
         z-index: 7;
         text-shadow: 1px 1px 3px rgba(250, 211, 144, 1);

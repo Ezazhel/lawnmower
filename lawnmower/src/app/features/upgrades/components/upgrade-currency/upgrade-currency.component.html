@@ -1,10 +1,12 @@
 <label class="currency-label">
     {{ currencySymbol }}
 </label>
-<app-upgrade
-    *ngFor="let upgrade of upgrades$ | async"
-    [upgrade]="upgrade"
-    [currency]="currency$ | async"
-    (click)="unlock(upgrade)"
->
-</app-upgrade>
+<div class="upgrade">
+    <app-upgrade
+        *ngFor="let upgrade of upgrades$ | async"
+        [upgrade]="upgrade"
+        [currency]="currency$ | async"
+        (click)="unlock(upgrade)"
+    >
+    </app-upgrade>
+</div>

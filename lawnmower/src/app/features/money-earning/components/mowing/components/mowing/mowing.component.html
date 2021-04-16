@@ -1,6 +1,6 @@
 <div fxLayout="column">
     <tools></tools>
-    <div fxLayout="row" fxLayoutAlign="center start">
+    <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start" fxLayoutAlign.lt-lg="center">
         <div class="neighboors" fxFlex="60">
             <app-neighboor
                 *ngFor="let neighboor of neighboors$ | async; trackBy: trackByFunction"
