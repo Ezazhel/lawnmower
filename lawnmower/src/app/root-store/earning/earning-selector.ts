@@ -1,3 +1,4 @@
+import { Creation } from '@core/models/currency';
 import { createFeatureSelector, MemoizedSelector, createSelector } from '@ngrx/store';
 import { State } from './earning-state';
 
@@ -14,4 +15,9 @@ export const selectAllCurrencies = createSelector(selectEarningState, (state) =>
 });
 
 export const selectImagination = createSelector(selectEarningState, (state) => getCurrency(state, 'I'));
-export const selectCreativity = createSelector(selectEarningState, (state) => getCurrency(state, 'C'));
+export const selectCreation = createSelector(selectEarningState, (state: State) => {
+    const currency = getCurrency(state, 'C');
+    if (currency != undefined) {
+        return Object.assign(new Creation(), getCurrency(state, 'C'));
+    } else return undefined;
+});

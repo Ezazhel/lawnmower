@@ -11,3 +11,8 @@ export const incrementTotalCreativity = createAction(
     '[STATS] Increment total creativity',
     props<{ creativity: number }>(),
 );
+
+export const incrementTotalFailedCreation = createAction(
+    '[STATS] Increment total failed creation',
+    props<{ number: number }>(),
+);

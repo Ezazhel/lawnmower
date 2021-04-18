@@ -6,6 +6,4 @@ export const selectBlogFeature: MemoizedSelector<object, State> = createFeatureS
 export const selectBlogging = createSelector(selectBlogFeature, (state) => state.blogging);
 
 export const selectIsThinking = createSelector(selectBlogFeature, (state) => state.isThinking);
-export const selectIsCreating = createSelector(selectBlogFeature, (state) => state.isCreating);
-export const selectIsGettingIdea = createSelector(selectBlogFeature, (state) => state.isGettingIdea);
 export const selectIdea = createSelector(selectBlogFeature, (state) => state.idea);

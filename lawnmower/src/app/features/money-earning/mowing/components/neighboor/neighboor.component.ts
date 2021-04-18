@@ -2,10 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 import { Neighboor } from '@core/models/neighboor';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import {
-    insertNeighboorToCut,
-    removeNeighboorFromCuttingList,
-} from '../../../../../../root-store/neighboor/neighboor-action';
+import { insertNeighboorToCut, removeNeighboorFromCuttingList } from '@root-store/neighboor/neighboor-action';
 
 @Component({
     selector: 'app-neighboor',

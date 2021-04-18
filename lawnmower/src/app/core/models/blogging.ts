@@ -1,4 +1,4 @@
-import { Creativity, Fan, Imagination } from './currency';
+import { Creation, Fan, Imagination } from './currency';
 
 export class Post {
     message: number = 0;
@@ -8,7 +8,7 @@ export class Post {
 }
 export class Blogging {
     fans: Fan;
-    creativity: Creativity = new Creativity();
+    creativity: Creation = new Creation();
     imagination: Imagination = new Imagination();
     adsRevenu: number = 0;
     post: Post = new Post();

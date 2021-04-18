@@ -1,5 +1,4 @@
 @import 'variable.scss';
-
 @mixin button-action($color) {
     box-shadow: 0px 2px 4px rgb(0 0 0 / 26%);
     background-color: transparentize($color: $color, $amount: 0.9);
@@ -19,7 +18,7 @@
     }
 }
 
-.blogs-action {
+:host {
     display: flex;
     flex-direction: row;
     place-content: center space-evenly;
@@ -58,6 +57,22 @@
                 box-shadow: 0px 1px 2px $red;
                 cursor: not-allowed;
             }
+        }
+    }
+    .creation {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 10px;
+        align-items: center;
+        border-radius: 5px;
+        box-shadow: 0 1px 5px rgb(0 0 0 / 20%);
+        span {
+            font-size: 12px;
+        }
+        padding: 0.4rem;
+        .creation-idea-cost {
+        }
+        .creation-chance {
         }
     }
 }

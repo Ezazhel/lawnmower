@@ -2,8 +2,8 @@ import { RootStoreState } from 'app/root-store';
 import { Achievement } from '../models/achievement';
 import { Neighboors } from './neighboors-data';
 import { Store } from '@ngrx/store';
-import { addMowingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
-import { MowingUpgrade } from './upgrade-data';
+import { addBloggingUpgradeAction, addMowingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
+import { BloggingUpgrade, MowingUpgrade } from './upgrade-data';
 import { addAchievements } from 'app/root-store/achievements/achievements-action';
 
 export const MowingAchievements = {
@@ -42,7 +42,6 @@ export const MowingAchievements = {
         (state: RootStoreState.State) => state.stats.totalMowned >= 20,
         (store: Store<RootStoreState.State>) => {
             store.dispatch(addMowingUpgradeAction({ id: MowingUpgrade.robot.id }));
-            store.dispatch(addAchievements({ Achievements: BloggingAchievements }));
         },
     ),
     ['ma5']: new Achievement(
@@ -53,6 +52,7 @@ export const MowingAchievements = {
         (state: RootStoreState.State) => state.neighboor.neighboors[Neighboors.n1.id].completedOnce,
         (store: Store<RootStoreState.State>) => {
             store.dispatch(addMowingUpgradeAction({ id: MowingUpgrade.flower.id }));
+            store.dispatch(addAchievements({ Achievements: BloggingAchievements }));
         },
     ),
 };
@@ -76,5 +76,15 @@ export const BloggingAchievements = {
             return post.message > 0 && post.picture > 0 && post.topic > 0 && post.video > 0;
         },
         null,
+    ),
+    ['ba3']: new Achievement(
+        'ba3',
+        'Not that creative',
+        "Every thing need practice and 10 failed creation isn't that bad",
+        'feature',
+        (state: RootStoreState.State) => state.stats.totalFailedCreation > 10,
+        (store: Store<RootStoreState.State>) => {
+            store.dispatch(addBloggingUpgradeAction({ id: BloggingUpgrade['book-worm'].id }));
+        },
     ),
 };

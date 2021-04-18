@@ -15,12 +15,11 @@ import { UpgradesModule } from '../upgrades/upgrades.module';
                 children: [
                     {
                         path: 'mowing',
-                        loadChildren: () => import('./components/mowing/mowing.module').then((m) => m.MowingModule),
+                        loadChildren: () => import('./mowing/mowing.module').then((m) => m.MowingModule),
                     },
                     {
                         path: 'blogging',
-                        loadChildren: () =>
-                            import('./components/blogging/blogging.module').then((m) => m.BloggingModule),
+                        loadChildren: () => import('./blogging/blogging.module').then((m) => m.BloggingModule),
                     },
                     { path: '**', redirectTo: 'mowing' },
                 ],

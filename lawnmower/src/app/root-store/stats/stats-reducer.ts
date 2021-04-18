@@ -5,6 +5,7 @@ import {
     incrementTotalMowned,
     incrementTotalImagination,
     incrementTotalCreativity,
+    incrementTotalFailedCreation,
 } from './stats-action';
 
 export const reducer = createReducer(
@@ -21,5 +22,9 @@ export const reducer = createReducer(
     on(incrementTotalCreativity, (state, { creativity }) => ({
         ...state,
         totalCreativity: state.totalCreativity + creativity,
+    })),
+    on(incrementTotalFailedCreation, (state, { number }) => ({
+        ...state,
+        totalFailedCreation: state.totalFailedCreation + number,
     })),
 );

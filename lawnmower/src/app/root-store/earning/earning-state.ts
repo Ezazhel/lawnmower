@@ -1,4 +1,4 @@
-import { Money, Currency, Imagination } from '@core/models/currency';
+import { Money, Currency } from '@core/models/currency';
 
 export interface State {
     currencies: {

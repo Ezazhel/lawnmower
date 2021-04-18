@@ -1,4 +1,4 @@
-import { Creativity } from '@core/models/currency';
+import { Creation } from '@core/models/currency';
 import { Upgrade } from '@core/models/upgrade';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
@@ -78,7 +78,7 @@ export const BloggingUpgrade = {
     ['paper_pencils']: new Upgrade(
         'paper_pencils',
         'Paper & Pencils',
-        () => 5,
+        () => 2.5,
         'blogging',
         'What should you do with paper and pencil ? Draw !',
         0,
@@ -86,14 +86,14 @@ export const BloggingUpgrade = {
         'Unlock creativity !',
         'feature',
         (store: Store<RootStoreState.State>) => {
-            store.dispatch(earnCurrency({ currency: { ...new Creativity() } }));
+            store.dispatch(earnCurrency({ currency: { ...new Creation() } }));
         },
         'I',
     ),
     ['ideas']: new Upgrade(
         'ideas',
         'Ideas !',
-        () => 1,
+        () => 0.2,
         'blogging',
         'Ok ok, you think a lot',
         0,
@@ -106,7 +106,7 @@ export const BloggingUpgrade = {
     ['handy']: new Upgrade(
         'handy',
         'Lefty or Righty ?',
-        () => 10,
+        () => 3,
         'blogging',
         "It's time to know Kenny...!",
         0,
@@ -115,5 +115,18 @@ export const BloggingUpgrade = {
         null,
         () => {},
         'C',
+    ),
+    ['book-worm']: new Upgrade(
+        'bookworm',
+        'Books are the answer',
+        (level) => level * 0.25,
+        'blogging',
+        'Read science-fiction !!',
+        0,
+        5,
+        'Boost base creation chance',
+        'creation',
+        (level: number) => level * 5,
+        'I',
     ),
 };

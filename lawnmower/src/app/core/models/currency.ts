@@ -10,12 +10,19 @@ export class Fan extends Currency {
     gainChance: number = 0;
 }
 
-export class Creativity extends Currency {
+export class Creation extends Currency {
+    basePrice: number = 1;
+    baseChance: number = 5;
     constructor() {
         super();
         this.gain = 0.007;
         this.id = 'C';
         this.type = 'C';
+        this.basePrice = 1;
+    }
+
+    price() {
+        return this.basePrice * Math.pow(1.65, this.amount);
     }
 }
 export class Imagination extends Currency {

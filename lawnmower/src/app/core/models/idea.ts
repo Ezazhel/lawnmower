@@ -12,4 +12,7 @@ export class Idea {
     bonusToImagination() {
         return Math.pow(1.15, this.own);
     }
+    additiveImaginationGain(own: number) {
+        return 0.01 * own;
+    }
 }
