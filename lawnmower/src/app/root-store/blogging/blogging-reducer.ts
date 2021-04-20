@@ -1,6 +1,7 @@
 import { Idea } from '@core/models/idea';
 import { createReducer, on } from '@ngrx/store';
 import {
+    addBook,
     getIdea,
     postMessage,
     postPicture,
@@ -21,6 +22,7 @@ export const reducer = createReducer(
     on(getIdea, (state) => incrementIdeaOwn(state, 1)),
     on(useIdea, (state) => incrementIdeaOwn(state, -1)),
     on(setIsThinking, (state) => ({ ...state, isThinking: !state.isThinking })),
+    on(addBook, (state, { book }) => ({ ...state, books: { ...state.books, [book.id]: { ...book, unlocked: true } } })),
 );
 
 const incrementIdeaOwn = (state: State, modifier: number) => {

@@ -1,3 +1,4 @@
+import { Books } from '@core/data/book-data';
 import { Blogging } from '@core/models/blogging';
 import Book from '@core/models/book';
 import { Idea } from '@core/models/idea';
@@ -14,5 +15,8 @@ export const initialState: State = {
     blogging: new Blogging(),
     isThinking: false,
     idea: null,
-    books: {},
+    books: {
+        [Books.davinci.id]: Books.davinci,
+        [Books.encyclopedia.id]: Books.encyclopedia,
+    },
 };
