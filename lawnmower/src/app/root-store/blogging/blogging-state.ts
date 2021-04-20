@@ -5,12 +5,14 @@ export interface State {
     blogging: Blogging;
     isThinking: boolean;
     idea: Idea;
-    books: Book[];
+    books: {
+        [id: string]: Partial<Book>;
+    };
 }
 
 export const initialState: State = {
     blogging: new Blogging(),
     isThinking: false,
     idea: null,
-    books: [],
+    books: {},
 };

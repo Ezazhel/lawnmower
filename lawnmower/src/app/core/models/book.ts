@@ -3,11 +3,12 @@ type BookAffect = 'creationGain' | 'readingSpeed' | 'ideaGain';
 class Book {
     id: string;
     name: string;
-    effect: (chapterRead: number) => number;
+    effect: (params?: number) => number;
     affect: BookAffect;
     chapterRead: number;
     readingPercent: number;
     totalChapter: number;
+    unlocked: boolean = false;
     constructor(id: string, name: string, effect, affect: BookAffect, totalChapter: number) {
         this.id = id;
         this.name = name;
