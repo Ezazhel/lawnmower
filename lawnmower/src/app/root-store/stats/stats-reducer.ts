@@ -4,8 +4,9 @@ import {
     incrementTotalMoney,
     incrementTotalMowned,
     incrementTotalImagination,
-    incrementTotalCreativity,
+    incrementTotalCreation,
     incrementTotalFailedCreation,
+    incrementTotalIdea,
 } from './stats-action';
 
 export const reducer = createReducer(
@@ -19,7 +20,7 @@ export const reducer = createReducer(
         ...state,
         totalImagination: state.totalImagination + imagination,
     })),
-    on(incrementTotalCreativity, (state, { creativity }) => ({
+    on(incrementTotalCreation, (state, { creation: creativity }) => ({
         ...state,
         totalCreativity: state.totalCreativity + creativity,
     })),
@@ -27,4 +28,5 @@ export const reducer = createReducer(
         ...state,
         totalFailedCreation: state.totalFailedCreation + number,
     })),
+    on(incrementTotalIdea, (state, { idea: number }) => ({ ...state, totalIdea: number })),
 );

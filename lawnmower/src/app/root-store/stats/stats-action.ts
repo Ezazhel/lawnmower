@@ -7,12 +7,11 @@ export const incrementTotalImagination = createAction(
     props<{ imagination: number }>(),
 );
 
-export const incrementTotalCreativity = createAction(
-    '[STATS] Increment total creativity',
-    props<{ creativity: number }>(),
-);
+export const incrementTotalCreation = createAction('[STATS] Increment total creation', props<{ creation: number }>());
 
 export const incrementTotalFailedCreation = createAction(
     '[STATS] Increment total failed creation',
     props<{ number: number }>(),
 );
+
+export const incrementTotalIdea = createAction('[STATS] Increment total idea', props<{ idea: number }>());

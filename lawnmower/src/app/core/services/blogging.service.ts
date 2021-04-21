@@ -9,7 +9,7 @@ import { selectCreation as selectCreation, selectImagination } from 'app/root-st
 import { earnCurrency } from 'app/root-store/earning/earning-action';
 import { Creation, Imagination } from '@core/models/currency';
 import {
-    incrementTotalCreativity as incrementTotalCreation,
+    incrementTotalCreation as incrementTotalCreation,
     incrementTotalFailedCreation,
     incrementTotalImagination,
 } from 'app/root-store/stats/stats-action';
@@ -45,7 +45,6 @@ export class BloggingService {
                     },
                 }),
             );
-            this._store.dispatch(incrementTotalImagination({ imagination: timer.deltaTime * imagination.gain }));
         });
 
     private getCreatePointSubscription = this.doGetCreatePoint
@@ -55,7 +54,6 @@ export class BloggingService {
                 if (Math.random() * 100 <= creation.baseChance) {
                     creation.amount += 1;
                     this._store.dispatch(earnCurrency({ currency: { ...creation } }));
-                    this._store.dispatch(incrementTotalCreation({ creativity: creation.amount }));
                     this._store.dispatch(useIdea());
                 } else {
                     this._store.dispatch(useIdea());

@@ -14,8 +14,8 @@ export class AchievementsComponent implements OnInit {
     achievements$: Observable<Achievement[]> = this.store.select(selectAchievements);
     constructor(private store: Store<RootStoreState.State>) {}
 
-    getAchievementsBonus(achievements: Achievement[]){
-        return Math.pow(1.2, achievements.filter(a => a.isUnlock).length);
+    getAchievementsBonus(achievements: Achievement[]) {
+        return Math.pow(1.12, achievements.filter((a) => a.isUnlock).length);
     }
 
     ngOnInit(): void {}

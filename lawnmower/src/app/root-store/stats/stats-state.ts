@@ -4,6 +4,7 @@ export interface State {
     totalImagination: number;
     totalCreativity: number;
     totalFailedCreation: number;
+    totalIdea: number;
 }
 export const initialState: State = {
     totalMoney: 0,
@@ -11,4 +12,5 @@ export const initialState: State = {
     totalImagination: 0,
     totalCreativity: 0,
     totalFailedCreation: 0,
+    totalIdea: 0,
 };
