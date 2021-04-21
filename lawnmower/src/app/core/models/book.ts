@@ -6,9 +6,12 @@ class Book {
     effect: (params?: number) => number;
     affect: BookAffect;
     chapterRead: number;
-    readingPercent: number;
+    readingPercent: number; //more like a "time to complete chapter in second" Should make a function scaling based on chapter.
+    readingProgression: number; // again second here, progression / percent * 100 = %
     totalChapter: number;
     unlocked: boolean = false;
+    effectDescription: string;
+    reading: boolean;
     constructor(id: string, name: string, effect, affect: BookAffect, totalChapter: number) {
         this.id = id;
         this.name = name;

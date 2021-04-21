@@ -16,7 +16,7 @@ export const initialState: State = {
     isThinking: false,
     idea: null,
     books: {
-        [Books.davinci.id]: Books.davinci,
+        [Books.journal.id]: Books.journal,
         [Books.encyclopedia.id]: Books.encyclopedia,
     },
 };
