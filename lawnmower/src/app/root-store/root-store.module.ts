@@ -8,6 +8,7 @@ import { UpgradeModule } from './upgrades/uprades.module';
 import { AchievementsModule } from './achievements/achievements.module';
 import { RouteModule } from './route/route.module';
 import { BloggingModule } from './blogging/blogging.module';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
     declarations: [],
@@ -21,6 +22,7 @@ import { BloggingModule } from './blogging/blogging.module';
         AchievementsModule,
         RouteModule,
         StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
     ],
 })
 export class RootStoreModule {}

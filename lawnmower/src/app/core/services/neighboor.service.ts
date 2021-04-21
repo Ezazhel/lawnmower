@@ -68,7 +68,6 @@ export class NeighboorService {
     private cutNeighboor(neighboor: Neighboor, timer: { deltaTime: number }, cuttingLimit: number, tool: Tools) {
         if (neighboor.cutPercent >= 100) {
             this.store.dispatch(NeighboorAction.cutActionCompleted({ id: neighboor.id, modifier: tool.power }));
-            this.store.dispatch(StatsAction.incrementTotalMowned({ mowned: tool.power }));
             this.store.dispatch(NeighboorAction.cutAction({ id: neighboor.id, cutPercent: 0 }));
             neighboor.cuttedTime += 1; //Needed in order to reflect change on store. (I really should use effect);
 
