@@ -1,1 +1,3 @@
-<p *ngFor="let book of books$ | async">{{ book.name }} !</p>
+<p *ngFor="let book of books$ | async; trackBy : trackByFunction">
+    <book [book]="book"></book>
+</p>
