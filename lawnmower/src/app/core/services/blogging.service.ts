@@ -15,6 +15,8 @@ import {
 } from 'app/root-store/stats/stats-action';
 import { Subject } from 'rxjs';
 import { useIdea } from '@root-store/blogging/blogging-action';
+import { selectAchievementsUnlock } from '@root-store/achievements/achievements-selector';
+import { Achievement } from '@core/models/achievement';
 
 @Injectable({
     providedIn: 'root',
@@ -29,10 +31,11 @@ export class BloggingService {
                 this._store.select(selectIsThinking),
                 this._store.select(selectImagination),
                 this._store.select(selectIdea),
+                this._store.select(selectAchievementsUnlock),
             ),
             filter(([_, isThinking]) => isThinking),
         )
-        .subscribe(([timer, _, imagination, idea]) => {
+        .subscribe(([timer, _, imagination, idea, achievements]) => {
             imagination ??= new Imagination();
             this._store.dispatch(
                 earnCurrency({
@@ -41,7 +44,7 @@ export class BloggingService {
                         amount:
                             (imagination.gain + (idea?.additiveImaginationGain(idea.own) ?? 0)) *
                             timer.deltaTime *
-                            (idea?.bonusToImagination() ?? 1),
+                            (idea?.bonusToImagination() ?? 1) * Achievement.prototype.getBonusAchievement(achievements.length),
                     },
                 }),
             );

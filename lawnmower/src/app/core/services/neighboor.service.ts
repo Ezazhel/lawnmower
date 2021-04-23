@@ -100,8 +100,6 @@ export class NeighboorService {
         this.store.dispatch(NeighboorAction.regrowAction({ id: neighboor.id, regrowPercent: neighboor.regrowPercent }));
         if (neighboor.regrowPercent <= 0) {
             this.store.dispatch(NeighboorAction.regrowActionCompleted({ id: neighboor.id, modifier: -1 }));
-            neighboor.regrowPercent = 100;
-            neighboor.completion -= 1;
             this.store.dispatch(NeighboorAction.regrowAction({ id: neighboor.id, regrowPercent: 100 }));
         }
     }

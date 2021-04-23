@@ -10,6 +10,7 @@ import {
     selectAchievementsUnlock,
 } from '../../root-store/achievements/achievements-selector';
 import { unlockAchievementAction } from '../../root-store/achievements/achievements-action';
+import { Achievement } from '@core/models/achievement';
 @Injectable({
     providedIn: 'root',
 })
@@ -47,7 +48,7 @@ export class IdlingService {
                         return (
                             previous +
                             current.income *
-                                (current.completion * deltaModifier * gainModifier * Math.pow(1.2, achievements.length))
+                                (current.completion * deltaModifier * gainModifier * Achievement.prototype.getBonusAchievement(achievements.length))
                         );
                     }, 0);
                     if (money != 0) {
