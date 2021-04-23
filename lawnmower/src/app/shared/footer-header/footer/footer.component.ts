@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Inject } from '@angular/core';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -10,6 +10,7 @@ import { menuLink } from '@shared/menu/menuLink';
 import { Route } from '@core/models/route';
 import * as Hammer from 'hammerjs';
 import { debounce } from '@core/utility/utility';
+import { DOCUMENT } from '@angular/common';
 @Component({
     selector: 'app-footer',
     templateUrl: './footer.component.html',
@@ -20,7 +21,11 @@ export class FooterComponent implements AfterViewInit {
     indexForTabPrincipal = 0;
     @ViewChild('tabPrincipal')
     tabPrincipal: MatTabGroup;
-    constructor(private router: Router, private store: Store<RootStoreState.State>) {
+    constructor(
+        private router: Router,
+        private store: Store<RootStoreState.State>,
+        @Inject(DOCUMENT) private document: Document,
+    ) {
         this.router.events
             .pipe(
                 filter((e) => e instanceof NavigationEnd),
@@ -35,14 +40,14 @@ export class FooterComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        const hammertime = new Hammer(document.documentElement);
-        hammertime.get('pan').set({ threshold: 300 });
+        const hammertime = new Hammer(this.document.body);
+        hammertime.get('swipe').set({ velocity: 0.1 });
         hammertime.on(
-            'panright',
+            'swiperight',
             debounce(() => this.switchTab(false), 100),
         );
         hammertime.on(
-            'panleft',
+            'swipeleft',
             debounce(() => this.switchTab(true), 100),
         );
     }

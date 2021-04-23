@@ -1,11 +1,16 @@
 .achievements {
-    display: flex;
-    justify-content: center;
-    flex-flow: row wrap;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(auto-fit, 1fr);
+    gap: 2px;
     .achievement {
         cursor: unset;
-        margin: 4px;
-        flex: 0 1 calc(20% - 40px);
+        font-size: 1em;
+        text-align: center;
+        font-weight: 300;
+        display: flex;
+        align-items: center;
+        padding: 1vw;
         &.unlocked {
             background: rgba(120, 224, 143, 1);
         }
@@ -14,7 +19,7 @@
         }
     }
 }
-.achievementBonusCurrencies{
+.achievementBonusCurrencies {
     display: grid;
     place-items: center;
 }

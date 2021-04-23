@@ -6,6 +6,7 @@
     border-radius: 5px;
     margin: 5px;
     z-index: 10;
+
     box-shadow: 0 1px 0px 1px transparentize($red, 0.8);
     &.selected {
         box-shadow: inset 0px 0px 1px 2px transparentize($color: $orange, $amount: 0.8);
@@ -20,6 +21,9 @@
     .neighboorContainer {
         padding: 0.5rem;
         font-size: 1rem;
+        @media screen and (max-width: 1024px) {
+            font-size: 0.75rem;
+        }
     }
     .progress {
         width: 2px;

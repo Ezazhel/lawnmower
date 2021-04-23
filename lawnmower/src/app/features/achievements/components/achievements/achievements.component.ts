@@ -3,7 +3,7 @@ import { Achievement } from '@core/models/achievement';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { Observable } from 'rxjs';
-import { selectAchievements } from '../../../../root-store/achievements/achievements-selector';
+import { selectAchievements } from '@root-store/achievements/achievements-selector';
 
 @Component({
     selector: 'app-achievements',

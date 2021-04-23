@@ -1,14 +1,15 @@
-
-<span class="achievementBonusCurrencies">Achievements increase all currencies gains by : {{ getAchievementsBonus(achievements$ | async) | exponential}} </span>
+<span class="achievementBonusCurrencies"
+    >Achievements increase all currencies gains by : {{ getAchievementsBonus(achievements$ | async) | exponential }}
+</span>
 <div class="achievements">
-    <mat-card
-    [matTooltip]="achievement.description"
-    class="achievement"
-    [ngClass]="achievement.isUnlock ? 'unlocked' : 'notUnlocked'"
-    *ngFor="let achievement of achievements$ | async; index as i; trackBy: trackByFunction"
+    <div
+        class="achievement"
+        [ngClass]="achievement.isUnlock ? 'unlocked' : 'notUnlocked'"
+        *ngFor="let achievement of achievements$ | async; index as i; trackBy: trackByFunction"
+        [matTooltip]="achievement.description"
     >
-    <mat-card-title>
-        {{ achievement.name }}
-    </mat-card-title>
-</mat-card>
+        <span>
+            {{ achievement.name }}
+        </span>
+    </div>
 </div>

@@ -1,0 +1,7 @@
+<div *ngIf="notifications$ | async as notifications" fxLayout="column-reverse" class="notifications">
+    <ng-container *ngFor="let notification of notifications; trackBy: trackByFn">
+        <div class="notification" [@notify]="'show'">
+            <span>{{ notification }}</span>
+        </div>
+    </ng-container>
+</div>

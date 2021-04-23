@@ -10,6 +10,7 @@ import {
     selectAchievementsUnlock,
 } from '../../root-store/achievements/achievements-selector';
 import { unlockAchievementAction } from '../../root-store/achievements/achievements-action';
+import { NotifierService } from './notifier.service';
 @Injectable({
     providedIn: 'root',
 })
@@ -26,7 +27,7 @@ export class IdlingService {
         share(),
     );
 
-    constructor(private store: Store<RootStoreState.State>) {}
+    constructor(private store: Store<RootStoreState.State>, private notifier: NotifierService) {}
 
     doSomething = ([ticker]) => {
         this.doEarnMoneyFromNeighboors$.next(ticker.deltaTime);
@@ -47,7 +48,10 @@ export class IdlingService {
                         return (
                             previous +
                             current.income *
-                                (current.completion * deltaModifier * gainModifier * Math.pow(1.2, achievements.length))
+                                (current.completion *
+                                    deltaModifier *
+                                    gainModifier *
+                                    Math.pow(1.12, achievements.length))
                         );
                     }, 0);
                     if (money != 0) {
@@ -65,6 +69,7 @@ export class IdlingService {
             achievements.forEach((a) => {
                 if (a.canUnlock(state)) {
                     this.store.dispatch(unlockAchievementAction({ id: a.id }));
+                    this.notifier.pushMessage(`Unlocked achievement : ${a.name}`);
                     if (a.type == 'feature') {
                         a.effect(this.store);
                     }
