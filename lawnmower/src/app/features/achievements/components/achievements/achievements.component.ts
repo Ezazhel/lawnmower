@@ -15,7 +15,7 @@ export class AchievementsComponent implements OnInit {
     constructor(private store: Store<RootStoreState.State>) {}
 
     getAchievementsBonus(achievements: Achievement[]) {
-        return Math.pow(1.12, achievements.filter((a) => a.isUnlock).length);
+        return Achievement.prototype.getBonusAchievement(achievements.filter((a) => a.isUnlock).length);
     }
 
     ngOnInit(): void {}

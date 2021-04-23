@@ -27,4 +27,8 @@ export class Achievement {
         this.canUnlock = canUnlock;
         this.giveBonus = giveBonus ?? false;
     }
+
+    getBonusAchievement(achievementsUnlocked: number){
+        return Math.pow(1.12, achievementsUnlocked);
+    }
 }

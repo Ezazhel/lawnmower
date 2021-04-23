@@ -24,6 +24,6 @@
 </div>
 <div class="creation" *ngIf="(creation$ | async) !== undefined">
     <button mat-button mat-fab color="primary" (click)="create()" matTooltip="C % 2 = +0.05I">Create</button>
-    <span class="creation-idea-cost">cost {{ (creation$ | async).price() }} idea</span>
+    <span class="creation-idea-cost">cost {{ (creation$ | async).price() | exponential }} idea</span>
     <span class="creation-chance">5% to get creation point</span>
 </div>

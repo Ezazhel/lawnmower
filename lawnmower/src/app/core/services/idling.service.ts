@@ -3,13 +3,11 @@ import { Store } from '@ngrx/store';
 import { RootStoreState, EarningAction, StatsAction } from 'app/root-store';
 import { interval, animationFrameScheduler, combineLatest, Subject } from 'rxjs';
 import { map, sampleTime, scan, share, withLatestFrom } from 'rxjs/operators';
-import { getAllNeighboorsWhereCompletionGtOne } from '../../root-store/neighboor/neighboor-selector';
-import { selectMowingGainModifier } from '../../root-store/upgrades/upgrades-selector';
-import {
-    selectAchievementsNotUnlock,
-    selectAchievementsUnlock,
-} from '../../root-store/achievements/achievements-selector';
-import { unlockAchievementAction } from '../../root-store/achievements/achievements-action';
+import { getAllNeighboorsWhereCompletionGtOne } from '@root-store/neighboor/neighboor-selector';
+import { selectMowingGainModifier } from '@root-store/upgrades/upgrades-selector';
+import { selectAchievementsNotUnlock, selectAchievementsUnlock } from '@root-store/achievements/achievements-selector';
+import { unlockAchievementAction } from '@root-store/achievements/achievements-action';
+import { Achievement } from '@core/models/achievement';
 import { NotifierService } from './notifier.service';
 @Injectable({
     providedIn: 'root',
@@ -51,7 +49,7 @@ export class IdlingService {
                                 (current.completion *
                                     deltaModifier *
                                     gainModifier *
-                                    Math.pow(1.12, achievements.length))
+                                    Achievement.prototype.getBonusAchievement(achievements.length))
                         );
                     }, 0);
                     if (money != 0) {

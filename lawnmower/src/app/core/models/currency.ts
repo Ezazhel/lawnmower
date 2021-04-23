@@ -12,7 +12,7 @@ export class Fan extends Currency {
 
 export class Creation extends Currency {
     basePrice: number = 1;
-    baseChance: number = 5;
+    baseChance: number = 15;
     constructor() {
         super();
         this.gain = 0.007;
@@ -22,7 +22,7 @@ export class Creation extends Currency {
     }
 
     price() {
-        return this.basePrice * Math.pow(1.65, this.amount);
+        return Math.floor(this.basePrice * Math.pow(1.65, this.amount));
     }
 }
 export class Imagination extends Currency {
