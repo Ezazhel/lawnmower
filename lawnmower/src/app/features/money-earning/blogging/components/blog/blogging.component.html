@@ -1,16 +1,18 @@
 <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start" fxLayoutAlign.lt-lg="center">
     <div fxFlex="60">
+        <blogging-actions></blogging-actions>
+        <section class="blog" *ngIf="blogging$ | async as blogging">
+            <post [post]="blogging.post.message"></post>
+        </section>
+    </div>
+    <div fxFlex="auto">
         <mat-tab-group>
-            <mat-tab label="Blog">
-                <blogging-actions></blogging-actions>
-                <section class="blog" *ngIf="blogging$ | async as blogging">
-                    <post [post]="blogging.post.message"></post>
-                </section>
+            <mat-tab label="Upgrades">
+                <upgrades fxFlex [upgradeTab]="upgradeTab"></upgrades>
             </mat-tab>
-            <mat-tab label="Books"> 
+            <mat-tab label="Books">
                 <books></books>
             </mat-tab>
         </mat-tab-group>
     </div>
-    <upgrades fxFlex [upgradeTab]="upgradeTab"></upgrades>
 </div>

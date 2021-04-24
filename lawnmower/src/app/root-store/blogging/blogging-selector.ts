@@ -13,3 +13,5 @@ export const selectIdea = createSelector(selectBlogFeature, (state) => state.ide
 export const selectBooks = createSelector(selectBlogFeature, (state) =>
     Object.keys(state.books).map((k) => Object.assign({} as Book, Books[k], state.books[k]) as Book),
 );
+
+export const selectReadingBooks = createSelector(selectBooks, (Books) => Books.filter((b) => b.reading));

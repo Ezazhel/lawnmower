@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { addBloggingUpgradeAction, addMowingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
 import { BloggingUpgrade, MowingUpgrade } from './upgrade-data';
 import { addAchievements } from 'app/root-store/achievements/achievements-action';
-import { addBook } from '@root-store/blogging/blogging-action';
+import { unlockBook } from '@root-store/blogging/blogging-action';
 
 export const MowingAchievements = {
     ['ma1']: new Achievement(
@@ -86,7 +86,7 @@ export const BloggingAchievements = {
         'feature',
         (state: RootStoreState.State) => state.stats.totalFailedCreation > 10,
         (store: Store<RootStoreState.State>) => {
-            store.dispatch(addBook({ book: Books.davinci }));
+            store.dispatch(unlockBook({ book: Books.davinci }));
         },
     ),
 };

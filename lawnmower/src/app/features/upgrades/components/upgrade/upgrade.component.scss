@@ -1,20 +1,20 @@
 @import 'variable.scss';
 :host {
     text-align: center;
-
+    height: 100%;
     .upgradeWrapper {
         display: flex;
         flex-direction: column;
-        height: 150px;
+        height: inherit;
         width: 200px;
         line-height: 24px;
         box-shadow: 0px 2px 2px -1px rgb(0 0 0 / 20%);
         .upgrade-title {
-            font-size: 1rem;
+            font-size: 0.8rem;
             font-weight: 700;
         }
         .upgrade-description {
-            font-size: 0.9rem;
+            font-size: 0.75rem;
         }
         .upgrade-content {
             margin-top: auto;

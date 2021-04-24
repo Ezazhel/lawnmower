@@ -10,6 +10,7 @@
         grid-gap: 0.5rem;
         place-items: center;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-auto-rows: 1fr;
     }
     .currency-label {
         z-index: 7;

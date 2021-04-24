@@ -8,6 +8,6 @@ export interface State {
 
 export const initialState: State = {
     currencies: {
-        [new Money().id]: new Money(0.05),
+        [new Money().id]: new Money(0.0),
     },
 };
