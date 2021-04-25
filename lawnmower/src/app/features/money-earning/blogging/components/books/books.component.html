@@ -1,1 +1,1 @@
-<book *ngFor="let book of books$ | async; trackBy: trackByFunction" [book]="book"></book>
+<book (click)="read(book)" *ngFor="let book of books$ | async; trackBy: trackByFunction" [book]="book"></book>

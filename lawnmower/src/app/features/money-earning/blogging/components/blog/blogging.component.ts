@@ -1,3 +1,4 @@
+import { BookService } from '@core/services/book.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Blogging } from '@core/models/blogging';
 
@@ -21,7 +22,11 @@ export class BloggingComponent implements OnInit {
 
     upgrades$: Observable<Upgrade[]> = this.store.select(selectBloggingUpgradeLevelValue);
 
-    constructor(private store: Store<RootStoreState.State>, private idlingService: IdlingService) {}
+    constructor(
+        private store: Store<RootStoreState.State>,
+        private idlingService: IdlingService,
+        private bookService: BookService,
+    ) {}
 
     ngOnInit(): void {}
 }

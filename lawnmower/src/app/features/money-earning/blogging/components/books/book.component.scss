@@ -6,9 +6,11 @@
     padding: 0.5vw;
     border-top: 1px solid $green;
     box-shadow: 0px 2px 2px -1px rgb(0 0 0 / 20%);
-    &[data-unlocked] {
+    cursor: pointer;
+    &[data-unlocked='false'] {
         border-top: 1px solid $red;
         opacity: 0.4;
+        cursor: not-allowed;
     }
     .bookDescription {
         font-size: 0.65em;

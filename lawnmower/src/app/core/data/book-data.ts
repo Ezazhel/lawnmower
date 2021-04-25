@@ -8,7 +8,7 @@ export const Books = {
         (chapterRead: number) => 5 * chapterRead,
         'creationGain',
         5,
-        (chapter) => (1 + chapter) * (2.5 * 1000),
+        (chapter) => (1 + chapter) * (2.5 * 60),
     ),
     ['encyclopedia']: new Book(
         'encyclopedia',
@@ -17,7 +17,7 @@ export const Books = {
         (totalBook: number) => 1.25 * totalBook,
         'readingSpeed',
         1,
-        () => 2 * 1000,
+        () => 2 * 60,
     ),
     ['journal']: new Book(
         'journal',
@@ -26,6 +26,6 @@ export const Books = {
         (ideaGain: number) => ideaGain * 2,
         'ideaGain',
         1,
-        () => 3 * 1000,
+        () => 3 * 60,
     ),
 };

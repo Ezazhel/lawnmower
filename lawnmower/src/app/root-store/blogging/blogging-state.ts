@@ -15,5 +15,8 @@ export const initialState: State = {
     blogging: new Blogging(),
     isThinking: false,
     idea: null,
-    books: Books,
+    books: {
+        ...Books,
+        [Books.davinci.id]: { ...Books.davinci, unlocked: true },
+    },
 };

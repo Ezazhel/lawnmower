@@ -9,7 +9,9 @@ import Book from '@core/models/book';
             <span class="bookDescription">{{ book.effectDescription }}</span>
             <div fxLayout="column" class="bookState" *ngIf="book.unlocked">
                 <span> Read {{ book.chapterRead }} / {{ book.totalChapter }} </span>
-                <span>Progression : {{ book.timeRead }} / {{ book.timeToReadChapter(book.chapterRead) }} </span>
+                <span
+                    >Progression : {{ book.timeRead | exponential }} / {{ book.timeToReadChapter(book.chapterRead) }}
+                </span>
             </div>
         </div>
     `,
