@@ -1,4 +1,4 @@
-import { Blogging } from '@core/models/blogging';
+import { AffectType } from '@core/models/upgrade';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import { State } from './upgrades-state';
 import { MowingUpgrade } from '@core/data/upgrade-data';
@@ -99,3 +99,5 @@ export const selectAllUpgrades = createSelector(selectUpgradeState, (state) => (
     ...state.global,
     ...state.mowing,
 }));
+
+export const selectUpgradeAffect = createSelector(selectAllUpgrades, (upgrades, affect: AffectType) => {});

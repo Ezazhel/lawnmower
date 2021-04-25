@@ -116,9 +116,9 @@ export const BloggingUpgrade = {
         "It's time to know Kenny...!",
         0,
         1,
-        'Improve imagination gain !',
-        null,
-        () => {},
+        '50% more imagination gain !',
+        'imaginationGain',
+        (imagination: number) => imagination * 1.5,
         'C',
     ),
     ['book-worm']: new Upgrade(

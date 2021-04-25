@@ -1,5 +1,5 @@
 import { Books } from '@core/data/book-data';
-import Book from '@core/models/book';
+import Book, { BookAffect } from '@core/models/book';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import { State } from './blogging-state';
 
@@ -15,3 +15,6 @@ export const selectBooks = createSelector(selectBlogFeature, (state) =>
 );
 
 export const selectReadingBooks = createSelector(selectBooks, (Books) => Books.filter((b) => b.reading));
+export const selectBookBonus = createSelector(selectBooks, (Books: Book[], affect: BookAffect) => {
+    return Books.filter((b) => b.affect == affect);
+});

@@ -24,6 +24,7 @@ export class BookService {
                     book.chapterRead += 1;
                     book.timeRead = 0;
                 }
+                if (book.chapterRead === book.totalChapter) book.reading = false;
                 this._store.dispatch(readBook({ book }));
             });
         });

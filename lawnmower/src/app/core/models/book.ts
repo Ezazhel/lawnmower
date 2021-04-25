@@ -1,4 +1,4 @@
-type BookAffect = 'creationGain' | 'readingSpeed' | 'ideaGain';
+export type BookAffect = 'creationGain' | 'readingSpeed' | 'ideaGain';
 
 class Book {
     id: string;

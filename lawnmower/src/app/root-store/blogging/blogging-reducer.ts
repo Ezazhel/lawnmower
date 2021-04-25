@@ -21,7 +21,7 @@ export const reducer = createReducer(
     on(postVideo, (state) => state),
     on(unlockIdea, (state) => ({ ...state, idea: new Idea() })),
     on(getIdea, (state) => incrementIdeaOwn(state, 1)),
-    on(useIdea, (state) => incrementIdeaOwn(state, -1)),
+    on(useIdea, (state, { used }) => incrementIdeaOwn(state, -used)),
     on(setIsThinking, (state) => ({ ...state, isThinking: !state.isThinking })),
     on(unlockBook, (state, { book }) => ({
         ...state,

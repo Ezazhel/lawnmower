@@ -86,7 +86,7 @@ export const BloggingAchievements = {
         'Not that creative',
         "Every thing need practice and 10 failed creation isn't that bad",
         'feature',
-        (state: RootStoreState.State) => state.stats.totalFailedCreation > 10,
+        (state: RootStoreState.State) => state.stats.totalFailedCreation >= 10,
         (store: Store<RootStoreState.State>) => {
             store.dispatch(unlockBook({ book: Books.davinci }));
         },
