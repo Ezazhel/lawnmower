@@ -2,11 +2,10 @@ import { Creation } from '@core/models/currency';
 import { Upgrade } from '@core/models/upgrade';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { addAchievements } from 'app/root-store/achievements/achievements-action';
 import { unlockIdea } from 'app/root-store/blogging/blogging-action';
 import { earnCurrency } from 'app/root-store/earning/earning-action';
 import { activateSubroute } from 'app/root-store/route/route-action';
-import { BloggingAchievements } from './achievement-data';
+
 import { routes } from './route-data';
 
 export const MowingUpgrade = {
@@ -21,6 +20,8 @@ export const MowingUpgrade = {
         'You cut grass 5% faster per level',
         'speed',
         (level: number): number => Math.pow(1.05, level),
+        '$',
+        (store: RootStoreState.State) => store.stats.totalMoney >= 0.04,
     ),
     ['rich-grass']: new Upgrade(
         'rich-grass',
@@ -33,11 +34,13 @@ export const MowingUpgrade = {
         '15% more money from cutting grass',
         'gain',
         (): number => 1.15,
+        '$',
+        (store: RootStoreState.State) => store.stats.totalMowned >= 4,
     ),
     ['anti-fertilizer']: new Upgrade(
         'anti-fertilizer',
         'Anti Fertilizer',
-        (level) => 0.25 * Math.pow(1.4, level),
+        (level) => 0.15 * Math.pow(1.6, level),
         'mowing',
         'What if you spray something on the grass ?',
         0,
@@ -45,6 +48,8 @@ export const MowingUpgrade = {
         'Grass regrow 5% slower',
         'regrow',
         (level: number): number => Math.pow(1.05, level),
+        '$',
+        (store: RootStoreState.State) => store.stats.totalMowned >= 8,
     ),
     ['robot']: new Upgrade(
         'robot',
@@ -61,7 +66,7 @@ export const MowingUpgrade = {
     ['flower']: new Upgrade(
         'flower',
         'Flower',
-        () => 5,
+        () => 3,
         'mowing',
         'For mommy',
         0,

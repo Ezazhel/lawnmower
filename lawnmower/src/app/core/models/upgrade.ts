@@ -1,3 +1,4 @@
+import { RootStoreState } from 'app/root-store';
 import { CurrencySymbol } from './currency';
 export type UpgradeType = 'global' | 'mowing' | 'blogging';
 export type AffectType = 'speed' | 'gain' | 'regrow' | 'cuttingLimit' | 'feature' | 'creation';
@@ -14,6 +15,7 @@ export class Upgrade {
     currency: CurrencySymbol = '$';
     level: number = 0;
     maxLevel: number;
+    requiredToUnlock?: (state: RootStoreState.State) => boolean;
 
     constructor(
         id: string,
@@ -27,6 +29,7 @@ export class Upgrade {
         affectType: AffectType,
         effect: Function,
         currency?: CurrencySymbol,
+        requiredToUnlock?: (state: RootStoreState.State) => boolean,
     ) {
         this.id = id;
         this.name = name;
@@ -39,5 +42,6 @@ export class Upgrade {
         this.affect = affectType;
         this.effect = effect;
         this.currency = currency ?? '$';
+        this.requiredToUnlock = requiredToUnlock;
     }
 }

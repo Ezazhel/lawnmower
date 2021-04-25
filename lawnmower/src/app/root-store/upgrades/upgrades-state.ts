@@ -8,11 +8,7 @@ export interface State {
 
 export const initialState: State = {
     global: {},
-    mowing: {
-        [MowingUpgrade.sharpen.id]: MowingUpgrade.sharpen.level,
-        [MowingUpgrade['rich-grass'].id]: MowingUpgrade['rich-grass'].level,
-        [MowingUpgrade['anti-fertilizer'].id]: MowingUpgrade['anti-fertilizer'].level,
-    },
+    mowing: {},
     blogging: {
         [BloggingUpgrade.paper_pencils.id]: BloggingUpgrade.paper_pencils.level,
         [BloggingUpgrade.handy.id]: BloggingUpgrade.handy.level,

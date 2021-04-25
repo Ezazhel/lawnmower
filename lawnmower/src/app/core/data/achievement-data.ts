@@ -7,6 +7,7 @@ import { addBloggingUpgradeAction, addMowingUpgradeAction } from 'app/root-store
 import { BloggingUpgrade, MowingUpgrade } from './upgrade-data';
 import { addAchievements } from 'app/root-store/achievements/achievements-action';
 import { unlockBook } from '@root-store/blogging/blogging-action';
+import { NotifierService } from '@core/services/notifier.service';
 
 export const MowingAchievements = {
     ['ma1']: new Achievement(
@@ -42,8 +43,9 @@ export const MowingAchievements = {
         'Cut 20 plot in total',
         'feature',
         (state: RootStoreState.State) => state.stats.totalMowned >= 20,
-        (store: Store<RootStoreState.State>) => {
+        (store: Store<RootStoreState.State>, notifier: NotifierService) => {
             store.dispatch(addMowingUpgradeAction({ id: MowingUpgrade.robot.id }));
+            notifier.pushMessage(`New upgrade : ${MowingUpgrade.robot.name}`);
         },
     ),
     ['ma5']: new Achievement(

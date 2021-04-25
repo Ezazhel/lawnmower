@@ -1,9 +1,10 @@
+import { Blogging } from '@core/models/blogging';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import { State } from './upgrades-state';
 import { MowingUpgrade } from '@core/data/upgrade-data';
 import { Upgrade } from '@core/models/upgrade';
 import { BloggingUpgrade } from '../../core/data/upgrade-data';
-import { UpgradeType, UpgradeTabsAffected } from '../../core/models/upgrade';
+import { UpgradeTabsAffected } from '../../core/models/upgrade';
 import { CurrencySymbol } from '../../core/models/currency';
 
 export const selectUpgradeState: MemoizedSelector<object, State> = createFeatureSelector('upgrades');
@@ -92,3 +93,9 @@ export const selectUpgradeForCurrencyAndTabs = createSelector(
         }
     },
 );
+
+export const selectAllUpgrades = createSelector(selectUpgradeState, (state) => ({
+    ...state.blogging,
+    ...state.global,
+    ...state.mowing,
+}));

@@ -1,3 +1,4 @@
+import { selectAllUpgrades } from './../../root-store/upgrades/upgrades-selector';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState, EarningAction, StatsAction } from 'app/root-store';
@@ -9,6 +10,8 @@ import { selectAchievementsNotUnlock, selectAchievementsUnlock } from '@root-sto
 import { unlockAchievementAction } from '@root-store/achievements/achievements-action';
 import { Achievement } from '@core/models/achievement';
 import { NotifierService } from './notifier.service';
+import { BloggingUpgrade, MowingUpgrade } from '@core/data/upgrade-data';
+import { addBloggingUpgradeAction, addMowingUpgradeAction } from '@root-store/upgrades/upgrades-action';
 @Injectable({
     providedIn: 'root',
 })
@@ -69,9 +72,30 @@ export class IdlingService {
                     this.store.dispatch(unlockAchievementAction({ id: a.id }));
                     this.notifier.pushMessage(`Unlocked achievement : ${a.name}`);
                     if (a.type == 'feature') {
-                        a.effect(this.store);
+                        a.effect(this.store, this.notifier);
                     }
                 }
             });
+        });
+
+    unlockUpgrade$ = this.timer$
+        .pipe(sampleTime(1000), withLatestFrom(this.store, this.store.select(selectAllUpgrades)))
+        .subscribe(([_, store, upgrades]) => {
+            const Upgrades = { ...MowingUpgrade, ...BloggingUpgrade };
+            Object.values(Upgrades)
+                .filter((u) => u.requiredToUnlock !== undefined && upgrades[u.id] === undefined)
+                .forEach((u) => {
+                    if (u.requiredToUnlock(store)) {
+                        switch (u.type) {
+                            case 'blogging':
+                                this.store.dispatch(addBloggingUpgradeAction({ id: u.id }));
+                                break;
+                            case 'mowing':
+                                this.store.dispatch(addMowingUpgradeAction({ id: u.id }));
+                                break;
+                        }
+                        this.notifier.pushMessage(`New Upgrade : ${u.name}`);
+                    }
+                });
         });
 }
