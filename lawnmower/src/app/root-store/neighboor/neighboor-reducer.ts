@@ -18,7 +18,7 @@ export const reducer = createReducer(
     on(cutActionCompleted, regrowActionCompleted, (state, { id, modifier }) => updateCompletion(state, id, modifier)),
     on(regrowAction, (state, { id, regrowPercent }) => updateRegrow(state, id, regrowPercent)),
     on(cutAction, (state, { id, cutPercent }) => updateCut(state, id, cutPercent)),
-    on(insertNeighboorToRegrow, (state, { id }) => ({ ...state, neighboorToRegrow: [...state.neighboorToRegrow, id] })),
+    on(insertNeighboorToRegrow, (state, { id }) => neighboorToRegrow(state, id)),
     on(insertNeighboorToCut, (state, { id, cutted }) => insertCut(state, id, cutted)),
     on(removeNeighboorFromCuttingList, (state, { id, unselect }) => removeFromCuttingList(state, id, unselect)),
     on(removeNeighboorFromRegrowList, (state, { id }) => ({
@@ -105,4 +105,12 @@ function removeFromCuttingList(state: State, id: string, unselect: boolean) {
             [id]: { ...state.neighboors[id], selected: !unselect },
         },
     };
+}
+
+function neighboorToRegrow(state: State, id: string) {
+    const neighboortoRegrow = state.neighboorToRegrow;
+    if (neighboortoRegrow.find((i) => i === id) === undefined) {
+        return { ...state, neighboorToRegrow: [...state.neighboorToRegrow, id] };
+    }
+    return state;
 }

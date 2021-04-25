@@ -19,7 +19,6 @@ export class NeighboorComponent implements OnInit {
 
     textToDisplay = () => {
         if (this.neighboor.cutPercent == 0 && !this.neighboor.selected) return '(click me)';
-        if (this.neighboor.cutPercent > 0 && !this.neighboor.selected) return '(paused)';
         if (this.neighboor.cutPercent > 0) return '(cutting)';
         if (this.neighboor.cutPercent == 0 && this.neighboor.selected) return '(will cut or click)';
     };
@@ -29,6 +28,5 @@ export class NeighboorComponent implements OnInit {
             this.store.dispatch(insertNeighboorToCut({ id: this.neighboor.id, cutted: 0 }));
             return;
         }
-        this.store.dispatch(removeNeighboorFromCuttingList({ id: this.neighboor.id, unselect: true }));
     }
 }

@@ -21,7 +21,7 @@ export const MowingUpgrade = {
         'speed',
         (level: number): number => Math.pow(1.05, level),
         '$',
-        (store: RootStoreState.State) => store.stats.totalMoney >= 0.04,
+        (store: RootStoreState.State) => store.stats.totalMoney >= 0.01,
     ),
     ['rich-grass']: new Upgrade(
         'rich-grass',
