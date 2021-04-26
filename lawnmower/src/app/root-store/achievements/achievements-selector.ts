@@ -19,3 +19,7 @@ export const selectAchievementsNotUnlock = createSelector(selectAchievements, (a
 export const selectAchievementsUnlock = createSelector(selectAchievements, (achievements) =>
     achievements.filter((a) => a.isUnlock),
 );
+
+export const selectAchievementBonusMult = createSelector(selectAchievementsUnlock, (achievements) =>
+    Achievement.prototype.getBonusAchievement(achievements.length),
+);

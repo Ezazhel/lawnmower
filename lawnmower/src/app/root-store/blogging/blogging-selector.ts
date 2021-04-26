@@ -15,6 +15,7 @@ export const selectBooks = createSelector(selectBlogFeature, (state) =>
 );
 
 export const selectReadingBooks = createSelector(selectBooks, (Books) => Books.filter((b) => b.reading));
+
 export const selectBookBonus = createSelector(selectBooks, (Books: Book[], affect: BookAffect) => {
     return Books.filter((b) => b.affect == affect);
 });

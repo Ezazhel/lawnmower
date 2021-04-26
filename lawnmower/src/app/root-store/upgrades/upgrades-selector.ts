@@ -3,9 +3,9 @@ import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/s
 import { State } from './upgrades-state';
 import { MowingUpgrade } from '@core/data/upgrade-data';
 import { Upgrade } from '@core/models/upgrade';
-import { BloggingUpgrade } from '../../core/data/upgrade-data';
-import { UpgradeTabsAffected } from '../../core/models/upgrade';
-import { CurrencySymbol } from '../../core/models/currency';
+import { BloggingUpgrade } from '@core/data/upgrade-data';
+import { UpgradeTabsAffected } from '@core/models/upgrade';
+import { CurrencySymbol } from '@core/models/currency';
 
 export const selectUpgradeState: MemoizedSelector<object, State> = createFeatureSelector('upgrades');
 
@@ -100,4 +100,10 @@ export const selectAllUpgrades = createSelector(selectUpgradeState, (state) => (
     ...state.mowing,
 }));
 
-export const selectUpgradeAffect = createSelector(selectAllUpgrades, (upgrades, affect: AffectType) => {});
+export const selectUpgradeAffect = createSelector(
+    selectAllUpgrades,
+    (upgrades: { [id: string]: number }, affect: AffectType) => {
+        const filterByUnlocked = (u: Upgrade) => u.affect === affect && upgrades[u.id] !== undefined;
+        return Object.values({ ...BloggingUpgrade, ...MowingUpgrade }).filter(filterByUnlocked);
+    },
+);

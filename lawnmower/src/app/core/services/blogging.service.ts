@@ -1,4 +1,5 @@
-import { selectBookBonus, selectIdea } from './../../root-store/blogging/blogging-selector';
+import { selectAchievementBonusMult } from '@root-store/achievements/achievements-selector';
+import { selectBookBonus, selectIdea } from '@root-store/blogging/blogging-selector';
 import { IdlingService } from '@core/services/idling.service';
 import { Injectable } from '@angular/core';
 import { RootStoreState } from 'app/root-store';
@@ -11,8 +12,7 @@ import { Creation, Imagination } from '@core/models/currency';
 import { incrementTotalFailedCreation } from 'app/root-store/stats/stats-action';
 import { Subject } from 'rxjs';
 import { useIdea } from '@root-store/blogging/blogging-action';
-import { selectAchievementsUnlock } from '@root-store/achievements/achievements-selector';
-import { Achievement } from '@core/models/achievement';
+import { selectUpgradeAffect } from '@root-store/upgrades/upgrades-selector';
 
 @Injectable({
     providedIn: 'root',
@@ -29,21 +29,21 @@ export class BloggingService {
                 this._store.select(selectImagination),
                 this._store.select(selectIdea),
                 this._store.select(selectCreation),
-                this._store.select(selectAchievementsUnlock),
+                this._store.select(selectAchievementBonusMult),
             ),
-            filter(([_, isThinking]) => isThinking),
+            withLatestFrom(this._store.select(selectUpgradeAffect, 'imaginationGain')),
+            filter(([[_, isThinking]]) => isThinking),
         )
-        .subscribe(([timer, _, imagination, idea, creation, achievements]) => {
+        .subscribe(([[timer, _, imagination, idea, creation, achievementBonus], imaginationBonus]) => {
             imagination ??= new Imagination();
-            const additiveBonus =
+            let additiveBonus =
                 imagination.gain +
                 (idea?.additiveImaginationGain(idea.own) ?? 0) +
                 0.05 * Math.floor((creation?.amount ?? 0) / 2);
-
-            const multiplicationBonus =
-                timer.deltaTime *
-                (idea?.bonusToImagination() ?? 1) *
-                Achievement.prototype.getBonusAchievement(achievements.length);
+            imaginationBonus.forEach((bonus) => {
+                additiveBonus = bonus.effect(additiveBonus);
+            });
+            const multiplicationBonus = timer.deltaTime * (idea?.bonusToImagination() ?? 1) * achievementBonus;
             this._store.dispatch(
                 earnCurrency({
                     currency: {
@@ -59,9 +59,9 @@ export class BloggingService {
             withLatestFrom(
                 this._store.select(selectIdea),
                 this._store.select(selectCreation),
-                this._store.select(selectAchievementsUnlock),
+                this._store.select(selectAchievementBonusMult),
                 this._store.select(selectBookBonus, 'creationGain'),
-                (_, idea, creation, achievements, bookCreationGain) => {
+                (_, idea, creation, achievementBonus, bookCreationGain) => {
                     if ((idea?.own ?? 0) < (creation?.price() ?? Creation.prototype.price())) return;
                     creation.baseChance += bookCreationGain.reduce(
                         (previous, next) => previous + next.effect(next.chapterRead),
@@ -72,8 +72,7 @@ export class BloggingService {
                             earnCurrency({
                                 currency: {
                                     ...creation,
-                                    amount:
-                                        1 * Math.floor(Achievement.prototype.getBonusAchievement(achievements.length)),
+                                    amount: 1 * Math.floor(achievementBonus),
                                 },
                             }),
                         );
