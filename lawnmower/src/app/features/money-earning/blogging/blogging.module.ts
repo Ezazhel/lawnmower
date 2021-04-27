@@ -6,6 +6,7 @@ import { UpgradesModule } from 'app/features/upgrades/upgrades.module';
 import * as fromComponents from './components';
 import { RouterModule, Routes } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CreationComponent } from './components/creation/creation.component';
 
 const routes: Routes = [
     {
@@ -14,7 +15,7 @@ const routes: Routes = [
     },
 ];
 @NgModule({
-    declarations: [...fromComponents.components],
+    declarations: [...fromComponents.components, CreationComponent],
     imports: [CommonModule, SharedModule, UpgradesModule, FlexLayoutModule, RouterModule.forChild(routes)],
 })
 export class BloggingModule {}

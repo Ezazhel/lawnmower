@@ -9,6 +9,11 @@ import { AchievementsModule } from './achievements/achievements.module';
 import { RouteModule } from './route/route.module';
 import { BloggingModule } from './blogging/blogging.module';
 import { EffectsModule } from '@ngrx/effects';
+import { HydrationEffects } from './hydrate/hydration.effects';
+import { hydrationMetaReducer } from './hydrate/hydration.reducer';
+import { MetaReducer } from '@ngrx/store';
+
+export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
 @NgModule({
     declarations: [],
@@ -21,8 +26,8 @@ import { EffectsModule } from '@ngrx/effects';
         UpgradeModule,
         AchievementsModule,
         RouteModule,
-        StoreModule.forRoot({}),
-        EffectsModule.forRoot([]),
+        StoreModule.forRoot({}, { metaReducers }),
+        EffectsModule.forRoot([HydrationEffects]),
     ],
 })
 export class RootStoreModule {}

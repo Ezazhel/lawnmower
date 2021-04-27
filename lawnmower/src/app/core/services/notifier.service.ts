@@ -37,9 +37,9 @@ export class NotifierService {
         );
     }
 
-    pushMessage(msg: string) {
+    pushMessage(msg: string, duration = 3000) {
         this.pushSource.next(msg);
-        setTimeout(() => this.popMessage(), 3000);
+        setTimeout(() => this.popMessage(), duration);
     }
 
     private popMessage() {

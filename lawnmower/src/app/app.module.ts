@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { FooterHeaderModule } from '@shared/footer-header/footer-header.module';
 import { RootStoreModule } from './root-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { Exponential } from './shared/pipes/exponential.pipe';
 import { NotificationsModule } from '@feature/notifications/notifications.module';
 @NgModule({
     declarations: [AppComponent],
