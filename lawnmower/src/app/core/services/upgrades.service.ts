@@ -39,7 +39,11 @@ export class UpgradesService {
                     currencies.find((c) => c.type == upgrade.currency).amount,
                     unlockBloggingUpgradeAction({ id: upgrade.id }),
                     EarningAction.earnCurrency({
-                        currency: { id: upgrade.currency, amount: -upgrade.price(upgrade.level - 1) },
+                        currency: {
+                            type: upgrade.currency,
+                            id: upgrade.currency,
+                            amount: -upgrade.price(upgrade.level - 1),
+                        },
                     }),
                 ),
             ),

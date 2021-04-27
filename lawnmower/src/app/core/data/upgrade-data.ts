@@ -1,10 +1,10 @@
-import { Creation } from '@core/models/currency';
+import { Creation, Idea } from '@core/models/currency';
 import { Upgrade } from '@core/models/upgrade';
 import { NotifierService } from '@core/services/notifier.service';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { unlockBook, unlockIdea } from 'app/root-store/blogging/blogging-action';
-import { earnCurrency } from 'app/root-store/earning/earning-action';
+import { unlockBook } from 'app/root-store/blogging/blogging-action';
+import { earnCurrency, canPayDollarForIdea } from 'app/root-store/earning/earning-action';
 import { activateSubroute } from 'app/root-store/route/route-action';
 import { Books } from './book-data';
 
@@ -96,6 +96,7 @@ export const BloggingUpgrade = {
             store.dispatch(earnCurrency({ currency: { ...new Creation() } }));
         },
         'I',
+        (state: RootStoreState.State) => state.stats.totalIdea > 3,
     ),
     ['ideas']: new Upgrade(
         'ideas',
@@ -107,7 +108,7 @@ export const BloggingUpgrade = {
         1,
         'Unlock ideas',
         'feature',
-        (store: Store<RootStoreState.State>) => store.dispatch(unlockIdea()),
+        (store: Store<RootStoreState.State>) => store.dispatch(earnCurrency({ currency: { ...new Idea() } })),
         'I',
     ),
     ['handy']: new Upgrade(
@@ -123,19 +124,6 @@ export const BloggingUpgrade = {
         (imagination: number) => imagination * 1.5,
         'C',
     ),
-    ['book-worm']: new Upgrade(
-        'bookworm',
-        'Books are the answer',
-        (level) => level * 0.25,
-        'blogging',
-        'Read science-fiction !!',
-        0,
-        5,
-        'Boost base creation chance',
-        'creation',
-        (level: number) => level * 5,
-        'I',
-    ),
     ['genius']: new Upgrade(
         'genius',
         'How to become a genius',
@@ -150,7 +138,23 @@ export const BloggingUpgrade = {
             store.dispatch(unlockBook({ book: Books.genius }));
             notifier.pushMessage(`Unlocked : ${Books.genius.name} `);
         },
-        'I',
+        'Idea',
         (state: RootStoreState.State) => state.stats.totalIdea >= 5,
+    ),
+    ['money_activity']: new Upgrade(
+        'money_activity',
+        'Passion',
+        () => 15,
+        'blogging',
+        "Passion cost money, but you'll have more idea",
+        0,
+        1,
+        'You can pay money to get Ideas',
+        'feature',
+        (store: Store<RootStoreState.State>, notifier: NotifierService) => {
+            store.dispatch(canPayDollarForIdea()), notifier.pushMessage('New feature unlocked !');
+        },
+        '$',
+        (state: RootStoreState.State) => state.earning.currencies['$'].amount > 10,
     ),
 };

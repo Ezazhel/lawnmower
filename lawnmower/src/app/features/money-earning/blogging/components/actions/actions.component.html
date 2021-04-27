@@ -10,7 +10,7 @@
 </button>
 
 <div fxLayout="column" fxFlexAlign="center" *ngIf="idea$ | async as idea" id="ideas">
-    <span> {{ idea.own }} Ideas</span>
+    <span> {{ idea.amount }} Ideas</span>
     <span
         matTooltip="buff imagination generation, used to create"
         [ngClass]="{

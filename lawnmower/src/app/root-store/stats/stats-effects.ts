@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { getIdea } from '@root-store/blogging/blogging-action';
 import { earnCurrency } from '@root-store/earning/earning-action';
 import { cutActionCompleted } from '@root-store/neighboor/neighboor-action';
 import { filter, map } from 'rxjs/operators';
@@ -40,7 +39,8 @@ export class StatEffects {
 
     incrementTotalIdea$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(getIdea),
+            ofType(earnCurrency),
+            filter(({ currency }) => currency.type == 'Idea'),
             map(() => incrementTotalIdea({ idea: 1 })),
         ),
     );

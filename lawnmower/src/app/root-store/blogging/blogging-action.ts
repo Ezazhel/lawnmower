@@ -8,9 +8,5 @@ export const postPicture = createAction('[Blogging] Post picture');
 
 export const setIsThinking = createAction('[Blogging] Think !');
 
-export const getIdea = createAction('[Blogging] Get an idea');
-export const unlockIdea = createAction('[Blogging] Unlock Idea');
-export const useIdea = createAction('[Blogging] Use Idea', props<{ used: number }>());
-
 export const unlockBook = createAction('[Blogging] Add book', props<{ book: Book }>());
 export const readBook = createAction('[Blogging] Read book', props<{ book: Book }>());

@@ -8,7 +8,7 @@ export const Books = {
         (chapterRead: number) => 5 * chapterRead,
         'creationGain',
         5,
-        (chapter) => (1 + chapter) * (2.5 * 60),
+        (chapter) => (1 + chapter) * (1 * 60),
     ),
     ['encyclopedia']: new Book(
         'encyclopedia',

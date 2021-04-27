@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialState } from './earning-state';
-import { earnCurrency } from './earning-action';
+import { canPayDollarForIdea, earnCurrency } from './earning-action';
 
 export const reducer = createReducer(
     initialState,
@@ -14,5 +14,9 @@ export const reducer = createReducer(
                 amount: (state.currencies[currency.id]?.amount ?? 0) + currency.amount,
             },
         },
+    })),
+    on(canPayDollarForIdea, (state) => ({
+        ...state,
+        currencies: { ...state.currencies, ['idea']: { ...state.currencies.idea, canPayToGetIdea: true } },
     })),
 );
