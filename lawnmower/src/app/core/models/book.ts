@@ -1,4 +1,4 @@
-export type BookAffect = 'creationGain' | 'readingSpeed' | 'ideaGain';
+export type BookAffect = 'creationGain' | 'readingSpeed' | 'ideaGain' | 'feature';
 
 class Book {
     id: string;
@@ -12,14 +12,17 @@ class Book {
     unlocked: boolean = false;
     effectDescription: string;
     reading: boolean;
+
+    unlockCondition: (...params: any) => boolean;
     constructor(
         id: string,
         name: string,
-        effectDescription,
-        effect,
+        effectDescription: string,
+        effect: (params: number) => number,
         affect: BookAffect,
         totalChapter: number,
-        timeToReadChapter,
+        timeToReadChapter: (chapterRead: number) => number,
+        unlockCondition?,
     ) {
         this.id = id;
         this.name = name;
@@ -30,6 +33,7 @@ class Book {
         this.totalChapter = totalChapter;
         this.timeToReadChapter = timeToReadChapter;
         this.timeRead = 0;
+        this.unlockCondition = unlockCondition;
     }
 }
 

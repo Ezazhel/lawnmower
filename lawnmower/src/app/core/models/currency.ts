@@ -1,4 +1,4 @@
-export type CurrencySymbol = '$' | 'I' | 'C';
+export type CurrencySymbol = '$' | 'I' | 'C' | 'Idea';
 export class Currency {
     id: string;
     amount: number = 0;

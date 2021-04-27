@@ -28,5 +28,5 @@ export const reducer = createReducer(
         ...state,
         totalFailedCreation: state.totalFailedCreation + number,
     })),
-    on(incrementTotalIdea, (state, { idea: number }) => ({ ...state, totalIdea: number })),
+    on(incrementTotalIdea, (state, { idea: number }) => ({ ...state, totalIdea: state.totalIdea + number })),
 );

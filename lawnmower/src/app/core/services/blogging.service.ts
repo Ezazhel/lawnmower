@@ -1,3 +1,4 @@
+import { selectBlogFeature } from '@root-store/blogging/blogging-selector';
 import { selectAchievementBonusMult } from '@root-store/achievements/achievements-selector';
 import { selectBookBonus, selectIdea } from '@root-store/blogging/blogging-selector';
 import { IdlingService } from '@core/services/idling.service';
@@ -5,7 +6,6 @@ import { Injectable } from '@angular/core';
 import { RootStoreState } from 'app/root-store';
 import { Store } from '@ngrx/store';
 import { filter, withLatestFrom } from 'rxjs/operators';
-import { selectIsThinking } from 'app/root-store/blogging/blogging-selector';
 import { selectCreation as selectCreation, selectImagination } from 'app/root-store/earning/earning-selector';
 import { earnCurrency } from 'app/root-store/earning/earning-action';
 import { Creation, Imagination } from '@core/models/currency';
@@ -25,16 +25,15 @@ export class BloggingService {
     private thinkSubscription = this._idlingService.timer$
         .pipe(
             withLatestFrom(
-                this._store.select(selectIsThinking),
+                this._store.select(selectBlogFeature),
                 this._store.select(selectImagination),
-                this._store.select(selectIdea),
                 this._store.select(selectCreation),
                 this._store.select(selectAchievementBonusMult),
             ),
             withLatestFrom(this._store.select(selectUpgradeAffect, 'imaginationGain')),
-            filter(([[_, isThinking]]) => isThinking),
+            filter(([[_, { isThinking }]]) => isThinking),
         )
-        .subscribe(([[timer, _, imagination, idea, creation, achievementBonus], imaginationBonus]) => {
+        .subscribe(([[timer, { idea }, imagination, creation, achievementBonus], imaginationBonus]) => {
             imagination ??= new Imagination();
             let additiveBonus =
                 imagination.gain +

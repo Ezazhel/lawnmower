@@ -103,7 +103,7 @@ export const selectAllUpgrades = createSelector(selectUpgradeState, (state) => (
 export const selectUpgradeAffect = createSelector(
     selectAllUpgrades,
     (upgrades: { [id: string]: number }, affect: AffectType) => {
-        const filterByUnlocked = (u: Upgrade) => u.affect === affect && upgrades[u.id] !== undefined;
+        const filterByUnlocked = (u: Upgrade) => u.affect === affect && upgrades[u.id] !== 0;
         return Object.values({ ...BloggingUpgrade, ...MowingUpgrade }).filter(filterByUnlocked);
     },
 );

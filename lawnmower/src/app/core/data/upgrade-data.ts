@@ -1,10 +1,12 @@
 import { Creation } from '@core/models/currency';
 import { Upgrade } from '@core/models/upgrade';
+import { NotifierService } from '@core/services/notifier.service';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { unlockIdea } from 'app/root-store/blogging/blogging-action';
+import { unlockBook, unlockIdea } from 'app/root-store/blogging/blogging-action';
 import { earnCurrency } from 'app/root-store/earning/earning-action';
 import { activateSubroute } from 'app/root-store/route/route-action';
+import { Books } from './book-data';
 
 import { routes } from './route-data';
 
@@ -21,7 +23,7 @@ export const MowingUpgrade = {
         'speed',
         (level: number): number => Math.pow(1.05, level),
         '$',
-        (store: RootStoreState.State) => store.stats.totalMoney >= 0.01,
+        (state: RootStoreState.State) => state.stats.totalMoney >= 0.01,
     ),
     ['rich-grass']: new Upgrade(
         'rich-grass',
@@ -35,7 +37,7 @@ export const MowingUpgrade = {
         'gain',
         (): number => 1.15,
         '$',
-        (store: RootStoreState.State) => store.stats.totalMowned >= 4,
+        (state: RootStoreState.State) => state.stats.totalMowned >= 4,
     ),
     ['anti-fertilizer']: new Upgrade(
         'anti-fertilizer',
@@ -49,7 +51,7 @@ export const MowingUpgrade = {
         'regrow',
         (level: number): number => Math.pow(1.05, level),
         '$',
-        (store: RootStoreState.State) => store.stats.totalMowned >= 8,
+        (state: RootStoreState.State) => state.stats.totalMowned >= 8,
     ),
     ['robot']: new Upgrade(
         'robot',
@@ -133,5 +135,22 @@ export const BloggingUpgrade = {
         'creation',
         (level: number) => level * 5,
         'I',
+    ),
+    ['genius']: new Upgrade(
+        'genius',
+        'How to become a genius',
+        () => 5,
+        'blogging',
+        'You shall find a book',
+        1,
+        1,
+        'Unlock a book',
+        'feature',
+        (store: Store<RootStoreState.State>, notifier: NotifierService) => {
+            store.dispatch(unlockBook({ book: Books.genius }));
+            notifier.pushMessage(`Unlocked : ${Books.genius.name} `);
+        },
+        'I',
+        (state: RootStoreState.State) => state.stats.totalIdea >= 5,
     ),
 };

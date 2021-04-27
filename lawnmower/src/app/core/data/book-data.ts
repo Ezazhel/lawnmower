@@ -28,4 +28,13 @@ export const Books = {
         1,
         () => 3 * 60,
     ),
+    ['genius']: new Book(
+        'genius',
+        'How to become a genius',
+        'Automate idea purchase',
+        () => 0,
+        'feature',
+        1,
+        () => 30,
+    ),
 };
