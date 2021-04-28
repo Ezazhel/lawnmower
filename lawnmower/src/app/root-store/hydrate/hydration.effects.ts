@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { NotifierService } from '@core/services/notifier.service';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { interval } from 'rxjs';
 import { distinctUntilChanged, map, switchMap, tap, sampleTime } from 'rxjs/operators';
 import { RootStoreState } from '..';
 import * as HydrationActions from './hydration.actions';

@@ -1,6 +1,8 @@
+import Book from '@core/models/book';
 import { Creation, Idea } from '@core/models/currency';
 import { assignCurrency } from '@core/utility/utility';
 import { createFeatureSelector, MemoizedSelector, createSelector } from '@ngrx/store';
+import { selectBookBonus } from '@root-store/blogging/blogging-selector';
 import { State } from './earning-state';
 
 const getMoney = (state: State) => state.currencies['$'];

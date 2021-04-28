@@ -17,6 +17,6 @@ export const reducer = createReducer(
     })),
     on(canPayDollarForIdea, (state) => ({
         ...state,
-        currencies: { ...state.currencies, ['idea']: { ...state.currencies.idea, canPayToGetIdea: true } },
+        currencies: { ...state.currencies, ['Idea']: { ...state.currencies['Idea'], canPayToGetIdea: true } },
     })),
 );

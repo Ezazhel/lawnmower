@@ -62,4 +62,8 @@ export class Idea extends Currency {
     additiveImaginationGain(own: number) {
         return 0.01 * own;
     }
+
+    priceDollar() {
+        return this.price() * 10;
+    }
 }
