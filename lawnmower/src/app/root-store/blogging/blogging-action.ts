@@ -10,3 +10,5 @@ export const setIsThinking = createAction('[Blogging] Think !');
 
 export const unlockBook = createAction('[Blogging] Add book', props<{ book: Book }>());
 export const readBook = createAction('[Blogging] Read book', props<{ book: Book }>());
+
+export const automateIdea = createAction('[Action] AutomateIdea');

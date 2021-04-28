@@ -11,19 +11,31 @@
 
 <div fxLayout="column" fxFlexAlign="center" *ngIf="idea$ | async as idea" id="ideas">
     <span> {{ idea.amount }} Ideas</span>
+    <span *ngIf="canAutomateIdea$ | async">
+        automate
+        <input type="checkbox" #checkboxIdea (click)="autoIdea()" [checked]="isAutomateIdea$ | async"
+    /></span>
     <span
         matTooltip="buff imagination generation, used to create"
         [ngClass]="{
             canGetIdea: (imagination$ | async)?.amount >= idea.price(),
             cantGetIdea: (imagination$ | async)?.amount <= idea.price()
         }"
-        (click)="doGetIdea$.next('I')"
+        (mousedown)="mouseDownIdea('I')"
+        (mouseup)="stopGetIdea()"
     >
         1 Idea : {{ idea.price() | exponential }} I
     </span>
-    <button mat-button-raised (click)="doGetIdeaWithDollar.next('$')" *ngIf="idea.canPayToGetIdea">
-        1 Idea : {{ idea.priceDollar() | exponential }}
-    </button>
+    <span
+        (click)="doGetIdea$.next('$')"
+        *ngIf="idea.canPayToGetIdea"
+        [ngClass]="{
+            canGetIdea: (money$ | async)?.amount >= idea.priceDollar(),
+            cantGetIdea: (money$ | async)?.amount <= idea.priceDollar()
+        }"
+    >
+        1 Idea : {{ idea.priceDollar() | exponential }}$
+    </span>
 </div>
 <div class="creation" *ngIf="creation$ | async as creation">
     <button mat-button mat-fab color="primary" (click)="create()" matTooltip="C/2 = +0.05I">Create</button>

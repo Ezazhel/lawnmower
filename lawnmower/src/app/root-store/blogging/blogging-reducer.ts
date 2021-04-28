@@ -1,5 +1,15 @@
+import { state } from '@angular/animations';
 import { createReducer, on } from '@ngrx/store';
-import { unlockBook, postMessage, postPicture, postTopic, postVideo, setIsThinking, readBook } from './blogging-action';
+import {
+    unlockBook,
+    postMessage,
+    postPicture,
+    postTopic,
+    postVideo,
+    setIsThinking,
+    readBook,
+    automateIdea,
+} from './blogging-action';
 import { initialState, State } from './blogging-state';
 export const reducer = createReducer(
     initialState,
@@ -16,4 +26,5 @@ export const reducer = createReducer(
         ...state,
         books: { ...state.books, [book.id]: { ...state.books[book.id], ...book } },
     })),
+    on(automateIdea, (state) => ({ ...state, automateIdea: !state.automateIdea })),
 );

@@ -18,3 +18,5 @@ export const selectReadingBooks = createSelector(selectBooks, (Books) => Books.f
 export const selectBookBonus = createSelector(selectBooks, (Books: Book[], affect: BookAffect) => {
     return Books.filter((b) => b.affect == affect);
 });
+
+export const selectAutomateIdea = createSelector(selectBlogFeature, (state) => state.automateIdea);

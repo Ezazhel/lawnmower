@@ -7,10 +7,12 @@ export interface State {
     books: {
         [id: string]: Partial<Book>;
     };
+    automateIdea: boolean;
 }
 
 export const initialState: State = {
     blogging: new Blogging(),
     isThinking: false,
     books: Books,
+    automateIdea: false,
 };
