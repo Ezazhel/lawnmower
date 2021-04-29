@@ -8,11 +8,13 @@ export interface State {
         [id: string]: Partial<Book>;
     };
     automateIdea: boolean;
+    canBuyBook: boolean;
 }
 
 export const initialState: State = {
     blogging: new Blogging(),
     isThinking: false,
-    books: Books,
+    books: {},
     automateIdea: false,
+    canBuyBook: false,
 };

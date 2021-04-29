@@ -3,7 +3,7 @@ import { Upgrade } from '@core/models/upgrade';
 import { NotifierService } from '@core/services/notifier.service';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { unlockBook } from 'app/root-store/blogging/blogging-action';
+import { canBuyBook, unlockBook } from 'app/root-store/blogging/blogging-action';
 import { earnCurrency, canPayDollarForIdea } from 'app/root-store/earning/earning-action';
 import { activateSubroute } from 'app/root-store/route/route-action';
 import { Books } from './book-data';
@@ -152,9 +152,27 @@ export const BloggingUpgrade = {
         'You can pay money to get Ideas',
         'feature',
         (store: Store<RootStoreState.State>, notifier: NotifierService) => {
-            store.dispatch(canPayDollarForIdea()), notifier.pushMessage('New feature unlocked !');
+            store.dispatch(canPayDollarForIdea());
+            notifier.pushMessage('New feature unlocked !');
         },
         '$',
         (state: RootStoreState.State) => state.earning.currencies['$'].amount > 10,
+    ),
+    ['librarian']: new Upgrade(
+        'librarian',
+        'Librarian',
+        () => 13,
+        'blogging',
+        'Go to librarian',
+        0,
+        1,
+        'you can buy book',
+        'feature',
+        (store: Store<RootStoreState.State>, notifier: NotifierService) => {
+            store.dispatch(canBuyBook());
+            notifier.pushMessage('New feature unlocked');
+        },
+        'Idea',
+        (state: RootStoreState.State) => state.earning.currencies['Idea'].amount > 8,
     ),
 };

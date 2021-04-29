@@ -9,6 +9,7 @@ import {
     setIsThinking,
     readBook,
     automateIdea,
+    canBuyBook,
 } from './blogging-action';
 import { initialState, State } from './blogging-state';
 export const reducer = createReducer(
@@ -20,11 +21,12 @@ export const reducer = createReducer(
     on(setIsThinking, (state) => ({ ...state, isThinking: !state.isThinking })),
     on(unlockBook, (state, { book }) => ({
         ...state,
-        books: { ...state.books, [book.id]: { ...state.books[book.id], ...book, unlocked: true } },
+        books: { ...state.books, [book.id]: { ...book, unlocked: true } },
     })),
     on(readBook, (state, { book }) => ({
         ...state,
         books: { ...state.books, [book.id]: { ...state.books[book.id], ...book } },
     })),
     on(automateIdea, (state) => ({ ...state, automateIdea: !state.automateIdea })),
+    on(canBuyBook, (state) => ({ ...state, canBuyBook: true })),
 );

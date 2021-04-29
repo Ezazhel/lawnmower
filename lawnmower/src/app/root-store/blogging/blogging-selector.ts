@@ -20,3 +20,5 @@ export const selectBookBonus = createSelector(selectBooks, (Books: Book[], affec
 });
 
 export const selectAutomateIdea = createSelector(selectBlogFeature, (state) => state.automateIdea);
+
+export const selectCanBuyBook = createSelector(selectBlogFeature, (state) => state.canBuyBook);

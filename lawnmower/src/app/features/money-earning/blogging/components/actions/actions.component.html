@@ -1,44 +1,47 @@
-<button
-    [ngClass]="{
-        think: true,
-        clicked: isThinking$ | async
-    }"
-    (click)="think()"
-    [matTooltip]="(imagination$ | async)?.gain"
->
-    Think
-</button>
-
-<div fxLayout="column" fxFlexAlign="center" *ngIf="idea$ | async as idea" id="ideas">
-    <span> {{ idea.amount }} Ideas</span>
-    <span *ngIf="canAutomateIdea$ | async">
-        automate
-        <input type="checkbox" #checkboxIdea (click)="autoIdea()" [checked]="isAutomateIdea$ | async"
-    /></span>
-    <span
-        matTooltip="buff imagination generation, used to create"
+<div fxLayout="column" fxFlexAlign="center">
+    <button
         [ngClass]="{
-            canGetIdea: (imagination$ | async)?.amount >= idea.price(),
-            cantGetIdea: (imagination$ | async)?.amount <= idea.price()
+            think: true,
+            clicked: isThinking$ | async
         }"
-        (mousedown)="mouseDownIdea('I')"
-        (mouseup)="stopGetIdea()"
+        (click)="think()"
+        [matTooltip]="(imagination$ | async)?.gain"
     >
-        1 Idea : {{ idea.price() | exponential }} I
-    </span>
-    <span
-        (click)="doGetIdea$.next('$')"
-        *ngIf="idea.canPayToGetIdea"
-        [ngClass]="{
-            canGetIdea: (money$ | async)?.amount >= idea.priceDollar(),
-            cantGetIdea: (money$ | async)?.amount <= idea.priceDollar()
-        }"
-    >
-        1 Idea : {{ idea.priceDollar() | exponential }}$
-    </span>
+        Think
+    </button>
 </div>
-<div class="creation" *ngIf="creation$ | async as creation">
-    <button mat-button mat-fab color="primary" (click)="create()" matTooltip="C/2 = +0.05I">Create</button>
-    <span class="creation-idea-cost">cost {{ creation.price() | exponential }} idea</span>
-    <span class="creation-chance">{{ creation.baseChance }}% to get creation point</span>
-</div>
+<ng-container *ngIf="imagination$ | async as imagination">
+    <div fxLayout="column" fxFlexAlign="center" *ngIf="idea$ | async as idea" id="ideas">
+        <span> {{ idea.amount }} Ideas</span>
+        <span *ngIf="canAutomateIdea$ | async">
+            automate
+            <input type="checkbox" #checkboxIdea (click)="autoIdea()" [checked]="isAutomateIdea$ | async"
+        /></span>
+        <span
+            matTooltip="buff imagination generation, used to create"
+            [ngClass]="{
+                canGetIdea: imagination?.amount >= idea.price(),
+                cantGetIdea: imagination?.amount <= idea.price()
+            }"
+            (mousedown)="mouseDownIdea('I')"
+            (mouseup)="stopGetIdea()"
+        >
+            1 Idea : {{ idea.price() | exponential }} I
+        </span>
+        <span
+            (click)="doGetIdea$.next('$')"
+            *ngIf="idea.canPayToGetIdea"
+            [ngClass]="{
+                canGetIdea: (money$ | async)?.amount >= idea.priceDollar(),
+                cantGetIdea: (money$ | async)?.amount <= idea.priceDollar()
+            }"
+        >
+            1 Idea : {{ idea.priceDollar() | exponential }}$
+        </span>
+    </div>
+    <div class="creation" *ngIf="creation$ | async as creation">
+        <button mat-button mat-fab color="primary" (click)="create()" matTooltip="C/2 = +0.05I">Create</button>
+        <span class="creation-idea-cost">cost {{ creation.price() | exponential }} idea</span>
+        <span class="creation-chance">{{ creation.baseChance }}% to get creation point</span>
+    </div>
+</ng-container>

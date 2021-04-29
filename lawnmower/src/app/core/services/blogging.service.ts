@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { filter, sampleTime, withLatestFrom } from 'rxjs/operators';
 import { selectAllCurrencies, selectEarningState } from 'app/root-store/earning/earning-selector';
 import { earnCurrency } from 'app/root-store/earning/earning-action';
-import { Creation, Imagination, Idea } from '@core/models/currency';
+import { Creation, Imagination, Idea, Currency, CurrencySymbol } from '@core/models/currency';
 import { incrementTotalFailedCreation } from 'app/root-store/stats/stats-action';
 import { Subject } from 'rxjs';
 import { selectUpgradeAffect } from '@root-store/upgrades/upgrades-selector';
@@ -98,13 +98,12 @@ export class BloggingService {
                 Idea,
                 currencies.find((c) => c.type == 'Idea'),
             );
-            debugger;
             const imagination = currencies.find((c) => c.type == 'I');
             const money = currencies.find((c) => c.type == '$');
             this.getIdea('', imagination, idea, money);
         });
 
-    public getIdea(currencySymbol, imagination, idea, money) {
+    public getIdea(currencySymbol: CurrencySymbol | string, imagination: Imagination, idea: Idea, money: Currency) {
         let ideaGet: number = 0;
         switch (currencySymbol) {
             case 'I':

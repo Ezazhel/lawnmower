@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Book from '@core/models/book';
 import { Store } from '@ngrx/store';
 import { readBook } from '@root-store/blogging/blogging-action';
-import { selectBooks } from '@root-store/blogging/blogging-selector';
+import { selectBooks, selectCanBuyBook } from '@root-store/blogging/blogging-selector';
 import { RootStoreState } from 'app/root-store/';
 
 @Component({
@@ -12,7 +12,7 @@ import { RootStoreState } from 'app/root-store/';
 })
 export class BooksComponent implements OnInit {
     books$ = this.store.select(selectBooks);
-
+    canBuyBook$ = this.store.select(selectCanBuyBook);
     constructor(private store: Store<RootStoreState.State>) {}
 
     ngOnInit(): void {}
@@ -25,4 +25,6 @@ export class BooksComponent implements OnInit {
         if (book.unlocked && book.chapterRead != book.totalChapter)
             this.store.dispatch(readBook({ book: { ...book, reading: !book.reading } }));
     }
+
+    buyBook() {}
 }

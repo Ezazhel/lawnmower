@@ -21,7 +21,7 @@ export class Creation extends Currency {
     }
 
     price() {
-        return Math.floor(this.basePrice * Math.pow(1.65, this.amount));
+        return Math.floor(this.basePrice * Math.pow(1.45, this.amount));
     }
 }
 export class Imagination extends Currency {
@@ -54,7 +54,7 @@ export class Idea extends Currency {
         this.type = 'Idea';
     }
     price() {
-        return this.basePrice * Math.pow(1.35, this.amount);
+        return this.basePrice * Math.pow(1.35, this.amount) * Math.floor(Math.max(1, this.amount / 5));
     }
     bonusToImagination() {
         return Math.pow(1.15, this.amount);
@@ -64,6 +64,6 @@ export class Idea extends Currency {
     }
 
     priceDollar() {
-        return this.price() * 10;
+        return (1 + this.basePrice) * Math.pow(1.55, this.amount);
     }
 }

@@ -1,1 +1,4 @@
-<book (click)="read(book)" *ngFor="let book of books$ | async; trackBy: trackByFunction" [book]="book"></book>
+<ng-container *ngIf="books$ | async as books">
+    <book (click)="read(book)" *ngFor="let book of books; trackBy: trackByFunction" [book]="book"></book>
+    <button *ngIf="canBuyBook$ | async">Buy book for {{ books.length * 10 }}</button>
+</ng-container>

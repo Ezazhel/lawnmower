@@ -75,7 +75,6 @@ export class ActionsComponent implements OnInit {
         this.doGetIdea$.next(currencySymbol);
         this.getIdeaInterval = setInterval(() => {
             this.doGetIdea$.next(currencySymbol);
-            console.log('test');
         }, 400);
     }
     stopGetIdea() {

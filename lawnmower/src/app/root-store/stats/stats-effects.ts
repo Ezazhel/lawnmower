@@ -24,7 +24,7 @@ export class StatEffects {
     incrementTotalCreation$ = createEffect(() =>
         this.actions$.pipe(
             ofType(earnCurrency),
-            filter(({ currency }) => currency.type == 'C'),
+            filter(({ currency }) => currency.type == 'C' && currency.amount > 0),
             map(({ currency }) => incrementTotalCreation({ creation: currency.amount })),
         ),
     );
@@ -32,7 +32,7 @@ export class StatEffects {
     incrementTotalImagination$ = createEffect(() =>
         this.actions$.pipe(
             ofType(earnCurrency),
-            filter(({ currency }) => currency.type == 'I'),
+            filter(({ currency }) => currency.type == 'I' && currency.amount > 0),
             map(({ currency }) => incrementTotalImagination({ imagination: currency.amount })),
         ),
     );
@@ -40,7 +40,7 @@ export class StatEffects {
     incrementTotalIdea$ = createEffect(() =>
         this.actions$.pipe(
             ofType(earnCurrency),
-            filter(({ currency }) => currency.type == 'Idea'),
+            filter(({ currency }) => currency.type == 'Idea' && currency.amount > 0),
             map(() => incrementTotalIdea({ idea: 1 })),
         ),
     );

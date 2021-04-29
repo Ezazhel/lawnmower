@@ -12,3 +12,4 @@ export const unlockBook = createAction('[Blogging] Add book', props<{ book: Book
 export const readBook = createAction('[Blogging] Read book', props<{ book: Book }>());
 
 export const automateIdea = createAction('[Action] AutomateIdea');
+export const canBuyBook = createAction('[Action] Can Buy book');
