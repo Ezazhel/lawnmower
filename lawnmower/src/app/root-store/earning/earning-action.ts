@@ -1,4 +1,4 @@
-import { Currency } from '@core/models/currency';
+import { Currency } from '@core/models/Currencies/Currency';
 import { createAction, props } from '@ngrx/store';
 export const earnCurrency = createAction('[Earning] Currency', props<{ currency: Currency }>());
 

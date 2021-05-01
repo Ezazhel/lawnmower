@@ -1,8 +1,7 @@
 import { RootStoreState } from 'app/root-store';
-import { CurrencySymbol } from './currency';
-export type UpgradeType = 'global' | 'mowing' | 'blogging';
-export type AffectType = 'speed' | 'gain' | 'regrow' | 'cuttingLimit' | 'feature' | 'creation' | 'imaginationGain';
-export type UpgradeTabsAffected = 'mowing' | 'blogging';
+import { CurrencySymbol } from '../Currencies';
+import { AffectType } from './AffectType';
+import { UpgradeType } from './UpgradeType';
 export class Upgrade {
     id: string;
     name: string;

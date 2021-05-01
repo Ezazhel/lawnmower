@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Creation, CurrencySymbol, Imagination } from '@core/models/currency';
-import { select, Store } from '@ngrx/store';
+import { CreationPoint, CurrencySymbol, Imagination } from '@core/models/Currencies';
+import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { automateIdea, setIsThinking } from '@root-store/blogging/blogging-action';
 import {
@@ -9,10 +9,9 @@ import {
     selectBooks,
     selectIsThinking,
 } from '@root-store/blogging/blogging-selector';
-import { earnCurrency } from '@root-store/earning/earning-action';
 import { selectCreation, selectIdea, selectImagination, selectMoney } from '@root-store/earning/earning-selector';
-import { BehaviorSubject, fromEvent, interval, Observable, Subject } from 'rxjs';
-import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { BloggingService } from '@core/services/blogging.service';
 import { Books } from '@core/data/book-data';
 
@@ -25,9 +24,9 @@ export class ActionsComponent implements OnInit {
     @ViewChild('checkboxIdea')
     checkboxIdea: ElementRef;
 
-    creation$: Observable<Creation> = this.store.select(selectCreation).pipe(
+    creation$: Observable<CreationPoint> = this.store.select(selectCreation).pipe(
         withLatestFrom(this.store.select(selectBookBonus, 'creationGain')),
-        filter((creation) => creation != undefined),
+        filter(([creation]) => creation !== undefined),
         map(([creation, bookCreationGain]) => {
             creation.baseChance += bookCreationGain.reduce(
                 (previous, next) => previous + next.effect(next.chapterRead),

@@ -7,7 +7,7 @@ import { RootStoreState } from 'app/root-store';
 import { selectBlogging, selectBooks } from 'app/root-store/blogging/blogging-selector';
 import { Observable } from 'rxjs';
 import { IdlingService } from '@core/services/idling.service';
-import { Upgrade, UpgradeTabsAffected } from '@core/models/upgrade';
+import { Upgrade, UpgradeTabsAffected } from '@core/models/Upgrade';
 import { selectBloggingUpgradeLevelValue } from 'app/root-store/upgrades/upgrades-selector';
 
 @Component({

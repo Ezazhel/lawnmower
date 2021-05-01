@@ -3,17 +3,18 @@ import { Action, Store } from '@ngrx/store';
 import { RootStoreState, EarningAction } from 'app/root-store';
 import { Subject, Subscription } from 'rxjs';
 import { filter, withLatestFrom } from 'rxjs/operators';
-import { selectAllCurrencies, selectMoney } from '../../root-store/earning/earning-selector';
-import { Upgrade } from '@core/models/upgrade';
-import { unlockMowingUpgradeAction, unlockBloggingUpgradeAction } from '../../root-store/upgrades/upgrades-action';
+import { selectAllCurrencies, selectMoney } from '@root-store/earning/earning-selector';
+import { Upgrade } from '@core/models/Upgrade/Upgrade';
+import { unlockMowingUpgradeAction, unlockBloggingUpgradeAction } from '@root-store/upgrades/upgrades-action';
 
-import { Currency, CurrencySymbol, Money } from '@core/models/currency';
+import { Currency, Money } from '@core/models/Currencies';
+import { NotifierService } from './notifier.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class UpgradesService {
-    constructor(private store: Store<RootStoreState.State>) {}
+    constructor(private store: Store<RootStoreState.State>, private notifier: NotifierService) {}
     public doUnlockUpgrade$: Subject<Upgrade> = new Subject<Upgrade>();
 
     private _unlockMowingUpgradeSubscription: Subscription = this.doUnlockUpgrade$
@@ -55,7 +56,7 @@ export class UpgradesService {
             this.store.dispatch(UnlockAction);
             this.store.dispatch(LoseMoneyAction);
             if (upgrade.affect == 'feature') {
-                upgrade.effect(this.store);
+                upgrade.effect(this.store, this.notifier);
             }
         }
     }

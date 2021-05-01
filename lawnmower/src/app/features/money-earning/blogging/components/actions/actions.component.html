@@ -5,10 +5,10 @@
             clicked: isThinking$ | async
         }"
         (click)="think()"
-        [matTooltip]="(imagination$ | async)?.gain"
     >
         Think
     </button>
+    <span>{{ (imagination$ | async)?.gain | exponential }}/s</span>
 </div>
 <ng-container *ngIf="imagination$ | async as imagination">
     <div fxLayout="column" fxFlexAlign="center" *ngIf="idea$ | async as idea" id="ideas">
@@ -23,7 +23,7 @@
                 canGetIdea: imagination?.amount >= idea.price(),
                 cantGetIdea: imagination?.amount <= idea.price()
             }"
-            (mousedown)="mouseDownIdea('I')"
+            (mouseleave)="mouseDownIdea('I')"
             (mouseup)="stopGetIdea()"
         >
             1 Idea : {{ idea.price() | exponential }} I

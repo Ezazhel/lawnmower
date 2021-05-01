@@ -1,15 +1,13 @@
-import { Currency } from '@core/models/currency';
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Upgrade } from '@core/models/upgrade';
 import { UpgradesService } from '@core/services/upgrades.service';
 import { select, Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { selectAllCurrencies, selectMoney } from 'app/root-store/earning/earning-selector';
+import { selectAllCurrencies } from 'app/root-store/earning/earning-selector';
 import { selectUpgradeForCurrencyAndTabs } from 'app/root-store/upgrades/upgrades-selector';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CurrencySymbol } from '../../../../core/models/currency';
-import { UpgradeTabsAffected } from '../../../../core/models/upgrade';
+import { CurrencySymbol } from '@core/models/Currencies';
+import { UpgradeTabsAffected, Upgrade } from '@core/models/Upgrade';
 
 @Component({
     selector: 'app-upgrade-currency',

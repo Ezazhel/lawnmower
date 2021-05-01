@@ -13,7 +13,7 @@ class Book {
     effectDescription: string;
     reading: boolean;
 
-    unlockCondition: (...params: any) => boolean;
+    isBuyable: boolean;
     constructor(
         id: string,
         name: string,
@@ -22,7 +22,7 @@ class Book {
         affect: BookAffect,
         totalChapter: number,
         timeToReadChapter: (chapterRead: number) => number,
-        unlockCondition?,
+        isBuyable?,
     ) {
         this.id = id;
         this.name = name;
@@ -33,7 +33,7 @@ class Book {
         this.totalChapter = totalChapter;
         this.timeToReadChapter = timeToReadChapter;
         this.timeRead = 0;
-        this.unlockCondition = unlockCondition;
+        this.isBuyable = isBuyable;
     }
 }
 

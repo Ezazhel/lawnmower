@@ -5,7 +5,7 @@ import { Neighboor } from '@core/models/neighboor';
 import { Observable } from 'rxjs';
 import { getAllNeighboors } from 'app/root-store/neighboor/neighboor-selector';
 
-import { UpgradeTabsAffected } from '@core/models/upgrade';
+import { UpgradeTabsAffected } from '@core/models/Upgrade';
 @Component({
     selector: 'mowing',
     templateUrl: './mowing.component.html',

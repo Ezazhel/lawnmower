@@ -18,6 +18,7 @@ export const Books = {
         'readingSpeed',
         1,
         () => 2 * 60,
+        true,
     ),
     ['journal']: new Book(
         'journal',
@@ -27,6 +28,7 @@ export const Books = {
         'ideaGain',
         1,
         () => 3 * 60,
+        true,
     ),
     ['genius']: new Book(
         'genius',

@@ -1,11 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { Observable } from 'rxjs';
-import { selectMoney, selectImagination, selectCreation } from '../../../root-store/earning/earning-selector';
-import { Imagination, Creation, Money } from '@core/models/currency';
+import { selectMoney, selectImagination, selectCreation } from '@root-store/earning/earning-selector';
+import { Imagination, CreationPoint, Money } from '@core/models/Currencies';
 import { selectStatsState } from 'app/root-store/stats/stats-selector';
-import { map } from 'rxjs/operators';
 @Component({
     selector: 'app-header',
     template: `
@@ -16,10 +15,10 @@ import { map } from 'rxjs/operators';
                     <label> {{ (money$ | async).amount | exponential }}$ </label>
                     <ng-container *ngIf="stats$ | async as stats">
                         <label *ngIf="stats.totalImagination > 0">
-                            imagination : {{ (imagination$ | async).amount | exponential }}
+                            {{ (imagination$ | async).amount | exponential }}I
                         </label>
                         <label *ngIf="stats.totalCreativity > 0">
-                            creativity : {{ (creativity$ | async).amount | exponential }}
+                            {{ (creativity$ | async).amount | exponential }}C
                         </label>
                     </ng-container>
                 </div>
@@ -33,7 +32,7 @@ export class HeaderComponent implements OnInit {
     public money$: Observable<Money> = this.store.select(selectMoney);
     public stats$ = this.store.select(selectStatsState);
     public imagination$: Observable<Imagination> = this.store.select(selectImagination);
-    public creativity$: Observable<Creation> = this.store.select(selectCreation);
+    public creativity$: Observable<CreationPoint> = this.store.select(selectCreation);
 
     constructor(private store: Store<RootStoreState.State>) {}
 

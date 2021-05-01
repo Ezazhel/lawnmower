@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Upgrade } from '@core/models/upgrade';
+import { Upgrade } from '@core/models/Upgrade/Upgrade';
 
 @Component({
     selector: 'app-upgrade',

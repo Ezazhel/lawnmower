@@ -1,11 +1,11 @@
-import { AffectType } from '@core/models/upgrade';
+import { AffectType } from '@core/models/Upgrade';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import { State } from './upgrades-state';
 import { MowingUpgrade } from '@core/data/upgrade-data';
-import { Upgrade } from '@core/models/upgrade';
+import { Upgrade } from '@core/models/Upgrade/Upgrade';
 import { BloggingUpgrade } from '@core/data/upgrade-data';
-import { UpgradeTabsAffected } from '@core/models/upgrade';
-import { CurrencySymbol } from '@core/models/currency';
+import { UpgradeTabsAffected } from '@core/models/Upgrade';
+import { CurrencySymbol } from '@core/models/Currencies';
 
 export const selectUpgradeState: MemoizedSelector<object, State> = createFeatureSelector('upgrades');
 

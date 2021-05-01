@@ -1,8 +1,5 @@
-import Book from '@core/models/book';
-import { Creation, Idea } from '@core/models/currency';
-import { assignCurrency } from '@core/utility/utility';
+import { CreationPoint, Currency, CurrencySymbol, Idea, Imagination } from '@core/models/Currencies';
 import { createFeatureSelector, MemoizedSelector, createSelector } from '@ngrx/store';
-import { selectBookBonus } from '@root-store/blogging/blogging-selector';
 import { State } from './earning-state';
 
 const getMoney = (state: State) => state.currencies['$'];
@@ -17,18 +14,18 @@ export const selectAllCurrencies = createSelector(selectEarningState, (state) =>
     return Object.keys(state.currencies).map((currencySymbol) => state.currencies[currencySymbol]);
 });
 
-export const selectImagination = createSelector(selectEarningState, (state) => getCurrency(state, 'I'));
+export const selectCurrency = createSelector(
+    selectEarningState,
+    (state: State) => <C extends Currency>(base: new () => C, symbol: CurrencySymbol): C => {
+        const currency = getCurrency(state, symbol);
+        if (currency !== undefined) {
+            return Object.assign(new base(), currency);
+        } else return undefined;
+    },
+);
 
-export const selectCreation = createSelector(selectEarningState, (state: State) => {
-    const currency = getCurrency(state, 'C');
-    if (currency != undefined) {
-        return assignCurrency(Creation, currency);
-    } else return undefined;
-});
+export const selectImagination = createSelector(selectCurrency, (func) => func(Imagination, 'I'));
 
-export const selectIdea = createSelector(selectEarningState, (state: State) => {
-    const idea = getCurrency(state, 'Idea');
-    if (idea != undefined) {
-        return assignCurrency(Idea, idea);
-    } else return undefined;
-});
+export const selectCreation = createSelector(selectCurrency, (func) => func(CreationPoint, 'C'));
+
+export const selectIdea = createSelector(selectCurrency, (func) => func(Idea, 'Idea'));

@@ -1,3 +1,4 @@
+import { Books } from '@core/data/book-data';
 import { Component, OnInit } from '@angular/core';
 import Book from '@core/models/book';
 import { Store } from '@ngrx/store';
@@ -26,5 +27,9 @@ export class BooksComponent implements OnInit {
             this.store.dispatch(readBook({ book: { ...book, reading: !book.reading } }));
     }
 
-    buyBook() {}
+    buyBook(books: Book[]) {
+        const bookToUnlock = Object.values(Books).filter((b) => b.isBuyable && !books.find((book) => book.id == b.id));
+        //select random, add "weight" to book.
+        console.log(bookToUnlock);
+    }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CurrencySymbol } from '@core/models/currency';
-import { UpgradeTabsAffected } from '../../../../core/models/upgrade';
+import { CurrencySymbol } from '@core/models/Currencies';
+import { UpgradeTabsAffected } from '@core/models/Upgrade';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { selectSpecificUpgradeCurrency } from 'app/root-store/upgrades/upgrades-selector';

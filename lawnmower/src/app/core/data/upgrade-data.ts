@@ -1,5 +1,5 @@
-import { Creation, Idea } from '@core/models/currency';
-import { Upgrade } from '@core/models/upgrade';
+import { CreationPoint, Idea } from '@core/models/Currencies';
+import { Upgrade } from '@core/models/Upgrade/Upgrade';
 import { NotifierService } from '@core/services/notifier.service';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
@@ -28,16 +28,16 @@ export const MowingUpgrade = {
     ['rich-grass']: new Upgrade(
         'rich-grass',
         'Rich grass',
-        () => 0.1,
+        () => 0.15,
         'mowing',
         'It seems that your neighboor money come from their grasses !',
         0,
         1,
-        '15% more money from cutting grass',
+        '25% more money from cutting grass',
         'gain',
-        (): number => 1.15,
+        (): number => 1.25,
         '$',
-        (state: RootStoreState.State) => state.stats.totalMowned >= 4,
+        (state: RootStoreState.State) => state.stats.totalMowned >= 6,
     ),
     ['anti-fertilizer']: new Upgrade(
         'anti-fertilizer',
@@ -46,7 +46,7 @@ export const MowingUpgrade = {
         'mowing',
         'What if you spray something on the grass ?',
         0,
-        3,
+        5,
         'Grass regrow 5% slower',
         'regrow',
         (level: number): number => Math.pow(1.05, level),
@@ -85,7 +85,7 @@ export const BloggingUpgrade = {
     ['paper_pencils']: new Upgrade(
         'paper_pencils',
         'Paper & Pencils',
-        () => 2.5,
+        () => 4,
         'blogging',
         'What should you do with paper and pencil ? Draw !',
         0,
@@ -93,17 +93,17 @@ export const BloggingUpgrade = {
         'Unlock creativity !',
         'feature',
         (store: Store<RootStoreState.State>) => {
-            store.dispatch(earnCurrency({ currency: { ...new Creation() } }));
+            store.dispatch(earnCurrency({ currency: { ...new CreationPoint() } }));
         },
-        'I',
-        (state: RootStoreState.State) => state.stats.totalIdea > 3,
+        'Idea',
+        (state: RootStoreState.State) => state.stats.totalIdea > 1,
     ),
     ['ideas']: new Upgrade(
         'ideas',
         'Ideas !',
         () => 0.2,
         'blogging',
-        'Ok ok, you think a lot',
+        'Ok smartass',
         0,
         1,
         'Unlock ideas',
@@ -144,7 +144,7 @@ export const BloggingUpgrade = {
     ['money_activity']: new Upgrade(
         'money_activity',
         'Passion',
-        () => 15,
+        () => 10,
         'blogging',
         "Passion cost money, but you'll have more idea",
         0,
@@ -156,12 +156,12 @@ export const BloggingUpgrade = {
             notifier.pushMessage('New feature unlocked !');
         },
         '$',
-        (state: RootStoreState.State) => state.earning.currencies['$'].amount > 10,
+        (state: RootStoreState.State) => state.earning.currencies['$'].amount > 6,
     ),
     ['librarian']: new Upgrade(
         'librarian',
         'Librarian',
-        () => 13,
+        () => 8,
         'blogging',
         'Go to librarian',
         0,
@@ -173,6 +173,6 @@ export const BloggingUpgrade = {
             notifier.pushMessage('New feature unlocked');
         },
         'Idea',
-        (state: RootStoreState.State) => state.earning.currencies['Idea'].amount > 8,
+        (state: RootStoreState.State) => state.earning.currencies['Idea']?.amount > 4,
     ),
 };

@@ -1,4 +1,4 @@
-import { Currency } from '@core/models/currency';
+import { Currency } from '@core/models/Currencies/Currency';
 export const debounce = (func, wait) => {
     let timeout;
     return function (...args) {

@@ -6,9 +6,9 @@ import { Injectable } from '@angular/core';
 import { RootStoreState } from 'app/root-store';
 import { Store } from '@ngrx/store';
 import { filter, sampleTime, withLatestFrom } from 'rxjs/operators';
-import { selectAllCurrencies, selectEarningState } from 'app/root-store/earning/earning-selector';
+import { selectAllCurrencies, selectCurrency } from 'app/root-store/earning/earning-selector';
 import { earnCurrency } from 'app/root-store/earning/earning-action';
-import { Creation, Imagination, Idea, Currency, CurrencySymbol } from '@core/models/currency';
+import { CreationPoint, Imagination, Idea, Currency, CurrencySymbol } from '@core/models/Currencies';
 import { incrementTotalFailedCreation } from 'app/root-store/stats/stats-action';
 import { Subject } from 'rxjs';
 import { selectUpgradeAffect } from '@root-store/upgrades/upgrades-selector';
@@ -26,30 +26,26 @@ export class BloggingService {
         .pipe(
             withLatestFrom(
                 this._store.select(selectBlogFeature),
-                this._store.select(selectEarningState),
+                this._store.select(selectCurrency),
                 this._store.select(selectAchievementBonusMult),
             ),
             withLatestFrom(this._store.select(selectUpgradeAffect, 'imaginationGain')),
             filter(([[_, { isThinking }]]) => isThinking),
         )
-        .subscribe(([[timer, _, { currencies }, achievementBonus], imaginationBonus]) => {
-            let imagination = currencies[new Imagination().type] ?? new Imagination();
-            const idea = assignCurrency<Idea>(Idea, currencies[new Idea().type]);
-            const creation = assignCurrency<Creation>(Creation, currencies[new Creation().type]);
-            let additiveBonus =
-                imagination.gain +
-                (idea?.additiveImaginationGain(idea.amount) ?? 0) +
-                0.05 * Math.floor((creation?.amount ?? 0) / 2);
-            imaginationBonus.forEach((bonus) => {
-                additiveBonus = bonus.effect(additiveBonus);
-            });
-            const multiplicationBonus = timer.deltaTime * (idea?.bonusToImagination() ?? 1) * achievementBonus;
+        .subscribe(([[timer, _, getCurrencies, achievementBonus], imaginationBonus]) => {
+            let imagination = getCurrencies(Imagination, 'I') ?? new Imagination();
+            const idea = getCurrencies(Idea, 'Idea');
+            const creation = getCurrencies(CreationPoint, 'C');
+
+            const amount =
+                imagination.additiveBonus(idea, creation, imaginationBonus) *
+                imagination.multiplicativebonus(timer.deltaTime, idea, achievementBonus);
 
             this._store.dispatch(
                 earnCurrency({
                     currency: {
                         ...imagination,
-                        amount: additiveBonus * multiplicationBonus,
+                        amount: amount,
                     },
                 }),
             );
@@ -58,17 +54,19 @@ export class BloggingService {
     private getCreatePointSubscription = this.doGetCreatePoint
         .pipe(
             withLatestFrom(
-                this._store.select(selectEarningState),
+                this._store.select(selectCurrency),
                 this._store.select(selectAchievementBonusMult),
                 this._store.select(selectBookBonus, 'creationGain'),
-                (_, { currencies }, achievementBonus, bookCreationGain) => {
-                    const idea = assignCurrency(Idea, currencies[new Idea().type]);
-                    const creation = assignCurrency(Creation, currencies[new Creation().type]);
-                    if ((idea?.amount ?? 0) < (creation?.price() ?? Creation.prototype.price())) return;
+                (_, currency, achievementBonus, bookCreationGain) => {
+                    const idea = currency(Idea, 'Idea');
+                    const creation = currency(CreationPoint, 'C');
+                    if ((idea?.amount ?? 0) < (creation?.price() ?? CreationPoint.prototype.price())) return;
+
                     creation.baseChance += bookCreationGain.reduce(
                         (previous, next) => previous + next.effect(next.chapterRead),
                         0,
                     );
+
                     if (Math.random() * 100 <= creation.baseChance) {
                         this._store.dispatch(
                             earnCurrency({
@@ -103,7 +101,7 @@ export class BloggingService {
             this.getIdea('', imagination, idea, money);
         });
 
-    public getIdea(currencySymbol: CurrencySymbol | string, imagination: Imagination, idea: Idea, money: Currency) {
+    public getIdea(currencySymbol: CurrencySymbol | string, imagination: Currency, idea: Idea, money: Currency) {
         let ideaGet: number = 0;
         switch (currencySymbol) {
             case 'I':
