@@ -1,5 +1,7 @@
 import { CreationPoint, Currency, CurrencySymbol, Idea, Imagination } from '@core/models/Currencies';
 import { createFeatureSelector, MemoizedSelector, createSelector } from '@ngrx/store';
+import { selectAchievementBonusMult } from '@root-store/achievements/achievements-selector';
+import { selectUpgradeAffect } from '@root-store/upgrades/upgrades-selector';
 import { State } from './earning-state';
 
 const getMoney = (state: State) => state.currencies['$'];
@@ -23,9 +25,19 @@ export const selectCurrency = createSelector(
         } else return undefined;
     },
 );
-
-export const selectImagination = createSelector(selectCurrency, (func) => func(Imagination, 'I'));
-
+export const selectTimer = createSelector(selectEarningState, (state) => state.timer);
 export const selectCreation = createSelector(selectCurrency, (func) => func(CreationPoint, 'C'));
 
 export const selectIdea = createSelector(selectCurrency, (func) => func(Idea, 'Idea'));
+
+export const selectImagination = createSelector(
+    selectTimer,
+    selectCurrency,
+    selectIdea,
+    selectCreation,
+    selectAchievementBonusMult,
+    selectUpgradeAffect,
+    (timer, func, idea, creation, achievementBonus, bonusUpgrade) => {
+        return func(Imagination, 'I').setPrivate(idea, creation, bonusUpgrade, timer.deltaTime, achievementBonus);
+    },
+);

@@ -4,6 +4,11 @@ import { Currency } from './Currency';
 import { Idea } from './Idea';
 
 export class Imagination extends Currency {
+    private idea: Idea;
+    private creation: CreationPoint;
+    private bonus: Upgrade[];
+    private delta: number;
+    private achievementBonus: number;
     constructor() {
         super();
         this.gain = 0.02;
@@ -21,5 +26,34 @@ export class Imagination extends Currency {
 
     multiplicativebonus(deltaTime: number, idea: Idea, achievementBonus: number) {
         return deltaTime * (idea?.bonusToImagination() ?? 1) * achievementBonus;
+    }
+
+    getGain() {
+        return (
+            this.additiveBonus(this.idea, this.creation, this.bonus) *
+            this.multiplicativebonus(this.delta, this.idea, this.achievementBonus)
+        );
+    }
+    getGainBySecond() {
+        return this.getGain() * (1000 / 30);
+    }
+    setPrivate(
+        idea: Idea,
+        creation: CreationPoint,
+        bonus: Upgrade[],
+        delta: number,
+        achievementBonus: number,
+    ): Imagination {
+        this.idea = idea;
+        this.creation = creation;
+        this.bonus = bonus;
+        this.delta = delta;
+        this.achievementBonus = achievementBonus;
+
+        return this;
+    }
+
+    setDelta(delta: number) {
+        this.delta = delta;
     }
 }

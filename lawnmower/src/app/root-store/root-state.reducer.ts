@@ -4,7 +4,6 @@ import { loadGame } from './root-state.action';
 
 export const reducer = createReducer(
     on(loadGame, (state: RootStoreState.State, { gameState }) => {
-        debugger;
         return gameState;
     }),
 );

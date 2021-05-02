@@ -36,7 +36,7 @@ export class ActionsComponent implements OnInit {
         }),
     );
 
-    imagination$: Observable<Imagination> = this.store.select(selectImagination);
+    imagination$: Observable<Imagination> = this.store.select(selectImagination, 'imaginationGain');
     isThinking$: Observable<boolean> = this.store.select(selectIsThinking);
 
     idea$ = this.store.select(selectIdea);
@@ -50,6 +50,7 @@ export class ActionsComponent implements OnInit {
     canAutomateIdea$ = this.store
         .select(selectBooks)
         .pipe(map((books) => books.find((b) => b.id == Books.genius.id)?.chapterRead > 0));
+
     constructor(private store: Store<RootStoreState.State>, private _bloggingService: BloggingService) {}
 
     ngOnInit(): void {}

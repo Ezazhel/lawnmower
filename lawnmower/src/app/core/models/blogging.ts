@@ -1,4 +1,4 @@
-import { CreationPoint, Fan, Imagination } from './Currencies';
+import { Fan } from './Currencies';
 
 export class Post {
     message: number = 0;
@@ -8,8 +8,6 @@ export class Post {
 }
 export class Blogging {
     fans: Fan;
-    creativity: CreationPoint = new CreationPoint();
-    imagination: Imagination = new Imagination();
     adsRevenu: number = 0;
     post: Post = new Post();
 }

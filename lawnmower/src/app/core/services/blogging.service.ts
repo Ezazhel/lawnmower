@@ -1,4 +1,4 @@
-import { selectAutomateIdea, selectBlogFeature } from '@root-store/blogging/blogging-selector';
+import { selectAutomateIdea, selectIsThinking } from '@root-store/blogging/blogging-selector';
 import { selectAchievementBonusMult } from '@root-store/achievements/achievements-selector';
 import { selectBookBonus } from '@root-store/blogging/blogging-selector';
 import { IdlingService } from '@core/services/idling.service';
@@ -6,12 +6,11 @@ import { Injectable } from '@angular/core';
 import { RootStoreState } from 'app/root-store';
 import { Store } from '@ngrx/store';
 import { filter, sampleTime, withLatestFrom } from 'rxjs/operators';
-import { selectAllCurrencies, selectCurrency } from 'app/root-store/earning/earning-selector';
+import { selectAllCurrencies, selectCurrency, selectImagination } from 'app/root-store/earning/earning-selector';
 import { earnCurrency } from 'app/root-store/earning/earning-action';
 import { CreationPoint, Imagination, Idea, Currency, CurrencySymbol } from '@core/models/Currencies';
 import { incrementTotalFailedCreation } from 'app/root-store/stats/stats-action';
 import { Subject } from 'rxjs';
-import { selectUpgradeAffect } from '@root-store/upgrades/upgrades-selector';
 import { assignCurrency } from '@core/utility/utility';
 
 @Injectable({
@@ -25,22 +24,13 @@ export class BloggingService {
     private thinkSubscription = this._idlingService.timer$
         .pipe(
             withLatestFrom(
-                this._store.select(selectBlogFeature),
-                this._store.select(selectCurrency),
-                this._store.select(selectAchievementBonusMult),
+                this._store.select(selectIsThinking),
+                this._store.select(selectImagination, 'imaginationGain'),
             ),
-            withLatestFrom(this._store.select(selectUpgradeAffect, 'imaginationGain')),
-            filter(([[_, { isThinking }]]) => isThinking),
+            filter(([_, isThinking]) => isThinking),
         )
-        .subscribe(([[timer, _, getCurrencies, achievementBonus], imaginationBonus]) => {
-            let imagination = getCurrencies(Imagination, 'I') ?? new Imagination();
-            const idea = getCurrencies(Idea, 'Idea');
-            const creation = getCurrencies(CreationPoint, 'C');
-
-            const amount =
-                imagination.additiveBonus(idea, creation, imaginationBonus) *
-                imagination.multiplicativebonus(timer.deltaTime, idea, achievementBonus);
-
+        .subscribe(([, , imagination]) => {
+            const amount = imagination.getGain();
             this._store.dispatch(
                 earnCurrency({
                     currency: {

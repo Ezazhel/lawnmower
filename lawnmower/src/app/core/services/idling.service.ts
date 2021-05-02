@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState, EarningAction, StatsAction } from 'app/root-store';
 import { interval, animationFrameScheduler, combineLatest, Subject } from 'rxjs';
-import { map, sampleTime, scan, share, withLatestFrom } from 'rxjs/operators';
+import { map, sampleTime, scan, share, tap, withLatestFrom } from 'rxjs/operators';
 import { getAllNeighboorsWhereCompletionGtOne } from '@root-store/neighboor/neighboor-selector';
 import { selectMowingGainModifier } from '@root-store/upgrades/upgrades-selector';
 import { selectAchievementsNotUnlock, selectAchievementsUnlock } from '@root-store/achievements/achievements-selector';
@@ -12,6 +12,7 @@ import { Achievement } from '@core/models/achievement';
 import { NotifierService } from './notifier.service';
 import { BloggingUpgrade, MowingUpgrade } from '@core/data/upgrade-data';
 import { addBloggingUpgradeAction, addMowingUpgradeAction } from '@root-store/upgrades/upgrades-action';
+import { updateTimer } from '@root-store/earning/earning-action';
 @Injectable({
     providedIn: 'root',
 })
@@ -23,8 +24,9 @@ export class IdlingService {
         })),
         scan((previous, current) => ({
             time: current.time,
-            deltaTime: (current.time - previous.time) / 1000,
+            deltaTime: Math.max(1000 / 30, current.time - previous.time) / 1000,
         })),
+        tap((timer) => this.store.dispatch(updateTimer({ timer: timer }))),
         share(),
     );
 

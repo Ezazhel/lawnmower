@@ -1,4 +1,3 @@
-import { Books } from '@core/data/book-data';
 import { Blogging } from '@core/models/blogging';
 import Book from '@core/models/book';
 export interface State {

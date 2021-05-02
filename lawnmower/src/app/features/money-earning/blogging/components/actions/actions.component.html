@@ -8,7 +8,7 @@
     >
         Think
     </button>
-    <span>{{ (imagination$ | async)?.gain | exponential }}/s</span>
+    <span>{{ (imagination$ | async)?.getGainBySecond() | exponential }}/s</span>
 </div>
 <ng-container *ngIf="imagination$ | async as imagination">
     <div fxLayout="column" fxFlexAlign="center" *ngIf="idea$ | async as idea" id="ideas">
@@ -23,8 +23,8 @@
                 canGetIdea: imagination?.amount >= idea.price(),
                 cantGetIdea: imagination?.amount <= idea.price()
             }"
-            (mouseleave)="mouseDownIdea('I')"
-            (mouseup)="stopGetIdea()"
+            (mousedown)="mouseDownIdea('I')"
+            (mouseleave)="stopGetIdea()"
         >
             1 Idea : {{ idea.price() | exponential }} I
         </span>

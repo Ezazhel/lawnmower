@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     @Output() public sidenavToggle = new EventEmitter();
     public money$: Observable<Money> = this.store.select(selectMoney);
     public stats$ = this.store.select(selectStatsState);
-    public imagination$: Observable<Imagination> = this.store.select(selectImagination);
+    public imagination$: Observable<Imagination> = this.store.select(selectImagination, 'imaginationGain');
     public creativity$: Observable<CreationPoint> = this.store.select(selectCreation);
 
     constructor(private store: Store<RootStoreState.State>) {}
