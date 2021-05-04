@@ -38,6 +38,7 @@ export const selectImagination = createSelector(
     selectAchievementBonusMult,
     selectUpgradeAffect,
     (timer, func, idea, creation, achievementBonus, bonusUpgrade) => {
-        return func(Imagination, 'I').setPrivate(idea, creation, bonusUpgrade, timer.deltaTime, achievementBonus);
+        const imagination = func(Imagination, 'I') ?? new Imagination();
+        return imagination.setPrivate(idea, creation, bonusUpgrade, timer.deltaTime, achievementBonus);
     },
 );

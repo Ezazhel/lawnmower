@@ -25,6 +25,7 @@
             }"
             (mousedown)="mouseDownIdea('I')"
             (mouseleave)="stopGetIdea()"
+            (mouseup)="stopGetIdea()"
         >
             1 Idea : {{ idea.price() | exponential }} I
         </span>

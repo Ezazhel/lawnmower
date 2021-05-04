@@ -1,3 +1,4 @@
+import { Creations } from '@core/data/creation-data';
 import { Blogging } from '@core/models/blogging';
 import Book from '@core/models/book';
 export interface State {
@@ -8,6 +9,9 @@ export interface State {
     };
     automateIdea: boolean;
     canBuyBook: boolean;
+    creations: {
+        [id: string]: number;
+    };
 }
 
 export const initialState: State = {
@@ -16,4 +20,7 @@ export const initialState: State = {
     books: {},
     automateIdea: false,
     canBuyBook: false,
+    creations: {
+        [Creations.first.name]: Creations.first.level,
+    },
 };

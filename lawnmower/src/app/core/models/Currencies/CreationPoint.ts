@@ -1,10 +1,14 @@
 import { Currency } from './Currency';
+import { CurrencySymbol } from './CurrencySymbol';
 
-export class CreationPoint extends Currency {
+export class CreationPoint implements Currency {
+    id: string;
+    amount: number;
+    type: CurrencySymbol;
+    gain?: number;
     basePrice: number;
     baseChance: number;
     constructor() {
-        super();
         this.id = 'C';
         this.type = 'C';
         this.basePrice = 1;

@@ -1,11 +1,14 @@
 import { Currency } from './Currency';
+import { CurrencySymbol } from './CurrencySymbol';
 
-export class Idea extends Currency {
+export class Idea implements Currency {
+    id: string;
+    type: CurrencySymbol;
+    gain?: number;
     amount: number;
     basePrice: number;
     canPayToGetIdea: boolean;
     constructor() {
-        super();
         this.amount = 0;
         this.basePrice = 0.5;
         this.id = 'Idea';

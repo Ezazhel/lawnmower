@@ -63,7 +63,7 @@ export const selectMowingRegrowSpeedUpgradeModifier = createSelector(
 //#region Blogging
 const getBloggingUpgradeLevelValue = (state: State): Upgrade[] =>
     Object.keys(state.blogging)
-        .map((key) => Object.assign({ ...BloggingUpgrade[key] }, { level: state.blogging[key] }) as Upgrade)
+        .map((key) => Object.assign(BloggingUpgrade[key], { level: state.blogging[key] }) as Upgrade)
         .sort(sortByCompleted);
 
 export const selectBloggingUpgradeLevelValue = createSelector(selectUpgradeState, getBloggingUpgradeLevelValue);
