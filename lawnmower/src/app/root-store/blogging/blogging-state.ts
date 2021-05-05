@@ -20,7 +20,5 @@ export const initialState: State = {
     books: {},
     automateIdea: false,
     canBuyBook: false,
-    creations: {
-        [Creations.first.name]: Creations.first.level,
-    },
+    creations: {},
 };

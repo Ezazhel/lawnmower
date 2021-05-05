@@ -13,3 +13,7 @@ export const readBook = createAction('[Blogging] Read book', props<{ book: Book 
 
 export const automateIdea = createAction('[Action] AutomateIdea');
 export const canBuyBook = createAction('[Action] Can Buy book');
+
+export const unlockCreation = createAction('[Blogging] unlockCreation', props<{ id: string }>());
+
+export const increaseCreationLevel = createAction('[Blogging] increase creation level', props<{ id: string }>());

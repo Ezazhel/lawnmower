@@ -26,5 +26,7 @@ export const selectAutomateIdea = createSelector(selectBlogFeature, (state) => s
 export const selectCanBuyBook = createSelector(selectBlogFeature, (state) => state.canBuyBook);
 
 export const selectCreations = createSelector(selectBlogFeature, (state) =>
-    Object.keys(state.creations).map((k) => Object.assign({ ...Creations[k] } as Creation, state.creations[k])),
+    Object.keys(state.creations).map(
+        (k) => Object.assign({ ...Creations[k] } as Creation, { level: state.creations[k] }) as Creation,
+    ),
 );

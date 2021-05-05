@@ -1,3 +1,4 @@
+import { Creations } from '@core/data/creation-data';
 import { createReducer, on } from '@ngrx/store';
 import {
     unlockBook,
@@ -9,6 +10,8 @@ import {
     readBook,
     automateIdea,
     canBuyBook,
+    increaseCreationLevel,
+    unlockCreation,
 } from './blogging-action';
 import { initialState, State } from './blogging-state';
 export const reducer = createReducer(
@@ -28,4 +31,9 @@ export const reducer = createReducer(
     })),
     on(automateIdea, (state) => ({ ...state, automateIdea: !state.automateIdea })),
     on(canBuyBook, (state) => ({ ...state, canBuyBook: true })),
+    on(unlockCreation, (state, { id }) => ({ ...state, creations: { ...state.creations, [id]: 1 } })),
+    on(increaseCreationLevel, (state, { id }) => ({
+        ...state,
+        creations: { ...state.creations, [id]: state.creations[id] + 1 },
+    })),
 );

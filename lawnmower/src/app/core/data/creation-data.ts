@@ -1,5 +1,7 @@
 import { Creation } from '@core/models/creation';
 
 export const Creations = {
-    ['first']: new Creation('first', 'First creations', 'IdeaLimit'),
+    ['cortex']: new Creation('first', 'Cortex', 'Increase Idea Limit', 'IdeaLimit'),
+    ['board']: new Creation('board', 'Board', 'Improve Creation Gain', 'CreationGain'),
+    ['poster']: new Creation('poster', 'Poster', 'Improve Idea gain', 'Idea'),
 };

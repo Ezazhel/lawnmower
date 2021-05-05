@@ -13,6 +13,7 @@ export class CreationPoint implements Currency {
         this.type = 'C';
         this.basePrice = 1;
         this.baseChance = 15;
+        this.amount = 0;
     }
 
     price() {
