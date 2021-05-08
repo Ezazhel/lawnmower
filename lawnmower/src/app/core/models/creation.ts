@@ -1,4 +1,4 @@
-export type CreationBonus = 'Idea' | 'IdeaLimit' | 'CreationGain' | 'ImaginationLimit' | 'Feature';
+export type CreationBonus = 'IdeaGain' | 'IdeaLimit' | 'CreationGain' | 'ImaginationLimit' | 'Feature';
 
 export class Creation {
     id: string;
@@ -7,10 +7,9 @@ export class Creation {
     maxLevel: number;
     description: string;
     bonus: CreationBonus;
-
     price: (creation?: Creation) => number;
-
     effect: Function;
+
     constructor(
         id: string,
         name: string,

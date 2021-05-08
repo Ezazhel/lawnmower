@@ -12,7 +12,7 @@ export class Imagination implements Currency {
     limit: number;
     private idea: Idea;
     private creation: CreationPoint;
-    private bonus: Upgrade[];
+    private _bonus: Upgrade[];
     private delta: number;
     private achievementBonus: number;
     constructor() {
@@ -36,7 +36,7 @@ export class Imagination implements Currency {
 
     getGain() {
         return (
-            this.additiveBonus(this.idea, this.creation, this.bonus) *
+            this.additiveBonus(this.idea, this.creation, this._bonus) *
             this.multiplicativebonus(this.delta, this.idea, this.achievementBonus)
         );
     }
@@ -52,7 +52,7 @@ export class Imagination implements Currency {
     ): Imagination {
         this.idea = idea;
         this.creation = creation;
-        this.bonus = bonus;
+        this._bonus = bonus;
         this.delta = delta;
         this.achievementBonus = achievementBonus;
 
@@ -61,5 +61,9 @@ export class Imagination implements Currency {
 
     setDelta(delta: number) {
         this.delta = delta;
+    }
+
+    set bonus(value: Upgrade[]) {
+        this._bonus = value;
     }
 }

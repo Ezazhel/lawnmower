@@ -156,7 +156,7 @@ export const BloggingUpgrade = {
             notifier.pushMessage('New feature unlocked !');
         },
         '$',
-        (state: RootStoreState.State) => state.earning.currencies['$'].amount > 6,
+        (state: RootStoreState.State) => state.earning.currencies['$'].amount > 6 && state.stats.totalIdea > 0,
     ),
     ['librarian']: new Upgrade(
         'librarian',

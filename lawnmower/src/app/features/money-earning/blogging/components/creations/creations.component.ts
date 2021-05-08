@@ -55,9 +55,10 @@ export class CreationsComponent implements OnInit {
             withLatestFrom(this.creationPoint$, (creation, creationPoint) => {
                 if (!creationPoint) return;
                 if (creation.level == creation.maxLevel) return;
+
                 const price = creation.price(creation);
 
-                if (price < creationPoint.amount) return;
+                if (price > creationPoint.amount) return;
 
                 this.store.dispatch(earnCurrency({ currency: { ...creationPoint, amount: -price } }));
                 this.store.dispatch(increaseCreationLevel({ id: creation.id }));

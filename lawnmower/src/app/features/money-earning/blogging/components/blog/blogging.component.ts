@@ -8,7 +8,6 @@ import { selectBlogging, selectBooks } from 'app/root-store/blogging/blogging-se
 import { Observable } from 'rxjs';
 import { IdlingService } from '@core/services/idling.service';
 import { Upgrade, UpgradeTabsAffected } from '@core/models/Upgrade';
-import { selectBloggingUpgradeLevelValue } from 'app/root-store/upgrades/upgrades-selector';
 
 @Component({
     selector: 'blogging',
@@ -20,13 +19,7 @@ export class BloggingComponent implements OnInit {
     upgradeTab: UpgradeTabsAffected = 'blogging';
     blogging$: Observable<Blogging> = this.store.select(selectBlogging);
     books$ = this.store.select(selectBooks);
-    upgrades$: Observable<Upgrade[]> = this.store.select(selectBloggingUpgradeLevelValue);
-
-    constructor(
-        private store: Store<RootStoreState.State>,
-        private idlingService: IdlingService,
-        private bookService: BookService,
-    ) {}
+    constructor(private store: Store<RootStoreState.State>, private bookService: BookService) {}
 
     ngOnInit(): void {}
 }

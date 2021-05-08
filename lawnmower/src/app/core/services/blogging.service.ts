@@ -1,5 +1,5 @@
 import { selectAutomateIdea, selectIsThinking } from '@root-store/blogging/blogging-selector';
-import { selectAchievementBonusMult } from '@root-store/achievements/achievements-selector';
+import { achievementBonusMult } from '@root-store/achievements/achievements-selector';
 import { selectBookBonus } from '@root-store/blogging/blogging-selector';
 import { IdlingService } from '@core/services/idling.service';
 import { Injectable } from '@angular/core';
@@ -47,7 +47,7 @@ export class BloggingService {
         .pipe(
             withLatestFrom(
                 this._store.select(selectCurrency),
-                this._store.select(selectAchievementBonusMult),
+                this._store.select(achievementBonusMult, true),
                 this._store.select(selectBookBonus, 'creationGain'),
                 (_, currency, achievementBonus, bookCreationGain) => {
                     const idea = currency(Idea, 'Idea');

@@ -1,7 +1,7 @@
 import { Books } from '@core/data/book-data';
 import { Creations } from '@core/data/creation-data';
 import Book, { BookAffect } from '@core/models/book';
-import { Creation } from '@core/models/creation';
+import { Creation, CreationBonus } from '@core/models/creation';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import { State } from './blogging-state';
 
@@ -31,3 +31,10 @@ export const selectCreations = createSelector(selectBlogFeature, (state) => {
     );
     return obj;
 });
+
+export const selectCreationsFilteredByBonus = createSelector(
+    selectCreations,
+    (creations: Creation[], bonus: CreationBonus) => {
+        return creations.filter((c) => c.bonus == bonus);
+    },
+);

@@ -3,7 +3,7 @@ import { Achievement } from '@core/models/achievement';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { Observable } from 'rxjs';
-import { selectAchievements } from '@root-store/achievements/achievements-selector';
+import { achievementsArray } from '@root-store/achievements/achievements-selector';
 
 @Component({
     selector: 'app-achievements',
@@ -11,7 +11,7 @@ import { selectAchievements } from '@root-store/achievements/achievements-select
     styleUrls: ['./achievements.component.scss'],
 })
 export class AchievementsComponent implements OnInit {
-    achievements$: Observable<Achievement[]> = this.store.select(selectAchievements);
+    achievements$: Observable<Achievement[]> = this.store.select(achievementsArray);
     constructor(private store: Store<RootStoreState.State>) {}
 
     getAchievementsBonus(achievements: Achievement[]) {

@@ -5,21 +5,22 @@ import { MowingAchievements, BloggingAchievements } from '@core/data/achievement
 
 const AllAchievements = { ...MowingAchievements, ...BloggingAchievements };
 
-export const selectAchievementState: MemoizedSelector<object, State> = createFeatureSelector('achievements');
+const filterUnlock = (a: Achievement, isUnlock: boolean) => a.isUnlock == isUnlock;
 
-export const selectAchievements = createSelector(selectAchievementState, (state) => {
+export const achievementState: MemoizedSelector<object, State> = createFeatureSelector('achievements');
+export const achievementsArray = createSelector(achievementState, (state) => {
     return Object.keys(state.achievements).map(
         (k) => Object.assign({}, AllAchievements[k], { isUnlock: state.achievements[k] }) as Achievement,
     );
 });
 
-export const selectAchievementsNotUnlock = createSelector(selectAchievements, (achievements) =>
-    achievements.filter((a) => !a.isUnlock),
-);
-export const selectAchievementsUnlock = createSelector(selectAchievements, (achievements) =>
-    achievements.filter((a) => a.isUnlock),
+export const achievementsUnlock = createSelector(
+    achievementsArray,
+    (achievements: Achievement[], isUnlock: boolean) => {
+        return achievements.filter((a) => filterUnlock(a, isUnlock));
+    },
 );
 
-export const selectAchievementBonusMult = createSelector(selectAchievementsUnlock, (achievements) =>
-    Achievement.prototype.getBonusAchievement(achievements.length),
-);
+export const achievementBonusMult = createSelector(achievementsArray, (achievements) => {
+    return Achievement.prototype.getBonusAchievement(achievements.filter((a) => filterUnlock(a, true)).length);
+});

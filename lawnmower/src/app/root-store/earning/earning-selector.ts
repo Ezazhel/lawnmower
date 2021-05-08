@@ -1,6 +1,7 @@
 import { CreationPoint, Currency, CurrencySymbol, Idea, Imagination } from '@core/models/Currencies';
+import { AffectType } from '@core/models/Upgrade';
 import { createFeatureSelector, MemoizedSelector, createSelector } from '@ngrx/store';
-import { selectAchievementBonusMult } from '@root-store/achievements/achievements-selector';
+import { achievementBonusMult, achievementsUnlock } from '@root-store/achievements/achievements-selector';
 import { selectUpgradeAffect } from '@root-store/upgrades/upgrades-selector';
 import { State } from './earning-state';
 
@@ -30,15 +31,18 @@ export const selectCreation = createSelector(selectCurrency, (func) => func(Crea
 
 export const selectIdea = createSelector(selectCurrency, (func) => func(Idea, 'Idea'));
 
-export const selectImagination = createSelector(
+const imaginationPrivate = createSelector(
     selectTimer,
     selectCurrency,
     selectIdea,
     selectCreation,
-    selectAchievementBonusMult,
-    selectUpgradeAffect,
-    (timer, func, idea, creation, achievementBonus, bonusUpgrade) => {
-        const imagination = func(Imagination, 'I') ?? new Imagination();
-        return imagination.setPrivate(idea, creation, bonusUpgrade, timer.deltaTime, achievementBonus);
+    achievementBonusMult,
+    (timer, currency, idea, creationPoint, achievementBonus) => {
+        const imagination = currency(Imagination, 'I') ?? new Imagination();
+        return imagination.setPrivate(idea, creationPoint, null, timer.deltaTime, achievementBonus);
     },
 );
+export const selectImagination = createSelector(imaginationPrivate, selectUpgradeAffect, (imagination, upgrades) => {
+    imagination.bonus = upgrades;
+    return imagination;
+});

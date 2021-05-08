@@ -15,6 +15,25 @@ const reduceEffectAdd = (acc: number, current: Upgrade) => acc + current.effect(
 
 const sortByCompleted = (a: Upgrade, b: Upgrade) => (a.level == a.maxLevel ? 1 : 0) - (b.level == b.maxLevel ? 1 : 0);
 
+const getUpgrades = (state: State, upgrade: keyof State) => {
+    let upgradeToAssign: { [x: string]: Upgrade } = {};
+    switch (upgrade) {
+        case 'blogging':
+            upgradeToAssign = BloggingUpgrade;
+            break;
+        case 'mowing':
+            upgradeToAssign = MowingUpgrade;
+            break;
+    }
+    const stateUpgrade = state[upgrade];
+    return Object.keys(stateUpgrade)
+        .map((key) => {
+            let obj = Object.assign(upgradeToAssign[key], { level: stateUpgrade[key] });
+            return obj;
+        })
+        .sort(sortByCompleted);
+};
+
 //#region  Mowing
 
 const getMowingUpgradeLevelValue = (state: State): Upgrade[] =>
@@ -52,50 +71,24 @@ export const selectMowingGainModifier = createSelector(selectUpgradeState, (stat
         .filter((u) => u.affect == 'gain' && u.level > 0)
         .reduce(reduceEffectMult, 1);
 });
+
 export const selectCuttingLimitModifier = createSelector(selectUpgradeState, getMowingCuttingLimit);
 
 export const selectMowingRegrowSpeedUpgradeModifier = createSelector(
     selectUpgradeState,
     getMowingRegrowSpeedUpgradeModifier,
 );
-
-//#endregion
-
-//#region Blogging
-const getBloggingUpgradeLevelValue = (state: State): Upgrade[] =>
-    Object.keys(state.blogging)
-        .map((key) => {
-            let obj = Object.assign(BloggingUpgrade[key], { level: state.blogging[key] });
-            return obj;
-        })
-        .sort(sortByCompleted);
-
-export const selectBloggingUpgradeLevelValue = createSelector(selectUpgradeState, getBloggingUpgradeLevelValue);
-
 //#endregion
 
 export const selectSpecificUpgradeCurrency = createSelector(
     selectUpgradeState,
-    (state, upgradeType: UpgradeTabsAffected) => {
-        if (upgradeType == 'mowing') {
-            const mowingUpgrade = getMowingUpgradeLevelValue(state).map((u) => u.currency);
-            return [...new Set(mowingUpgrade)];
-        } else {
-            const blogginUpgrade = getBloggingUpgradeLevelValue(state).map((u) => u.currency);
-            return [...new Set(blogginUpgrade)];
-        }
-    },
+    (state: State, upgradeType: keyof State) => [...new Set(getUpgrades(state, upgradeType).map((u) => u.currency))],
 );
 
 export const selectUpgradeForCurrencyAndTabs = createSelector(
     selectUpgradeState,
-    (state, props: { symbol: CurrencySymbol; tabs: UpgradeTabsAffected }) => {
-        if (props.tabs == 'mowing') {
-            return getMowingUpgradeLevelValue(state).filter((u) => u.currency == props.symbol);
-        } else {
-            return getBloggingUpgradeLevelValue(state).filter((u) => u.currency == props.symbol);
-        }
-    },
+    (state: State, props: { symbol: CurrencySymbol; tabs: keyof State }) =>
+        getUpgrades(state, props.tabs).filter((u) => u.currency == props.symbol),
 );
 
 export const selectAllUpgrades = createSelector(selectUpgradeState, (state) => ({

@@ -23,8 +23,8 @@ export const Creations = {
     ['poster']: new Creation(
         'poster',
         'Poster',
-        'Improve Idea gain',
-        'Idea',
+        'Reduce price for idea',
+        'IdeaGain',
         2,
         ({ level }) => 3 + level,
         ({ level }: Creation) => 0.5 * level,

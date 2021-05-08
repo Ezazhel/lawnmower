@@ -6,7 +6,7 @@ import { interval, animationFrameScheduler, combineLatest, Subject } from 'rxjs'
 import { map, sampleTime, scan, share, tap, withLatestFrom } from 'rxjs/operators';
 import { getAllNeighboorsWhereCompletionGtOne } from '@root-store/neighboor/neighboor-selector';
 import { selectMowingGainModifier } from '@root-store/upgrades/upgrades-selector';
-import { selectAchievementsNotUnlock, selectAchievementsUnlock } from '@root-store/achievements/achievements-selector';
+import { achievementsUnlock } from '@root-store/achievements/achievements-selector';
 import { unlockAchievementAction } from '@root-store/achievements/achievements-action';
 import { Achievement } from '@core/models/achievement';
 import { NotifierService } from './notifier.service';
@@ -45,7 +45,7 @@ export class IdlingService {
             withLatestFrom(
                 this.store.select(getAllNeighboorsWhereCompletionGtOne),
                 this.store.select(selectMowingGainModifier),
-                this.store.select(selectAchievementsUnlock),
+                this.store.select(achievementsUnlock, true),
                 (deltaModifier, neighboors, gainModifier, achievements) => {
                     let money = neighboors.reduce((previous, current) => {
                         return (
@@ -68,7 +68,7 @@ export class IdlingService {
         )
         .subscribe();
 
-    unlockAchievement$ = combineLatest([this.timer$, this.store, this.store.select(selectAchievementsNotUnlock)])
+    unlockAchievement$ = combineLatest([this.timer$, this.store, this.store.select(achievementsUnlock, false)])
         .pipe(sampleTime(1000))
         .subscribe(([, state, achievements]) => {
             achievements.forEach((a) => {
