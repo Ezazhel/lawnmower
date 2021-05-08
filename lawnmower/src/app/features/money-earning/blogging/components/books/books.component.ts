@@ -8,7 +8,6 @@ import { RootStoreState } from 'app/root-store/';
 import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { selectMoney } from '@root-store/earning/earning-selector';
-import { S_IFBLK } from 'constants';
 import { earnCurrency } from '@root-store/earning/earning-action';
 
 @Component({

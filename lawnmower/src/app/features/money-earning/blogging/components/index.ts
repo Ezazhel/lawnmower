@@ -3,7 +3,7 @@ import { BloggingComponent } from './blog/blogging.component';
 import { ActionsComponent } from './actions/actions.component';
 import { BooksComponent } from './books/books.component';
 import { BookComponent } from './books/book.component';
-import { CreationComponent } from './creation/creation.component';
+import { CreationsComponent } from './creations/creations.component';
 
 export const components = [
     BloggingComponent,
@@ -11,7 +11,7 @@ export const components = [
     ActionsComponent,
     BooksComponent,
     BookComponent,
-    CreationComponent,
+    CreationsComponent,
 ];
 
 export { BloggingComponent } from './blog/blogging.component';

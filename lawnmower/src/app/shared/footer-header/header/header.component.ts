@@ -14,11 +14,11 @@ import { selectStatsState } from 'app/root-store/stats/stats-selector';
                 <div fxLayout="row" fxLayoutAlign="space-evenly center" class="w-100">
                     <label> {{ (money$ | async).amount | exponential }}$ </label>
                     <ng-container *ngIf="stats$ | async as stats">
-                        <label *ngIf="stats.totalImagination > 0">
-                            {{ (imagination$ | async).amount | exponential }}I
+                        <label *ngIf="stats.totalImagination > 0 && imagination$ | async as imagination">
+                            {{ imagination.amount | exponential }}/{{ imagination.limit }}I
                         </label>
-                        <label *ngIf="stats.totalCreativity > 0">
-                            {{ (creativity$ | async).amount | exponential }}C
+                        <label *ngIf="stats.totalCreativity > 0 && creativity$ | async as creativity">
+                            {{ creativity.amount | exponential }}C
                         </label>
                     </ng-container>
                 </div>

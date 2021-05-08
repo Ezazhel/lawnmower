@@ -1,4 +1,4 @@
-export type BookAffect = 'creationGain' | 'readingSpeed' | 'ideaGain' | 'feature';
+export type BookAffect = 'creationGain' | 'readingSpeed' | 'ideaGain' | 'feature' | 'ideaLimit';
 
 class Book {
     id: string;
@@ -22,7 +22,7 @@ class Book {
         affect: BookAffect,
         totalChapter: number,
         timeToReadChapter: (chapterRead: number) => number,
-        isBuyable?,
+        isBuyable?: boolean,
     ) {
         this.id = id;
         this.name = name;

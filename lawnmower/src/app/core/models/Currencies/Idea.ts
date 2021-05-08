@@ -8,15 +8,18 @@ export class Idea implements Currency {
     amount: number;
     basePrice: number;
     canPayToGetIdea: boolean;
+
+    limit: number;
     constructor() {
         this.amount = 0;
         this.basePrice = 0.5;
         this.id = 'Idea';
         this.type = 'Idea';
+        this.limit = 6;
     }
 
     price() {
-        return this.basePrice * Math.pow(1.35, this.amount) * Math.floor(Math.max(1, this.amount / 5));
+        return this.basePrice * Math.pow(1.35, this.amount) * Math.floor(Math.max(1, this.amount / 4));
     }
 
     bonusToImagination() {

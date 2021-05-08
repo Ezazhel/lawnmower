@@ -85,7 +85,7 @@ export const BloggingUpgrade = {
     ['paper_pencils']: new Upgrade(
         'paper_pencils',
         'Paper & Pencils',
-        () => 4,
+        () => 3,
         'blogging',
         'What should you do with paper and pencil ? Draw !',
         0,
@@ -127,7 +127,7 @@ export const BloggingUpgrade = {
     ['genius']: new Upgrade(
         'genius',
         'How to become a genius',
-        () => 5,
+        () => 3,
         'blogging',
         'You shall find a book',
         1,
@@ -161,7 +161,7 @@ export const BloggingUpgrade = {
     ['librarian']: new Upgrade(
         'librarian',
         'Librarian',
-        () => 8,
+        () => 5,
         'blogging',
         'Go to librarian',
         0,

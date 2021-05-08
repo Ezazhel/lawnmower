@@ -1,5 +1,5 @@
 <app-upgrade-currency
-    *ngFor="let currency of currencies$ | async"
+    *ngFor="let currency of currencies$ | async; trackBy: trackByCurrency"
     [currencySymbol]="currency"
     [upgradeTab]="upgradeTab"
 ></app-upgrade-currency>

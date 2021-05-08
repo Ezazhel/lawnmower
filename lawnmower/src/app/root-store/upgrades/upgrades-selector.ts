@@ -6,6 +6,7 @@ import { Upgrade } from '@core/models/Upgrade/Upgrade';
 import { BloggingUpgrade } from '@core/data/upgrade-data';
 import { UpgradeTabsAffected } from '@core/models/Upgrade';
 import { CurrencySymbol } from '@core/models/Currencies';
+import { automateIdea } from '@root-store/blogging/blogging-action';
 
 export const selectUpgradeState: MemoizedSelector<object, State> = createFeatureSelector('upgrades');
 
@@ -63,7 +64,10 @@ export const selectMowingRegrowSpeedUpgradeModifier = createSelector(
 //#region Blogging
 const getBloggingUpgradeLevelValue = (state: State): Upgrade[] =>
     Object.keys(state.blogging)
-        .map((key) => Object.assign(BloggingUpgrade[key], { level: state.blogging[key] }) as Upgrade)
+        .map((key) => {
+            let obj = Object.assign(BloggingUpgrade[key], { level: state.blogging[key] });
+            return obj;
+        })
         .sort(sortByCompleted);
 
 export const selectBloggingUpgradeLevelValue = createSelector(selectUpgradeState, getBloggingUpgradeLevelValue);
@@ -73,11 +77,12 @@ export const selectBloggingUpgradeLevelValue = createSelector(selectUpgradeState
 export const selectSpecificUpgradeCurrency = createSelector(
     selectUpgradeState,
     (state, upgradeType: UpgradeTabsAffected) => {
-        switch (upgradeType) {
-            case 'mowing':
-                return [...new Set(getMowingUpgradeLevelValue(state).map((u) => u.currency))];
-            case 'blogging':
-                return [...new Set(getBloggingUpgradeLevelValue(state).map((u) => u.currency))];
+        if (upgradeType == 'mowing') {
+            const mowingUpgrade = getMowingUpgradeLevelValue(state).map((u) => u.currency);
+            return [...new Set(mowingUpgrade)];
+        } else {
+            const blogginUpgrade = getBloggingUpgradeLevelValue(state).map((u) => u.currency);
+            return [...new Set(blogginUpgrade)];
         }
     },
 );
@@ -85,11 +90,10 @@ export const selectSpecificUpgradeCurrency = createSelector(
 export const selectUpgradeForCurrencyAndTabs = createSelector(
     selectUpgradeState,
     (state, props: { symbol: CurrencySymbol; tabs: UpgradeTabsAffected }) => {
-        switch (props.tabs) {
-            case 'mowing':
-                return getMowingUpgradeLevelValue(state).filter((u) => u.currency == props.symbol);
-            case 'blogging':
-                return getBloggingUpgradeLevelValue(state).filter((u) => u.currency == props.symbol);
+        if (props.tabs == 'mowing') {
+            return getMowingUpgradeLevelValue(state).filter((u) => u.currency == props.symbol);
+        } else {
+            return getBloggingUpgradeLevelValue(state).filter((u) => u.currency == props.symbol);
         }
     },
 );

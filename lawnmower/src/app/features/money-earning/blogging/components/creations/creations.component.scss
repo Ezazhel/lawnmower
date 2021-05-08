@@ -1,0 +1,28 @@
+@import 'variable.scss';
+@import 'mixin.scss';
+.creation__wrapper {
+    display: grid;
+    gap: 20px;
+    place-items: center;
+    padding: 0.4vw;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .creation {
+        display: flex;
+        align-items: center;
+        flex-flow: column wrap;
+        place-content: center;
+        gap: 5px;
+        padding: 0.4vw;
+        @include BorderTop($green, 0);
+        @include Shadow();
+        line-height: 1rem;
+        .creation__name {
+            font-size: 1.15rem;
+        }
+        .creation__level {
+            font-size: 0.8rem;
+        }
+        .creation__description {
+        }
+    }
+}

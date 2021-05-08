@@ -8,8 +8,8 @@ export class Imagination implements Currency {
     id: string;
     amount: number;
     type: CurrencySymbol;
-    gain?: number;
-
+    gain: number;
+    limit: number;
     private idea: Idea;
     private creation: CreationPoint;
     private bonus: Upgrade[];
@@ -19,6 +19,7 @@ export class Imagination implements Currency {
         this.gain = 0.02;
         this.id = 'I';
         this.type = 'I';
+        this.limit = 5;
     }
 
     additiveBonus(idea: Idea, creation: CreationPoint, bonus: Upgrade[]) {

@@ -4,7 +4,7 @@ import Book from '@core/models/book';
 @Component({
     selector: 'book',
     template: `
-        <div class="bookWrapper" [attr.data-unlocked]="book.unlocked">
+        <div class="bookWrapper">
             <span>{{ book.name }} !</span>
             <span class="bookDescription">{{ book.effectDescription }}</span>
             <div fxLayout="column" class="bookState" *ngIf="book.unlocked">

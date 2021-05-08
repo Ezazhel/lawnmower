@@ -3,12 +3,9 @@
         <mat-tab-group>
             <mat-tab label="Blog">
                 <blogging-actions></blogging-actions>
-                <section class="blog" *ngIf="blogging$ | async as blogging">
-                    <post [post]="blogging.post.message"></post>
-                </section>
             </mat-tab>
             <mat-tab label="Creation">
-                <creation></creation>
+                <creations></creations>
             </mat-tab>
         </mat-tab-group>
     </div>

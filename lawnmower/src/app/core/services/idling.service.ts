@@ -26,7 +26,7 @@ export class IdlingService {
             time: current.time,
             deltaTime: Math.max(1000 / 30, current.time - previous.time) / 1000,
         })),
-        tap((timer) => this.store.dispatch(updateTimer({ timer: timer }))),
+        tap((timer) => this.store.dispatch(updateTimer({ timer: { ...timer } }))),
         share(),
     );
 

@@ -1,0 +1,7 @@
+@mixin BorderTop($color, $transparentize) {
+    border-top: 4px solid transparentize($color, $transparentize);
+}
+
+@mixin Shadow() {
+    box-shadow: 0px 2px 2px -1px rgb(0 0 0 / 20%);
+}

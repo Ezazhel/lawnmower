@@ -40,4 +40,8 @@ export class UpgradeCurrencyComponent implements OnInit {
     unlock(upgrade: Upgrade) {
         this.upgradeService.doUnlockUpgrade$.next(upgrade);
     }
+
+    trackByUpgrade(index: number, upgrade: Upgrade) {
+        return upgrade.id;
+    }
 }

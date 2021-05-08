@@ -5,4 +5,6 @@ export interface Currency {
     amount: number;
     type: CurrencySymbol;
     gain?: number;
+
+    limit?: number;
 }

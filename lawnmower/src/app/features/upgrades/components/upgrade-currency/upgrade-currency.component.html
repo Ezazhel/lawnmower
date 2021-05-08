@@ -3,7 +3,7 @@
 </label>
 <div class="upgrade">
     <app-upgrade
-        *ngFor="let upgrade of upgrades$ | async"
+        *ngFor="let upgrade of upgrades$ | async; trackBy: trackByUpgrade"
         [upgrade]="upgrade"
         [currency]="currency$ | async"
         (click)="unlock(upgrade)"

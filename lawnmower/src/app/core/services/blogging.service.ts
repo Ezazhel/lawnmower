@@ -30,6 +30,8 @@ export class BloggingService {
             filter(([_, isThinking]) => isThinking),
         )
         .subscribe(([, , imagination]) => {
+            if (imagination.amount >= imagination.limit) return;
+
             const amount = imagination.getGain();
             this._store.dispatch(
                 earnCurrency({
@@ -95,7 +97,7 @@ export class BloggingService {
         let ideaGet: number = 0;
         switch (currencySymbol) {
             case 'I':
-                if ((imagination?.amount ?? 0) <= idea.price()) return;
+                if ((imagination?.amount ?? 0) <= idea.price() || idea.amount >= idea.limit) return;
                 this._store.dispatch(earnCurrency({ currency: { ...imagination, amount: -idea.price() } }));
                 ideaGet += 1;
                 break;
@@ -105,12 +107,14 @@ export class BloggingService {
                 ideaGet += 1;
                 break;
             default:
-                if ((imagination?.amount ?? 0) <= idea.price()) break;
-                ideaGet += 1;
-                this._store.dispatch(earnCurrency({ currency: { ...imagination, amount: -idea.price() } }));
-                if (money.amount <= idea.priceDollar()) break;
-                ideaGet += 1;
-                this._store.dispatch(earnCurrency({ currency: { ...money, amount: -idea.priceDollar() } }));
+                if ((imagination?.amount ?? 0) >= idea.price() && idea.amount < idea.limit) {
+                    ideaGet += 1;
+                    this._store.dispatch(earnCurrency({ currency: { ...imagination, amount: -idea.price() } }));
+                }
+                if (money.amount >= idea.priceDollar() && idea.canPayToGetIdea) {
+                    ideaGet += 1;
+                    this._store.dispatch(earnCurrency({ currency: { ...money, amount: -idea.priceDollar() } }));
+                }
                 break;
         }
         this._store.dispatch(earnCurrency({ currency: { ...idea, amount: ideaGet } }));

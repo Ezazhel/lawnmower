@@ -12,7 +12,7 @@
 </div>
 <ng-container *ngIf="imagination$ | async as imagination">
     <div fxLayout="column" fxFlexAlign="center" *ngIf="idea$ | async as idea" id="ideas">
-        <span> {{ idea.amount }} Ideas</span>
+        <span> {{ idea.amount }}/{{ idea.limit }} Ideas</span>
         <span *ngIf="canAutomateIdea$ | async">
             automate
             <input type="checkbox" #checkboxIdea (click)="autoIdea()" [checked]="isAutomateIdea$ | async"

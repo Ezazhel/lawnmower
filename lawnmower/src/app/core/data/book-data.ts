@@ -39,4 +39,14 @@ export const Books = {
         1,
         () => 30,
     ),
+    ['nerd']: new Book(
+        'nerd',
+        'Nerd 101',
+        'Increase idea limit',
+        (level) => level,
+        'ideaLimit',
+        5,
+        (chapterRead) => 15 * chapterRead,
+        true,
+    ),
 };

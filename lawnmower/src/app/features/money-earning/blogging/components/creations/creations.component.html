@@ -1,0 +1,22 @@
+<button *ngIf="(creationToBuy$ | async).length > 0" (click)="doUnlockCreation$.next()">
+    Unlock creation for {{ price }}C
+</button>
+<section class="creation__wrapper">
+    <div *ngFor="let creation of creations$ | async">
+        <div class="creation" (click)="doUpgradeCreation$.next(creation)">
+            <label class="creation__name">
+                {{ creation.name }}
+            </label>
+
+            <span class="creation__level" *ngIf="creation.level < creation.maxLevel">
+                {{ creation.level }}/{{ creation.maxLevel }}
+            </span>
+            <p class="creation_description">
+                {{ creation.description }}
+            </p>
+            <span class="creation__upgrade" *ngIf="creation.level !== creation.maxLevel"
+                >{{ creation.price(creation) }}C</span
+            >
+        </div>
+    </div>
+</section>
