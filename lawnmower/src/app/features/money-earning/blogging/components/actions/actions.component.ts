@@ -9,11 +9,12 @@ import {
     selectBooks,
     selectIsThinking,
 } from '@root-store/blogging/blogging-selector';
-import { selectCreation, selectIdea, selectImagination, selectMoney } from '@root-store/earning/earning-selector';
+import { selectCreationPoint, selectIdea, selectImagination, selectMoney } from '@root-store/earning/earning-selector';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { BloggingService } from '@core/services/blogging.service';
 import { Books } from '@core/data/book-data';
+import { CurrencyFacadeService } from '@core/facade/currency.facade';
 
 @Component({
     selector: 'blogging-actions',
@@ -24,7 +25,7 @@ export class ActionsComponent implements OnInit {
     @ViewChild('checkboxIdea')
     checkboxIdea: ElementRef;
 
-    creation$: Observable<CreationPoint> = this.store.select(selectCreation).pipe(
+    creation$: Observable<CreationPoint> = this.store.select(selectCreationPoint).pipe(
         withLatestFrom(this.store.select(selectBookBonus, 'creationGain')),
         filter(([creation]) => creation !== undefined),
         map(([creation, bookCreationGain]) => {
@@ -36,7 +37,7 @@ export class ActionsComponent implements OnInit {
         }),
     );
 
-    imagination$: Observable<Imagination> = this.store.select(selectImagination, 'imaginationGain');
+    imagination$: Observable<Imagination> = this.currencyFacade.imagination$;
     isThinking$: Observable<boolean> = this.store.select(selectIsThinking);
 
     idea$ = this.store.select(selectIdea);
@@ -51,7 +52,11 @@ export class ActionsComponent implements OnInit {
         .select(selectBooks)
         .pipe(map((books) => books.find((b) => b.id == Books.genius.id)?.chapterRead > 0));
 
-    constructor(private store: Store<RootStoreState.State>, private _bloggingService: BloggingService) {}
+    constructor(
+        private store: Store<RootStoreState.State>,
+        private _bloggingService: BloggingService,
+        private currencyFacade: CurrencyFacadeService,
+    ) {}
 
     ngOnInit(): void {}
 

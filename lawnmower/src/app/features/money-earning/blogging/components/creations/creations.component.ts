@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { increaseCreationLevel, unlockCreation } from '@root-store/blogging/blogging-action';
 import { selectCreations } from '@root-store/blogging/blogging-selector';
 import { earnCurrency } from '@root-store/earning/earning-action';
-import { selectCreation } from '@root-store/earning/earning-selector';
+import { selectCreationPoint } from '@root-store/earning/earning-selector';
 import { RootStoreState } from 'app/root-store/';
 import { Subject } from 'rxjs';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class CreationsComponent implements OnInit {
         select(selectCreations),
         map((creations) => Object.values(Creations).filter((c) => !creations.find((creation) => creation.id == c.id))),
     );
-    creationPoint$ = this.store.select(selectCreation);
+    creationPoint$ = this.store.select(selectCreationPoint);
 
     basePrice: number = 2;
     price: number = this.basePrice;

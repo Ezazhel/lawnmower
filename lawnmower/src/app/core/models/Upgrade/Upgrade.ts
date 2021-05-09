@@ -1,8 +1,9 @@
+import { IBonus } from '@core/models/Bonus';
 import { RootStoreState } from 'app/root-store';
 import { CurrencySymbol } from '../Currencies';
 import { AffectType } from './AffectType';
 import { UpgradeType } from './UpgradeType';
-export class Upgrade {
+export class Upgrade implements IBonus {
     id: string;
     name: string;
     price: (level?: number) => number;

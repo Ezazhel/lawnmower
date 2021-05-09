@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getAllNeighboors } from '@root-store/neighboor/neighboor-selector';
 import { NeighboorAction, RootStoreState } from 'app/root-store/';
-import { timeoutWith } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class NeighboorFacadeService {

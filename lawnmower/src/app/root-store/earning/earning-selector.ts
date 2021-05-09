@@ -1,8 +1,10 @@
+import { CreationBonus } from './../../core/models/creation';
+import { Creation } from '@core/models/creation';
 import { CreationPoint, Currency, CurrencySymbol, Idea, Imagination } from '@core/models/Currencies';
-import { AffectType } from '@core/models/Upgrade';
+import { AffectType, Upgrade } from '@core/models/Upgrade';
 import { createFeatureSelector, MemoizedSelector, createSelector } from '@ngrx/store';
 import { achievementBonusMult, achievementsUnlock } from '@root-store/achievements/achievements-selector';
-import { selectUpgradeAffect } from '@root-store/upgrades/upgrades-selector';
+import { selectImaginationBonus, selectUpgradeAffect } from '@root-store/upgrades/upgrades-selector';
 import { State } from './earning-state';
 
 const getMoney = (state: State) => state.currencies['$'];
@@ -27,7 +29,7 @@ export const selectCurrency = createSelector(
     },
 );
 export const selectTimer = createSelector(selectEarningState, (state) => state.timer);
-export const selectCreation = createSelector(selectCurrency, (func) => func(CreationPoint, 'C'));
+export const selectCreationPoint = createSelector(selectCurrency, (func) => func(CreationPoint, 'C'));
 
 export const selectIdea = createSelector(selectCurrency, (func) => func(Idea, 'Idea'));
 
@@ -35,14 +37,15 @@ const imaginationPrivate = createSelector(
     selectTimer,
     selectCurrency,
     selectIdea,
-    selectCreation,
+    selectCreationPoint,
     achievementBonusMult,
     (timer, currency, idea, creationPoint, achievementBonus) => {
         const imagination = currency(Imagination, 'I') ?? new Imagination();
         return imagination.setPrivate(idea, creationPoint, null, timer.deltaTime, achievementBonus);
     },
 );
-export const selectImagination = createSelector(imaginationPrivate, selectUpgradeAffect, (imagination, upgrades) => {
-    imagination.bonus = upgrades;
+export const selectImagination = createSelector(imaginationPrivate, selectImaginationBonus, (imagination, bonus) => {
+    const { upgradeBonus, creationsBonus } = bonus;
+    imagination.bonus = [...upgradeBonus, ...creationsBonus];
     return imagination;
 });

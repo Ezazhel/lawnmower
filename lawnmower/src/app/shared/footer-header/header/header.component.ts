@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { Observable } from 'rxjs';
-import { selectMoney, selectImagination, selectCreation } from '@root-store/earning/earning-selector';
+import { selectMoney, selectImagination, selectCreationPoint } from '@root-store/earning/earning-selector';
 import { Imagination, CreationPoint, Money } from '@core/models/Currencies';
 import { selectStatsState } from 'app/root-store/stats/stats-selector';
 @Component({
@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
     public money$: Observable<Money> = this.store.select(selectMoney);
     public stats$ = this.store.select(selectStatsState);
     public imagination$: Observable<Imagination> = this.store.select(selectImagination, 'imaginationGain');
-    public creativity$: Observable<CreationPoint> = this.store.select(selectCreation);
+    public creativity$: Observable<CreationPoint> = this.store.select(selectCreationPoint);
 
     constructor(private store: Store<RootStoreState.State>) {}
 

@@ -26,11 +26,9 @@ export class BooksComponent implements OnInit {
     }
 
     buyBook({ [0]: books, [1]: money }: [Book[], Money]) {
-        debugger;
         this.bookFacade.buyBook(books, money);
     }
     read(book: Book) {
-        debugger;
         this.bookFacade.readBook(book);
     }
 }

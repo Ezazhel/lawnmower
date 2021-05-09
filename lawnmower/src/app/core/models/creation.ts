@@ -1,6 +1,7 @@
+import { IBonus } from '@core/models/Bonus';
 export type CreationBonus = 'IdeaGain' | 'IdeaLimit' | 'CreationGain' | 'ImaginationLimit' | 'Feature';
 
-export class Creation {
+export class Creation implements IBonus {
     id: string;
     name: string;
     level: number;

@@ -1,3 +1,4 @@
+import { IBonus } from '../Bonus';
 import { Upgrade } from '../Upgrade';
 import { CreationPoint } from './CreationPoint';
 import { Currency } from './Currency';
@@ -12,7 +13,7 @@ export class Imagination implements Currency {
     limit: number;
     private idea: Idea;
     private creation: CreationPoint;
-    private _bonus: Upgrade[];
+    private _bonus: IBonus[];
     private delta: number;
     private achievementBonus: number;
     constructor() {
@@ -22,11 +23,12 @@ export class Imagination implements Currency {
         this.limit = 5;
     }
 
-    additiveBonus(idea: Idea, creation: CreationPoint, bonus: Upgrade[]) {
+    additiveBonus(idea: Idea, creation: CreationPoint, bonus: IBonus[]) {
         let addition =
             this.gain +
             (idea?.additiveImaginationGain(idea.amount) ?? 0) +
             0.05 * Math.floor((creation?.amount ?? 0) / 2);
+        debugger;
         return bonus?.reduce((previous, next) => next.effect(addition), addition) ?? addition;
     }
 
@@ -63,7 +65,7 @@ export class Imagination implements Currency {
         this.delta = delta;
     }
 
-    set bonus(value: Upgrade[]) {
+    set bonus(value: IBonus[]) {
         this._bonus = value;
     }
 }

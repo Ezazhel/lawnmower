@@ -7,6 +7,7 @@ import { BloggingUpgrade } from '@core/data/upgrade-data';
 import { UpgradeTabsAffected } from '@core/models/Upgrade';
 import { CurrencySymbol } from '@core/models/Currencies';
 import { automateIdea } from '@root-store/blogging/blogging-action';
+import { selectBooks, selectCreations } from '@root-store/blogging/blogging-selector';
 
 export const selectUpgradeState: MemoizedSelector<object, State> = createFeatureSelector('upgrades');
 
@@ -28,7 +29,7 @@ const getUpgrades = (state: State, upgrade: keyof State) => {
     const stateUpgrade = state[upgrade];
     return Object.keys(stateUpgrade)
         .map((key) => {
-            let obj = Object.assign(upgradeToAssign[key], { level: stateUpgrade[key] });
+            let obj = Object.assign({}, upgradeToAssign[key], { level: stateUpgrade[key] }) as Upgrade;
             return obj;
         })
         .sort(sortByCompleted);
@@ -67,7 +68,7 @@ export const selectMowingSpeedUpgradeModifier = createSelector(selectUpgradeStat
 
 export const selectMowingGainModifier = createSelector(selectUpgradeState, (state) => {
     return Object.keys(state.mowing)
-        .map((key) => Object.assign(MowingUpgrade[key], { level: state.mowing[key] }) as Upgrade)
+        .map((key) => Object.assign(MowingUpgrade[key], { level: state.mowing[key] }))
         .filter((u) => u.affect == 'gain' && u.level > 0)
         .reduce(reduceEffectMult, 1);
 });
@@ -97,10 +98,26 @@ export const selectAllUpgrades = createSelector(selectUpgradeState, (state) => (
     ...state.mowing,
 }));
 
+export const selectAllUpgradesArray = createSelector(selectUpgradeState, (state) => {
+    return [...getUpgrades(state, 'mowing'), ...getUpgrades(state, 'blogging')];
+});
+
 export const selectUpgradeAffect = createSelector(
     selectAllUpgrades,
     (upgrades: { [id: string]: number }, affect: AffectType) => {
         const filterByUnlocked = (u: Upgrade) => u.affect === affect && upgrades[u.id] !== 0;
         return Object.values({ ...BloggingUpgrade, ...MowingUpgrade }).filter(filterByUnlocked);
+    },
+);
+
+export const selectImaginationBonus = createSelector(
+    selectAllUpgradesArray,
+    selectBooks,
+    selectCreations,
+    (upgrades, books, creations) => {
+        const upgradesBoostingImagination = upgrades.filter((upgrade) => upgrade.affect == 'imaginationGain');
+        const creationBonus = creations.filter((creation) => creation.bonus == 'ImaginationLimit');
+
+        return { upgradeBonus: upgradesBoostingImagination, creationsBonus: creationBonus };
     },
 );
