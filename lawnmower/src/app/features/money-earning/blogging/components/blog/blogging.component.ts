@@ -1,13 +1,9 @@
-import { BookService } from '@core/services/book.service';
+import { UpgradeState } from '@root-store/upgrades';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Blogging } from '@core/models/blogging';
-
-import { Store } from '@ngrx/store';
-import { RootStoreState } from 'app/root-store';
-import { selectBlogging, selectBooks } from 'app/root-store/blogging/blogging-selector';
 import { Observable } from 'rxjs';
-import { IdlingService } from '@core/services/idling.service';
-import { Upgrade, UpgradeTabsAffected } from '@core/models/Upgrade';
+import { BloggingFacadeService } from '@core/facade/blogging.facade';
+import { BookFacadeService } from '@core/facade/book.facade';
 
 @Component({
     selector: 'blogging',
@@ -16,10 +12,11 @@ import { Upgrade, UpgradeTabsAffected } from '@core/models/Upgrade';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BloggingComponent implements OnInit {
-    upgradeTab: UpgradeTabsAffected = 'blogging';
-    blogging$: Observable<Blogging> = this.store.select(selectBlogging);
-    books$ = this.store.select(selectBooks);
-    constructor(private store: Store<RootStoreState.State>, private bookService: BookService) {}
+    upgradeTab: keyof UpgradeState.State = 'blogging';
+
+    blogging$: Observable<Blogging> = this.blogFacade.blogging$;
+    books$ = this.bookFacade.books$;
+    constructor(private blogFacade: BloggingFacadeService, private bookFacade: BookFacadeService) {}
 
     ngOnInit(): void {}
 }

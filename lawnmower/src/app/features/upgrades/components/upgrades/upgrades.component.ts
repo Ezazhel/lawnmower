@@ -1,11 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { UpgradeFacadeService } from '@core/facade/upgrade.facade';
 import { CurrencySymbol } from '@core/models/Currencies';
-import { UpgradeTabsAffected } from '@core/models/Upgrade';
-import { select, Store } from '@ngrx/store';
-import { RootStoreState } from 'app/root-store';
-import { selectSpecificUpgradeCurrency } from 'app/root-store/upgrades/upgrades-selector';
+import { UpgradeState } from '@root-store/upgrades';
 import { Observable } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
     selector: 'upgrades',
@@ -15,13 +12,13 @@ import { distinctUntilChanged } from 'rxjs/operators';
 })
 export class UpgradesComponent implements OnInit {
     @Input()
-    upgradeTab: UpgradeTabsAffected;
+    upgradeTab: keyof UpgradeState.State;
 
-    currencies$: Observable<CurrencySymbol[]> = null;
-    constructor(private store: Store<RootStoreState.State>) {}
+    currencies$: Observable<CurrencySymbol[]>;
+    constructor(private upgradeFacade: UpgradeFacadeService) {}
 
     ngOnInit(): void {
-        this.currencies$ = this.store.select(selectSpecificUpgradeCurrency, this.upgradeTab);
+        this.currencies$ = this.upgradeFacade.getUpgradeOfFeature(this.upgradeTab);
     }
 
     trackByCurrency(index: number, currency: CurrencySymbol) {

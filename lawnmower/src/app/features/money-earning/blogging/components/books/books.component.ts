@@ -1,14 +1,9 @@
-import { Books } from '@core/data/book-data';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import Book from '@core/models/book';
-import { select, Store } from '@ngrx/store';
-import { readBook, unlockBook } from '@root-store/blogging/blogging-action';
-import { selectBooks, selectCanBuyBook } from '@root-store/blogging/blogging-selector';
-import { RootStoreState } from 'app/root-store/';
-import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { selectMoney } from '@root-store/earning/earning-selector';
-import { earnCurrency } from '@root-store/earning/earning-action';
+import { BookFacadeService } from '@core/facade/book.facade';
+import { CurrencyFacadeService } from '@core/facade/currency.facade';
+import { withLatestFrom } from 'rxjs/operators';
+import { Money } from '@core/models/Currencies';
 
 @Component({
     selector: 'books',
@@ -16,29 +11,13 @@ import { earnCurrency } from '@root-store/earning/earning-action';
     styleUrls: ['./books.component.scss'],
 })
 export class BooksComponent implements OnInit {
-    books$ = this.store.pipe(
-        select(selectBooks),
-        tap((books) => (this.bookPrice = books.length * 10)),
-    );
-    canBuyBook$ = this.store.select(selectCanBuyBook);
-    bookPrice: number;
+    booksAndMoney$ = this.bookFacade.books$.pipe(withLatestFrom(this.currencyFacade.money$));
 
-    doBuyBook$ = new Subject();
+    canBuyBook$ = this.bookFacade.canBuyBook$;
 
-    buyBook$ = this.doBuyBook$
-        .pipe(withLatestFrom(this.books$, this.store.select(selectMoney)))
-        .subscribe(([, books, money]) => {
-            if (money.amount < this.bookPrice) return;
+    price = (books: Book[]) => this.bookFacade.bookPrice(books);
 
-            const bookToUnlock = Object.values(Books).filter(
-                (b) => b.isBuyable && !books.find((book) => book.id == b.id),
-            );
-            const bookUnlockedIndex = Math.floor(Math.random() * (bookToUnlock.length - 1));
-            //select random, add "weight" to book.
-            this.store.dispatch(unlockBook({ book: bookToUnlock[bookUnlockedIndex] }));
-            this.store.dispatch(earnCurrency({ currency: { ...money, amount: -this.bookPrice } }));
-        });
-    constructor(private store: Store<RootStoreState.State>) {}
+    constructor(private bookFacade: BookFacadeService, private currencyFacade: CurrencyFacadeService) {}
 
     ngOnInit(): void {}
 
@@ -46,8 +25,12 @@ export class BooksComponent implements OnInit {
         return book.id;
     }
 
+    buyBook({ [0]: books, [1]: money }: [Book[], Money]) {
+        debugger;
+        this.bookFacade.buyBook(books, money);
+    }
     read(book: Book) {
-        if (book.unlocked && book.chapterRead != book.totalChapter)
-            this.store.dispatch(readBook({ book: { ...book, reading: !book.reading } }));
+        debugger;
+        this.bookFacade.readBook(book);
     }
 }

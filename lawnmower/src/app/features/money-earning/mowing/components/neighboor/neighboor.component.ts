@@ -1,8 +1,5 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { Neighboor } from '@core/models/neighboor';
-import { Store } from '@ngrx/store';
-import { RootStoreState } from 'app/root-store';
-import { insertNeighboorToCut, removeNeighboorFromCuttingList } from '@root-store/neighboor/neighboor-action';
 
 @Component({
     selector: 'app-neighboor',
@@ -13,7 +10,11 @@ import { insertNeighboorToCut, removeNeighboorFromCuttingList } from '@root-stor
 export class NeighboorComponent implements OnInit {
     @Input()
     neighboor: Neighboor;
-    constructor(private store: Store<RootStoreState.State>) {}
+
+    @Output()
+    insertToCut = new EventEmitter<string>();
+
+    constructor() {}
 
     ngOnInit(): void {}
 
@@ -25,7 +26,7 @@ export class NeighboorComponent implements OnInit {
 
     cut() {
         if (!this.neighboor.selected || (this.neighboor.selected && this.neighboor.cutPercent == 0)) {
-            this.store.dispatch(insertNeighboorToCut({ id: this.neighboor.id, cutted: 0 }));
+            this.insertToCut.next(this.neighboor.id);
             return;
         }
     }

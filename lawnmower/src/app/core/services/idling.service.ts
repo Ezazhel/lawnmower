@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState, EarningAction, StatsAction } from 'app/root-store';
 import { interval, animationFrameScheduler, combineLatest, Subject } from 'rxjs';
-import { map, sampleTime, scan, share, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, sampleTime, scan, share, tap, withLatestFrom } from 'rxjs/operators';
 import { getAllNeighboorsWhereCompletionGtOne } from '@root-store/neighboor/neighboor-selector';
 import { selectMowingGainModifier } from '@root-store/upgrades/upgrades-selector';
 import { achievementsUnlock } from '@root-store/achievements/achievements-selector';
@@ -13,6 +13,8 @@ import { NotifierService } from './notifier.service';
 import { BloggingUpgrade, MowingUpgrade } from '@core/data/upgrade-data';
 import { addBloggingUpgradeAction, addMowingUpgradeAction } from '@root-store/upgrades/upgrades-action';
 import { updateTimer } from '@root-store/earning/earning-action';
+import { selectReadingBooks } from '@root-store/blogging/blogging-selector';
+import { readBook } from '@root-store/blogging/blogging-action';
 @Injectable({
     providedIn: 'root',
 })
@@ -101,5 +103,22 @@ export class IdlingService {
                         this.notifier.pushMessage(`New Upgrade : ${u.name}`);
                     }
                 });
+        });
+
+    private readBookSubscription = this.timer$
+        .pipe(
+            withLatestFrom(this.store.select(selectReadingBooks)),
+            filter(([_, books]) => books.length > 0),
+        )
+        .subscribe(([timer, books]) => {
+            books.forEach((book) => {
+                book.timeRead += timer.deltaTime;
+                if (book.timeRead > book.timeToReadChapter(book.chapterRead)) {
+                    book.chapterRead += 1;
+                    book.timeRead = 0;
+                }
+                if (book.chapterRead === book.totalChapter) book.reading = false;
+                this.store.dispatch(readBook({ book }));
+            });
         });
 }

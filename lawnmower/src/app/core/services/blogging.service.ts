@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { filter, sampleTime, withLatestFrom } from 'rxjs/operators';
 import { selectAllCurrencies, selectCurrency, selectImagination } from 'app/root-store/earning/earning-selector';
 import { earnCurrency } from 'app/root-store/earning/earning-action';
-import { CreationPoint, Imagination, Idea, Currency, CurrencySymbol } from '@core/models/Currencies';
+import { CreationPoint, Idea, Currency, CurrencySymbol } from '@core/models/Currencies';
 import { incrementTotalFailedCreation } from 'app/root-store/stats/stats-action';
 import { Subject } from 'rxjs';
 import { assignCurrency } from '@core/utility/utility';

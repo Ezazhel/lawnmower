@@ -1,5 +1,5 @@
-<span class="achievementBonusCurrencies"
-    >Achievements increase all currencies gains by : {{ getAchievementsBonus(achievements$ | async) | exponential }}
+<span class="achievementBonusCurrencies">
+    Achievements increase all currencies gains by : {{ achievementBonusToCurrency$ | async | exponential }}
 </span>
 <div class="achievements">
     <div

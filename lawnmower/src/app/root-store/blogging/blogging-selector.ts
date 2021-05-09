@@ -21,8 +21,6 @@ export const selectBookBonus = createSelector(selectBooks, (Books: Book[], affec
     return Books.filter((b) => b.affect == affect);
 });
 
-export const selectAutomateIdea = createSelector(selectBlogFeature, (state) => state.automateIdea);
-
 export const selectCanBuyBook = createSelector(selectBlogFeature, (state) => state.canBuyBook);
 
 export const selectCreations = createSelector(selectBlogFeature, (state) => {
@@ -31,6 +29,12 @@ export const selectCreations = createSelector(selectBlogFeature, (state) => {
     );
     return obj;
 });
+
+export const canAutomateIdea = createSelector(
+    selectBooks,
+    (books) => books.find((b) => b.id == Books.genius.id)?.chapterRead > 0,
+);
+export const selectAutomateIdea = createSelector(selectBlogFeature, (state) => state.automateIdea);
 
 export const selectCreationsFilteredByBonus = createSelector(
     selectCreations,

@@ -8,19 +8,16 @@ const AllAchievements = { ...MowingAchievements, ...BloggingAchievements };
 const filterUnlock = (a: Achievement, isUnlock: boolean) => a.isUnlock == isUnlock;
 
 export const achievementState: MemoizedSelector<object, State> = createFeatureSelector('achievements');
-export const achievementsArray = createSelector(achievementState, (state) => {
+export const achievements = createSelector(achievementState, (state) => {
     return Object.keys(state.achievements).map(
         (k) => Object.assign({}, AllAchievements[k], { isUnlock: state.achievements[k] }) as Achievement,
     );
 });
 
-export const achievementsUnlock = createSelector(
-    achievementsArray,
-    (achievements: Achievement[], isUnlock: boolean) => {
-        return achievements.filter((a) => filterUnlock(a, isUnlock));
-    },
-);
+export const achievementsUnlock = createSelector(achievements, (achievements: Achievement[], isUnlock: boolean) => {
+    return achievements.filter((a) => filterUnlock(a, isUnlock));
+});
 
-export const achievementBonusMult = createSelector(achievementsArray, (achievements) => {
+export const achievementBonusMult = createSelector(achievements, (achievements) => {
     return Achievement.prototype.getBonusAchievement(achievements.filter((a) => filterUnlock(a, true)).length);
 });
