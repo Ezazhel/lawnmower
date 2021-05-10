@@ -23,13 +23,16 @@ export class Imagination implements Currency {
         this.limit = 5;
     }
 
-    additiveBonus(idea: Idea, creation: CreationPoint, bonus: IBonus[]) {
+    additiveBonus(idea: Idea, creation: CreationPoint) {
         let addition =
             this.gain +
             (idea?.additiveImaginationGain(idea.amount) ?? 0) +
             0.05 * Math.floor((creation?.amount ?? 0) / 2);
-        debugger;
-        return bonus?.reduce((previous, next) => next.effect(addition), addition) ?? addition;
+        return (
+            this._bonus
+                .filter((b) => b.bonusType == 'Additive')
+                ?.reduce((previous, next) => next.effect(addition), addition) ?? addition
+        );
     }
 
     multiplicativebonus(deltaTime: number, idea: Idea, achievementBonus: number) {
@@ -38,7 +41,7 @@ export class Imagination implements Currency {
 
     getGain() {
         return (
-            this.additiveBonus(this.idea, this.creation, this._bonus) *
+            this.additiveBonus(this.idea, this.creation) *
             this.multiplicativebonus(this.delta, this.idea, this.achievementBonus)
         );
     }
@@ -48,7 +51,7 @@ export class Imagination implements Currency {
     setPrivate(
         idea: Idea,
         creation: CreationPoint,
-        bonus: Upgrade[],
+        bonus: IBonus[],
         delta: number,
         achievementBonus: number,
     ): Imagination {

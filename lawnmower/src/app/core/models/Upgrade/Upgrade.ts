@@ -1,9 +1,9 @@
-import { IBonus } from '@core/models/Bonus';
+import { BonusType, IBonusWithLevel } from '@core/models/Bonus';
 import { RootStoreState } from 'app/root-store';
 import { CurrencySymbol } from '../Currencies';
 import { AffectType } from './AffectType';
 import { UpgradeType } from './UpgradeType';
-export class Upgrade implements IBonus {
+export class Upgrade implements IBonusWithLevel {
     id: string;
     name: string;
     price: (level?: number) => number;
@@ -16,6 +16,7 @@ export class Upgrade implements IBonus {
     level: number = 0;
     maxLevel: number;
     requiredToUnlock?: (state: RootStoreState.State) => boolean;
+    bonusType: BonusType;
 
     constructor(
         id: string,
@@ -28,6 +29,7 @@ export class Upgrade implements IBonus {
         effectDescription: string,
         affectType: AffectType,
         effect: Function,
+        bonusType: BonusType,
         currency?: CurrencySymbol,
         requiredToUnlock?: (state: RootStoreState.State) => boolean,
     ) {
@@ -41,6 +43,7 @@ export class Upgrade implements IBonus {
         this.effectDescription = effectDescription;
         this.affect = affectType;
         this.effect = effect;
+        this.bonusType = bonusType;
         this.currency = currency ?? '$';
         this.requiredToUnlock = requiredToUnlock;
     }

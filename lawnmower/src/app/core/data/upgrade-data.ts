@@ -7,7 +7,6 @@ import { canBuyBook, unlockBook } from 'app/root-store/blogging/blogging-action'
 import { earnCurrency, canPayDollarForIdea } from 'app/root-store/earning/earning-action';
 import { activateSubroute } from 'app/root-store/route/route-action';
 import { Books } from './book-data';
-
 import { routes } from './route-data';
 
 export const MowingUpgrade = {
@@ -22,6 +21,7 @@ export const MowingUpgrade = {
         'You cut grass 5% faster per level',
         'speed',
         (level: number): number => Math.pow(1.05, level),
+        'Multiplicative',
         '$',
         (state: RootStoreState.State) => state.stats.totalMoney >= 0.01,
     ),
@@ -36,6 +36,7 @@ export const MowingUpgrade = {
         '25% more money from cutting grass',
         'gain',
         (): number => 1.25,
+        'Multiplicative',
         '$',
         (state: RootStoreState.State) => state.stats.totalMowned >= 6,
     ),
@@ -50,6 +51,7 @@ export const MowingUpgrade = {
         'Grass regrow 5% slower',
         'regrow',
         (level: number): number => Math.pow(1.05, level),
+        'Multiplicative',
         '$',
         (state: RootStoreState.State) => state.stats.totalMowned >= 8,
     ),
@@ -64,6 +66,7 @@ export const MowingUpgrade = {
         'You can cut one more grass before needing to click',
         'cuttingLimit',
         () => 1,
+        'Feature',
     ),
     ['flower']: new Upgrade(
         'flower',
@@ -78,6 +81,7 @@ export const MowingUpgrade = {
         (store: Store<RootStoreState.State>) => {
             store.dispatch(activateSubroute({ mainRoute: routes['earning'], subRoute: routes['earning'].subPath[1] }));
         },
+        'Feature',
     ),
 };
 
@@ -95,6 +99,7 @@ export const BloggingUpgrade = {
         (store: Store<RootStoreState.State>) => {
             store.dispatch(earnCurrency({ currency: { ...new CreationPoint() } }));
         },
+        'Feature',
         'Idea',
         (state: RootStoreState.State) => state.stats.totalIdea > 1,
     ),
@@ -109,6 +114,7 @@ export const BloggingUpgrade = {
         'Unlock ideas',
         'feature',
         (store: Store<RootStoreState.State>) => store.dispatch(earnCurrency({ currency: { ...new Idea() } })),
+        'Feature',
         'I',
     ),
     ['handy']: new Upgrade(
@@ -121,7 +127,8 @@ export const BloggingUpgrade = {
         1,
         '50% more imagination gain !',
         'imaginationGain',
-        (imagination: number) => imagination * 1.5,
+        () => 1.5,
+        'Multiplicative',
         'C',
     ),
     ['genius']: new Upgrade(
@@ -138,6 +145,7 @@ export const BloggingUpgrade = {
             store.dispatch(unlockBook({ book: Books.genius }));
             notifier.pushMessage(`Unlocked : ${Books.genius.name} `);
         },
+        'Feature',
         'Idea',
         (state: RootStoreState.State) => state.stats.totalIdea >= 5,
     ),
@@ -155,6 +163,7 @@ export const BloggingUpgrade = {
             store.dispatch(canPayDollarForIdea());
             notifier.pushMessage('New feature unlocked !');
         },
+        'Feature',
         '$',
         (state: RootStoreState.State) => state.earning.currencies['$'].amount > 6 && state.stats.totalIdea > 0,
     ),
@@ -172,6 +181,7 @@ export const BloggingUpgrade = {
             store.dispatch(canBuyBook());
             notifier.pushMessage('New feature unlocked');
         },
+        'Feature',
         'Idea',
         (state: RootStoreState.State) => state.earning.currencies['Idea']?.amount > 4,
     ),
