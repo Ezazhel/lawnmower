@@ -3,10 +3,10 @@ import { RootStoreState } from 'app/root-store';
 import { Achievement } from '../models/achievement';
 import { Neighboors } from './neighboors-data';
 import { Store } from '@ngrx/store';
-import { addBloggingUpgradeAction, addMowingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
-import { BloggingUpgrade, MowingUpgrade } from './upgrade-data';
+import { addMowingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
+import { MowingUpgrade } from './upgrade-data';
 import { addAchievements } from 'app/root-store/achievements/achievements-action';
-import { unlockBook } from '@root-store/blogging/blogging-action';
+import { unlockBook } from 'app/root-store/blogging/blogging-action';
 import { NotifierService } from '@core/services/notifier.service';
 
 export const MowingAchievements = {

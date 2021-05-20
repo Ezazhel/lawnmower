@@ -4,17 +4,17 @@ import { State } from './upgrades-state';
 import { MowingUpgrade } from '@core/data/upgrade-data';
 import { Upgrade } from '@core/models/Upgrade/Upgrade';
 import { BloggingUpgrade } from '@core/data/upgrade-data';
-import { UpgradeTabsAffected } from '@core/models/Upgrade';
 import { CurrencySymbol } from '@core/models/Currencies';
-import { automateIdea } from '@root-store/blogging/blogging-action';
-import { selectBooks, selectCreations } from '@root-store/blogging/blogging-selector';
+import { selectBooks, selectCreations } from 'app/root-store/blogging/blogging-selector';
+import { UpgradeBonusByLevel } from '@core/models/Upgrade/UpgradeWithLevel';
 
 export const selectUpgradeState: MemoizedSelector<object, State> = createFeatureSelector('upgrades');
 
-const reduceEffectMult = (acc: number, current: Upgrade) => acc * current.effect(current.level);
-const reduceEffectAdd = (acc: number, current: Upgrade) => acc + current.effect(current.level);
+const reduceEffectMult = (acc: number, current: UpgradeBonusByLevel) => acc * current.effect();
+const reduceEffectAdd = (acc: number, current: UpgradeBonusByLevel) => acc + current.effect();
 
-const sortByCompleted = (a: Upgrade, b: Upgrade) => (a.level == a.maxLevel ? 1 : 0) - (b.level == b.maxLevel ? 1 : 0);
+const sortByCompleted = (a: UpgradeBonusByLevel, b: UpgradeBonusByLevel) =>
+    (a.level == a.maxLevel ? 1 : 0) - (b.level == b.maxLevel ? 1 : 0);
 
 const getUpgrades = (state: State, upgrade: keyof State) => {
     let upgradeToAssign: { [x: string]: Upgrade } = {};
@@ -37,12 +37,12 @@ const getUpgrades = (state: State, upgrade: keyof State) => {
 
 //#region  Mowing
 
-const getMowingUpgradeLevelValue = (state: State): Upgrade[] =>
+const getMowingUpgradeLevelValue = (state: State): UpgradeBonusByLevel[] =>
     Object.keys(state.mowing)
-        .map((key) => Object.assign(MowingUpgrade[key], { level: state.mowing[key] }) as Upgrade)
+        .map((key) => Object.assign({ ...MowingUpgrade[key] }, { level: state.mowing[key] }))
         .sort(sortByCompleted);
 
-const getMowingUpgradeLeveledUpOnly = (state: State): Upgrade[] =>
+const getMowingUpgradeLeveledUpOnly = (state: State): UpgradeBonusByLevel[] =>
     getMowingUpgradeLevelValue(state).filter((u) => u.level > 0);
 
 const getMowingSpeedUpgradeModifier = (state: State): number =>

@@ -7,7 +7,6 @@
       "@core/*": ["app/core/*"],
       "@shared/*": ["app/shared/*"],
       "@feature/*": ["app/features/*"],
-      "@root-store/*": ["app/root-store/*"]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

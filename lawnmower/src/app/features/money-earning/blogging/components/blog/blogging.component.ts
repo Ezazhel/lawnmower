@@ -1,4 +1,4 @@
-import { UpgradeState } from '@root-store/upgrades';
+import { UpgradeState } from 'app/root-store/upgrades';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Blogging } from '@core/models/blogging';
 import { Observable } from 'rxjs';

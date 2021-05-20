@@ -5,7 +5,7 @@ import {
     selectAutomateIdea,
     selectBlogging,
     selectIsThinking,
-} from '@root-store/blogging/blogging-selector';
+} from 'app/root-store/blogging/blogging-selector';
 import { RootStoreState } from 'app/root-store/';
 
 @Injectable({ providedIn: 'root' })

@@ -1,20 +1,20 @@
-import { selectAllUpgrades } from './../../root-store/upgrades/upgrades-selector';
+import { selectAllUpgrades } from 'app/root-store/upgrades/upgrades-selector';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState, EarningAction, StatsAction } from 'app/root-store';
 import { interval, animationFrameScheduler, combineLatest, Subject } from 'rxjs';
 import { filter, map, sampleTime, scan, share, tap, withLatestFrom } from 'rxjs/operators';
-import { getAllNeighboorsWhereCompletionGtOne } from '@root-store/neighboor/neighboor-selector';
-import { selectMowingGainModifier } from '@root-store/upgrades/upgrades-selector';
-import { achievementsUnlock } from '@root-store/achievements/achievements-selector';
-import { unlockAchievementAction } from '@root-store/achievements/achievements-action';
+import { getAllNeighboorsWhereCompletionGtOne } from 'app/root-store/neighboor/neighboor-selector';
+import { selectMowingGainModifier } from 'app/root-store/upgrades/upgrades-selector';
+import { achievementsUnlock } from 'app/root-store/achievements/achievements-selector';
+import { unlockAchievementAction } from 'app/root-store/achievements/achievements-action';
 import { Achievement } from '@core/models/achievement';
 import { NotifierService } from './notifier.service';
 import { BloggingUpgrade, MowingUpgrade } from '@core/data/upgrade-data';
-import { addBloggingUpgradeAction, addMowingUpgradeAction } from '@root-store/upgrades/upgrades-action';
-import { updateTimer } from '@root-store/earning/earning-action';
-import { selectReadingBooks } from '@root-store/blogging/blogging-selector';
-import { readBook } from '@root-store/blogging/blogging-action';
+import { addBloggingUpgradeAction, addMowingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
+import { updateTimer } from 'app/root-store/earning/earning-action';
+import { selectReadingBooks } from 'app/root-store/blogging/blogging-selector';
+import { readBook } from 'app/root-store/blogging/blogging-action';
 @Injectable({
     providedIn: 'root',
 })

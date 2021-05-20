@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
 import { Observable } from 'rxjs';
-import { selectMoney, selectImagination, selectCreationPoint } from '@root-store/earning/earning-selector';
+import { selectMoney, selectImagination, selectCreationPoint } from 'app/root-store/earning/earning-selector';
 import { Imagination, CreationPoint, Money } from '@core/models/Currencies';
 import { selectStatsState } from 'app/root-store/stats/stats-selector';
 @Component({

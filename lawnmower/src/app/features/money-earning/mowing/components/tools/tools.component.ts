@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { selectEquippedTool } from '@root-store/neighboor/neighboor-selector';
+import { selectEquippedTool } from 'app/root-store/neighboor/neighboor-selector';
 
 @Component({
     selector: 'tools',

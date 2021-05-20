@@ -3,9 +3,9 @@ import { Action, Store } from '@ngrx/store';
 import { RootStoreState, EarningAction } from 'app/root-store';
 import { Subject, Subscription } from 'rxjs';
 import { filter, withLatestFrom } from 'rxjs/operators';
-import { selectAllCurrencies, selectMoney } from '@root-store/earning/earning-selector';
+import { selectAllCurrencies, selectMoney } from 'app/root-store/earning/earning-selector';
 import { Upgrade } from '@core/models/Upgrade/Upgrade';
-import { unlockMowingUpgradeAction, unlockBloggingUpgradeAction } from '@root-store/upgrades/upgrades-action';
+import { unlockMowingUpgradeAction, unlockBloggingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
 
 import { Currency, Money } from '@core/models/Currencies';
 import { NotifierService } from './notifier.service';

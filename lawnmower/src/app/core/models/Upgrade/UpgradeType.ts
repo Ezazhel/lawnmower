@@ -1,1 +1,1 @@
-export type UpgradeType = 'global' | 'mowing' | 'blogging';
+export type UpgradeType = 'global' | 'mowing' | 'blogging' | 'creation';

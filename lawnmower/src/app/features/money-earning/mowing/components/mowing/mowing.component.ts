@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Neighboor } from '@core/models/neighboor';
 import { Observable } from 'rxjs';
 import { NeighboorFacadeService } from '@core/facade/neighboor.facade';
-import { UpgradeState } from '@root-store/upgrades';
+import { UpgradeState } from 'app/root-store/upgrades';
 @Component({
     selector: 'mowing',
     templateUrl: './mowing.component.html',

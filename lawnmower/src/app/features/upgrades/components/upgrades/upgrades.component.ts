@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { UpgradeFacadeService } from '@core/facade/upgrade.facade';
 import { CurrencySymbol } from '@core/models/Currencies';
-import { UpgradeState } from '@root-store/upgrades';
+import { UpgradeState } from 'app/root-store/upgrades';
 import { Observable } from 'rxjs';
 
 @Component({

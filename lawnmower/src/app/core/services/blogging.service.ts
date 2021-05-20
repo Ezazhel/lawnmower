@@ -1,6 +1,6 @@
-import { selectAutomateIdea, selectIsThinking } from '@root-store/blogging/blogging-selector';
-import { achievementBonusMult } from '@root-store/achievements/achievements-selector';
-import { selectBookBonus } from '@root-store/blogging/blogging-selector';
+import { selectAutomateIdea, selectIsThinking } from 'app/root-store/blogging/blogging-selector';
+import { achievementBonusMult } from 'app/root-store/achievements/achievements-selector';
+import { selectBookBonus } from 'app/root-store/blogging/blogging-selector';
 import { IdlingService } from '@core/services/idling.service';
 import { Injectable } from '@angular/core';
 import { RootStoreState } from 'app/root-store';

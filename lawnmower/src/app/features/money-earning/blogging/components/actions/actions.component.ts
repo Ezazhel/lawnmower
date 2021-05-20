@@ -2,14 +2,19 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CreationPoint, CurrencySymbol, Imagination } from '@core/models/Currencies';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
-import { automateIdea, setIsThinking } from '@root-store/blogging/blogging-action';
+import { automateIdea, setIsThinking } from 'app/root-store/blogging/blogging-action';
 import {
     selectAutomateIdea,
     selectBookBonus,
     selectBooks,
     selectIsThinking,
-} from '@root-store/blogging/blogging-selector';
-import { selectCreationPoint, selectIdea, selectImagination, selectMoney } from '@root-store/earning/earning-selector';
+} from 'app/root-store/blogging/blogging-selector';
+import {
+    selectCreationPoint,
+    selectIdea,
+    selectImagination,
+    selectMoney,
+} from 'app/root-store/earning/earning-selector';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { BloggingService } from '@core/services/blogging.service';

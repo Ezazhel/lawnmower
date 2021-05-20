@@ -1,5 +1,9 @@
 import { CreationPoint, Idea } from '@core/models/Currencies';
+import { CreationUpgrade } from '@core/models/Upgrade/CreationUpgrade';
 import { Upgrade } from '@core/models/Upgrade/Upgrade';
+import { UpgradeFeature } from '@core/models/Upgrade/UpgradeFeature';
+import { UpgradeOneTimeBuy } from '@core/models/Upgrade/UpgradeOneTimeBuy';
+import { UpgradeBonusByLevel } from '@core/models/Upgrade/UpgradeWithLevel';
 import { NotifierService } from '@core/services/notifier.service';
 import { Store } from '@ngrx/store';
 import { RootStoreState } from 'app/root-store';
@@ -10,179 +14,168 @@ import { Books } from './book-data';
 import { routes } from './route-data';
 
 export const MowingUpgrade = {
-    ['sharpen']: new Upgrade(
+    ['sharpen']: new UpgradeBonusByLevel(
         'sharpen',
         'Sharpen blade',
-        (level) => 0.0425 * Math.pow(1.2, level),
         'mowing',
         'Sharp blade will cut grass faster',
-        0,
-        5,
         'You cut grass 5% faster per level',
         'speed',
-        (level: number): number => Math.pow(1.05, level),
         'Multiplicative',
         '$',
+        5,
+        (): number => 1.05,
+        () => ({ base: 0.0425, pow: 1.2 }),
+
         (state: RootStoreState.State) => state.stats.totalMoney >= 0.01,
     ),
-    ['rich-grass']: new Upgrade(
+    ['rich-grass']: new UpgradeOneTimeBuy(
         'rich-grass',
         'Rich grass',
-        () => 0.15,
         'mowing',
         'It seems that your neighboor money come from their grasses !',
-        0,
-        1,
         '25% more money from cutting grass',
         'gain',
-        (): number => 1.25,
         'Multiplicative',
         '$',
+        (): number => 1.25,
+        () => ({ base: 0.15 }),
         (state: RootStoreState.State) => state.stats.totalMowned >= 6,
     ),
-    ['anti-fertilizer']: new Upgrade(
+    ['anti-fertilizer']: new UpgradeBonusByLevel(
         'anti-fertilizer',
         'Anti Fertilizer',
-        (level) => 0.15 * Math.pow(1.6, level),
         'mowing',
         'What if you spray something on the grass ?',
-        0,
-        5,
         'Grass regrow 5% slower',
         'regrow',
-        (level: number): number => Math.pow(1.05, level),
         'Multiplicative',
         '$',
+        5,
+        (): number => 1.05,
+        () => ({ base: 0.15, pow: 1.6 }),
         (state: RootStoreState.State) => state.stats.totalMowned >= 8,
     ),
-    ['robot']: new Upgrade(
+    ['robot']: new UpgradeOneTimeBuy(
         'robot',
         'Robot',
-        () => 0.3,
         'mowing',
         'Hello there',
-        0,
-        1,
         'You can cut one more grass before needing to click',
         'cuttingLimit',
-        () => 1,
         'Feature',
+        '$',
+        () => 1,
+        () => ({ base: 0.3 }),
     ),
-    ['flower']: new Upgrade(
+    ['flower']: new UpgradeFeature(
         'flower',
         'Flower',
-        () => 3,
         'mowing',
         'For mommy',
-        0,
-        1,
         'Unlock the blog !',
         'feature',
+        'Feature',
+        '$',
+        () => 3,
         (store: Store<RootStoreState.State>) => {
             store.dispatch(activateSubroute({ mainRoute: routes['earning'], subRoute: routes['earning'].subPath[1] }));
         },
-        'Feature',
     ),
 };
 
 export const BloggingUpgrade = {
-    ['paper_pencils']: new Upgrade(
+    ['paper_pencils']: new UpgradeFeature(
         'paper_pencils',
         'Paper & Pencils',
-        () => 3,
         'blogging',
         'What should you do with paper and pencil ? Draw !',
-        0,
-        1,
         'Unlock creativity !',
         'feature',
+        'Feature',
+        'Idea',
+        () => 3,
         (store: Store<RootStoreState.State>) => {
             store.dispatch(earnCurrency({ currency: { ...new CreationPoint() } }));
         },
-        'Feature',
-        'Idea',
         (state: RootStoreState.State) => state.stats.totalIdea > 1,
     ),
-    ['ideas']: new Upgrade(
+    ['ideas']: new UpgradeFeature(
         'ideas',
         'Ideas !',
-        () => 0.2,
         'blogging',
         'Ok smartass',
-        0,
-        1,
         'Unlock ideas',
         'feature',
-        (store: Store<RootStoreState.State>) => store.dispatch(earnCurrency({ currency: { ...new Idea() } })),
         'Feature',
         'I',
+        () => 0.2,
+        (store: Store<RootStoreState.State>) => store.dispatch(earnCurrency({ currency: { ...new Idea() } })),
     ),
-    ['handy']: new Upgrade(
+    ['handy']: new UpgradeOneTimeBuy(
         'handy',
         'Lefty or Righty ?',
-        () => 3,
         'blogging',
         "It's time to know Kenny...!",
-        0,
-        1,
         '50% more imagination gain !',
         'imaginationGain',
-        () => 1.5,
         'Multiplicative',
         'C',
+        () => 1.5,
+        () => ({ base: 3 }),
     ),
-    ['genius']: new Upgrade(
+    ['genius']: new UpgradeFeature(
         'genius',
         'How to become a genius',
-        () => 3,
         'blogging',
         'You shall find a book',
-        1,
-        1,
         'Unlock a book',
         'feature',
+        'Feature',
+        'Idea',
+        () => 3,
         (store: Store<RootStoreState.State>, notifier: NotifierService) => {
             store.dispatch(unlockBook({ book: Books.genius }));
             notifier.pushMessage(`Unlocked : ${Books.genius.name} `);
         },
-        'Feature',
-        'Idea',
         (state: RootStoreState.State) => state.stats.totalIdea >= 5,
     ),
-    ['money_activity']: new Upgrade(
+    ['money_activity']: new UpgradeFeature(
         'money_activity',
         'Passion',
-        () => 10,
         'blogging',
         "Passion cost money, but you'll have more idea",
-        0,
-        1,
         'You can pay money to get Ideas',
         'feature',
+        'Feature',
+        '$',
+        () => 10,
         (store: Store<RootStoreState.State>, notifier: NotifierService) => {
             store.dispatch(canPayDollarForIdea());
             notifier.pushMessage('New feature unlocked !');
         },
-        'Feature',
-        '$',
         (state: RootStoreState.State) => state.earning.currencies['$'].amount > 6 && state.stats.totalIdea > 0,
     ),
-    ['librarian']: new Upgrade(
+    ['librarian']: new UpgradeFeature(
         'librarian',
         'Librarian',
-        () => 5,
         'blogging',
         'Go to librarian',
-        0,
-        1,
         'you can buy book',
         'feature',
+        'Feature',
+        'Idea',
+        () => 5,
         (store: Store<RootStoreState.State>, notifier: NotifierService) => {
             store.dispatch(canBuyBook());
             notifier.pushMessage('New feature unlocked');
         },
-        'Feature',
-        'Idea',
         (state: RootStoreState.State) => state.earning.currencies['Idea']?.amount > 4,
     ),
+};
+
+export const CreateUpgrade = {
+    ['cortex']: new CreationUpgrade('cortex', 'Additive', 'IdeaLimit', 5, (level) => level),
+    ['board']: new CreationUpgrade('board', 'Additive', 'CreationGain', 2, (level) => level),
+    ['poster']: new CreationUpgrade('poster', 'Multiplicative', 'IdeaGain', 2, (level) => 0.5 / level),
 };

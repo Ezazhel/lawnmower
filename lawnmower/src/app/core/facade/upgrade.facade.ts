@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { State } from '@root-store/upgrades/upgrades-state';
+import { State } from 'app/root-store/upgrades/upgrades-state';
 import { Store } from '@ngrx/store';
-import { selectSpecificUpgradeCurrency } from '@root-store/upgrades/upgrades-selector';
+import { selectSpecificUpgradeCurrency } from 'app/root-store/upgrades/upgrades-selector';
 import { RootStoreState } from 'app/root-store/';
 
 @Injectable({ providedIn: 'root' })

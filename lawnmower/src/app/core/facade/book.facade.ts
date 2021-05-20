@@ -3,9 +3,9 @@ import { Books } from '@core/data/book-data';
 import Book from '@core/models/book';
 import { Money } from '@core/models/Currencies';
 import { Store } from '@ngrx/store';
-import { readBook, unlockBook } from '@root-store/blogging/blogging-action';
-import { selectBooks, selectCanBuyBook } from '@root-store/blogging/blogging-selector';
-import { earnCurrency } from '@root-store/earning/earning-action';
+import { readBook, unlockBook } from 'app/root-store/blogging/blogging-action';
+import { selectBooks, selectCanBuyBook } from 'app/root-store/blogging/blogging-selector';
+import { earnCurrency } from 'app/root-store/earning/earning-action';
 import { RootStoreState } from 'app/root-store/';
 
 @Injectable({ providedIn: 'root' })

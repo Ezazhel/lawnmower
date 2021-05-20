@@ -1,15 +1,19 @@
-import { IBonus } from '@core/models/Bonus';
+import { BonusType, IBonusFeature } from './Bonus';
+
 export type CreationBonus = 'IdeaGain' | 'IdeaLimit' | 'CreationGain' | 'ImaginationLimit' | 'Feature';
 
-export class Creation implements IBonus {
+export class Creation implements IBonusFeature {
     id: string;
     name: string;
     level: number;
     maxLevel: number;
     description: string;
     bonus: CreationBonus;
+
+    bonusType: BonusType;
     price: (creation?: Creation) => number;
-    effect: Function;
+
+    effect: () => number;
 
     constructor(
         id: string,
@@ -18,7 +22,7 @@ export class Creation implements IBonus {
         bonus: CreationBonus,
         maxLevel: number,
         price: (creation?: Creation) => number,
-        effect: Function,
+        effect: () => number,
     ) {
         this.id = id;
         this.name = name;

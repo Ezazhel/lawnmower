@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { earnCurrency } from '@root-store/earning/earning-action';
-import { cutActionCompleted } from '@root-store/neighboor/neighboor-action';
+import { earnCurrency } from 'app/root-store/earning/earning-action';
+import { cutActionCompleted } from 'app/root-store/neighboor/neighboor-action';
 import { filter, map } from 'rxjs/operators';
 import {
     incrementTotalCreation,

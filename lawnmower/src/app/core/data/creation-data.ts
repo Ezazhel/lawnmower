@@ -1,5 +1,5 @@
 import { Creation } from '@core/models/creation';
-import { Idea, Imagination } from '@core/models/Currencies';
+import { Idea } from '@core/models/Currencies';
 
 export const Creations = {
     ['cortex']: new Creation(

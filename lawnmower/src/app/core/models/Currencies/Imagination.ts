@@ -1,5 +1,5 @@
-import { IBonus } from '../Bonus';
-import { Upgrade } from '../Upgrade';
+import { RootStoreState } from 'app/root-store/';
+import { IBonusWithLevel } from '../Bonus';
 import { CreationPoint } from './CreationPoint';
 import { Currency } from './Currency';
 import { CurrencySymbol } from './CurrencySymbol';
@@ -11,11 +11,14 @@ export class Imagination implements Currency {
     type: CurrencySymbol;
     gain: number;
     limit: number;
+
     private idea: Idea;
     private creation: CreationPoint;
-    private _bonus: IBonus[];
+    private _bonus: IBonusWithLevel[];
     private delta: number;
     private achievementBonus: number;
+
+    private state: RootStoreState.State;
     constructor() {
         this.gain = 0.02;
         this.id = 'I';
@@ -31,7 +34,7 @@ export class Imagination implements Currency {
         return (
             this._bonus
                 .filter((b) => b.bonusType == 'Additive')
-                ?.reduce((previous, next) => next.effect(addition), addition) ?? addition
+                ?.reduce((previous, next) => (addition += next.effect()), addition) ?? addition
         );
     }
 
@@ -51,7 +54,7 @@ export class Imagination implements Currency {
     setPrivate(
         idea: Idea,
         creation: CreationPoint,
-        bonus: IBonus[],
+        bonus: IBonusWithLevel[],
         delta: number,
         achievementBonus: number,
     ): Imagination {
@@ -68,7 +71,7 @@ export class Imagination implements Currency {
         this.delta = delta;
     }
 
-    set bonus(value: IBonus[]) {
+    set bonus(value: IBonusWithLevel[]) {
         this._bonus = value;
     }
 }

@@ -1,10 +1,9 @@
-import { CreationBonus } from './../../core/models/creation';
-import { Creation } from '@core/models/creation';
+import { IBonusWithLevel } from './../../core/models/Bonus';
+import { IBonus } from '@core/models/Bonus';
 import { CreationPoint, Currency, CurrencySymbol, Idea, Imagination } from '@core/models/Currencies';
-import { AffectType, Upgrade } from '@core/models/Upgrade';
 import { createFeatureSelector, MemoizedSelector, createSelector } from '@ngrx/store';
-import { achievementBonusMult, achievementsUnlock } from '@root-store/achievements/achievements-selector';
-import { selectImaginationBonus, selectUpgradeAffect } from '@root-store/upgrades/upgrades-selector';
+import { achievementBonusMult } from 'app/root-store/achievements/achievements-selector';
+import { selectImaginationBonus } from 'app/root-store/upgrades/upgrades-selector';
 import { State } from './earning-state';
 
 const getMoney = (state: State) => state.currencies['$'];
@@ -21,12 +20,13 @@ export const selectAllCurrencies = createSelector(selectEarningState, (state) =>
 
 export const selectCurrency = createSelector(
     selectEarningState,
-    (state: State) => <C extends Currency>(base: new () => C, symbol: CurrencySymbol): C => {
-        const currency = getCurrency(state, symbol);
-        if (currency !== undefined) {
-            return Object.assign(new base(), currency);
-        } else return undefined;
-    },
+    (state: State) =>
+        <C extends Currency>(base: new () => C, symbol: CurrencySymbol): C => {
+            const currency = getCurrency(state, symbol);
+            if (currency !== undefined) {
+                return Object.assign(new base(), currency);
+            } else return undefined;
+        },
 );
 export const selectTimer = createSelector(selectEarningState, (state) => state.timer);
 export const selectCreationPoint = createSelector(selectCurrency, (func) => func(CreationPoint, 'C'));

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { achievementBonusMult, achievements } from '@root-store/achievements/achievements-selector';
+import { achievementBonusMult, achievements } from 'app/root-store/achievements/achievements-selector';
 import { RootStoreState } from 'app/root-store/';
 
 @Injectable({ providedIn: 'root' })

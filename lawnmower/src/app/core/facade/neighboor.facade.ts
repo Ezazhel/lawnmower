@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getAllNeighboors } from '@root-store/neighboor/neighboor-selector';
+import { getAllNeighboors } from 'app/root-store/neighboor/neighboor-selector';
 import { NeighboorAction, RootStoreState } from 'app/root-store/';
 
 @Injectable({ providedIn: 'root' })
