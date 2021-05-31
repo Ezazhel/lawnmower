@@ -1,4 +1,5 @@
 import { RootStoreState } from 'app/root-store/';
+import { max } from 'rxjs/operators';
 import { UpgradeType, AffectType } from '.';
 import { BonusType, IBonusWithLevel } from '../Bonus';
 import { CurrencySymbol } from '../Currencies';
@@ -23,22 +24,24 @@ export class UpgradeBonusByLevel implements Upgrade, IBonusWithLevel {
         public currency: CurrencySymbol,
         maxLevel: number,
 
-        price: () => number,
-        effect: () => { base: number; pow?: number },
+        effect: () => number,
+        price: () => { base: number; pow?: number },
         requiredToUnlock?: (state: RootStoreState.State) => boolean,
     ) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.description = description;
-        this.effect = function () {
-            const { base, pow } = effect();
-            if (!pow) return base * this.level;
-        };
         this.price = function () {
-            return price() * this.level;
+            const { base, pow } = price();
+            if (!pow) return base * Math.max(1, this.level);
+            return base * Math.pow(pow, Math.max(1, this.level));
+        };
+        this.effect = function () {
+            return Math.pow(effect(), this.level);
         };
         this.requiredToUnlock = requiredToUnlock;
         this.level = 0;
+        this.maxLevel = maxLevel;
     }
 }

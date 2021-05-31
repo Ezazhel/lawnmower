@@ -1,5 +1,6 @@
 import { RootStoreState } from 'app/root-store/';
-import { IBonusWithLevel } from '../Bonus';
+import { IBonus, IBonusWithLevel } from '../Bonus';
+import { UpgradeCurrency } from '../Upgrade/UpgradeCurrency';
 import { CreationPoint } from './CreationPoint';
 import { Currency } from './Currency';
 import { CurrencySymbol } from './CurrencySymbol';
@@ -14,7 +15,7 @@ export class Imagination implements Currency {
 
     private idea: Idea;
     private creation: CreationPoint;
-    private _bonus: IBonusWithLevel[];
+    private _bonus: IBonus[];
     private delta: number;
     private achievementBonus: number;
 

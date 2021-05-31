@@ -2,7 +2,7 @@ import { BonusType, IBonusFeature } from './Bonus';
 
 export type CreationBonus = 'IdeaGain' | 'IdeaLimit' | 'CreationGain' | 'ImaginationLimit' | 'Feature';
 
-export class Creation implements IBonusFeature {
+export class Creation {
     id: string;
     name: string;
     level: number;
@@ -13,24 +13,21 @@ export class Creation implements IBonusFeature {
     bonusType: BonusType;
     price: (creation?: Creation) => number;
 
-    effect: () => number;
+    reference?: string;
 
     constructor(
         id: string,
         name: string,
         description: string,
-        bonus: CreationBonus,
         maxLevel: number,
         price: (creation?: Creation) => number,
-        effect: () => number,
     ) {
         this.id = id;
         this.name = name;
         this.level = 1;
         this.maxLevel = maxLevel;
         this.description = description;
-        this.bonus = bonus;
         this.price = price;
-        this.effect = effect;
+        this.reference = this.id;
     }
 }

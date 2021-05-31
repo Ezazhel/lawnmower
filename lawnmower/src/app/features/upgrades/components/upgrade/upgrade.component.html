@@ -3,7 +3,7 @@
     [ngClass]="{
         unlocked: upgrade.level == upgrade.maxLevel,
         notUnlocked: upgrade.level != upgrade.maxLevel,
-        canBuy: currency >= upgrade.price(upgrade.level)
+        canBuy: currency >= upgrade.price()
     }"
 >
     <div class="upgrade-title">

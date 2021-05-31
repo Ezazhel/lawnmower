@@ -1,4 +1,4 @@
-import { BonusType, IBonusWithLevel } from '@core/models/Bonus';
+import { BonusType } from '@core/models/Bonus';
 import { RootStoreState } from 'app/root-store';
 import { CurrencySymbol } from '../Currencies';
 import { AffectType } from './AffectType';

@@ -17,7 +17,7 @@ const sortByCompleted = (a: UpgradeBonusByLevel, b: UpgradeBonusByLevel) =>
     (a.level == a.maxLevel ? 1 : 0) - (b.level == b.maxLevel ? 1 : 0);
 
 const getUpgrades = (state: State, upgrade: keyof State) => {
-    let upgradeToAssign: { [x: string]: Upgrade } = {};
+    let upgradeToAssign: { [x: string]: Upgrade & { effect: any } } = {};
     switch (upgrade) {
         case 'blogging':
             upgradeToAssign = BloggingUpgrade;
@@ -29,7 +29,7 @@ const getUpgrades = (state: State, upgrade: keyof State) => {
     const stateUpgrade = state[upgrade];
     return Object.keys(stateUpgrade)
         .map((key) => {
-            let obj = Object.assign({}, upgradeToAssign[key], { level: stateUpgrade[key] }) as Upgrade;
+            let obj = Object.assign({}, upgradeToAssign[key], { level: stateUpgrade[key] });
             return obj;
         })
         .sort(sortByCompleted);

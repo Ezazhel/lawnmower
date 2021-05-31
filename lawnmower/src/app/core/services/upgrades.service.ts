@@ -4,18 +4,19 @@ import { RootStoreState, EarningAction } from 'app/root-store';
 import { Subject, Subscription } from 'rxjs';
 import { filter, withLatestFrom } from 'rxjs/operators';
 import { selectAllCurrencies, selectMoney } from 'app/root-store/earning/earning-selector';
-import { Upgrade } from '@core/models/Upgrade/Upgrade';
 import { unlockMowingUpgradeAction, unlockBloggingUpgradeAction } from 'app/root-store/upgrades/upgrades-action';
 
 import { Currency, Money } from '@core/models/Currencies';
 import { NotifierService } from './notifier.service';
+import { UpgradeBonusByLevel } from '@core/models/Upgrade/UpgradeWithLevel';
+import { UpgradeFeature } from '@core/models/Upgrade/UpgradeFeature';
 
 @Injectable({
     providedIn: 'root',
 })
 export class UpgradesService {
     constructor(private store: Store<RootStoreState.State>, private notifier: NotifierService) {}
-    public doUnlockUpgrade$: Subject<Upgrade> = new Subject<Upgrade>();
+    public doUnlockUpgrade$: Subject<UpgradeBonusByLevel> = new Subject<UpgradeBonusByLevel>();
 
     private _unlockMowingUpgradeSubscription: Subscription = this.doUnlockUpgrade$
         .pipe(
@@ -25,7 +26,7 @@ export class UpgradesService {
                     upgrade,
                     currency.amount,
                     unlockMowingUpgradeAction({ id: upgrade.id }),
-                    EarningAction.earnCurrency({ currency: new Money(-upgrade.price(upgrade.level - 1)) }),
+                    EarningAction.earnCurrency({ currency: new Money(-upgrade.price()) }),
                 );
             }),
         )
@@ -43,7 +44,7 @@ export class UpgradesService {
                         currency: {
                             type: upgrade.currency,
                             id: upgrade.currency,
-                            amount: -upgrade.price(upgrade.level - 1),
+                            amount: -upgrade.price(),
                         },
                     }),
                 ),
@@ -51,10 +52,15 @@ export class UpgradesService {
         )
         .subscribe();
 
-    private projectUnlockUpgrade(upgrade: Upgrade, currency: number, UnlockAction: Action, LoseMoneyAction: Action) {
-        if (currency >= upgrade.price(upgrade.level) && upgrade.level < upgrade.maxLevel) {
-            this.store.dispatch(UnlockAction);
+    private projectUnlockUpgrade(
+        upgrade: UpgradeBonusByLevel | UpgradeFeature,
+        currency: number,
+        UnlockAction: Action,
+        LoseMoneyAction: Action,
+    ) {
+        if (currency >= upgrade.price() && upgrade.level < upgrade.maxLevel) {
             this.store.dispatch(LoseMoneyAction);
+            this.store.dispatch(UnlockAction);
             if (upgrade.affect == 'feature') {
                 upgrade.effect(this.store, this.notifier);
             }

@@ -1,5 +1,4 @@
-import { IBonusWithLevel } from './../../core/models/Bonus';
-import { IBonus } from '@core/models/Bonus';
+import { IBonusWithLevel } from '@core/models/Bonus';
 import { CreationPoint, Currency, CurrencySymbol, Idea, Imagination } from '@core/models/Currencies';
 import { createFeatureSelector, MemoizedSelector, createSelector } from '@ngrx/store';
 import { achievementBonusMult } from 'app/root-store/achievements/achievements-selector';
@@ -46,6 +45,6 @@ const imaginationPrivate = createSelector(
 );
 export const selectImagination = createSelector(imaginationPrivate, selectImaginationBonus, (imagination, bonus) => {
     const { upgradeBonus, creationsBonus } = bonus;
-    imagination.bonus = [...upgradeBonus, ...creationsBonus];
+    imagination.bonus = [...upgradeBonus, ...creationsBonus] as IBonusWithLevel[];
     return imagination;
 });

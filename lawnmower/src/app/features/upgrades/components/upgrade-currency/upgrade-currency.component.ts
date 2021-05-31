@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CurrencySymbol } from '@core/models/Currencies';
 import { UpgradeTabsAffected, Upgrade } from '@core/models/Upgrade';
+import { UpgradeBonusByLevel } from '@core/models/Upgrade/UpgradeWithLevel';
 
 @Component({
     selector: 'app-upgrade-currency',
@@ -37,7 +38,7 @@ export class UpgradeCurrencyComponent implements OnInit {
         });
     }
 
-    unlock(upgrade: Upgrade) {
+    unlock(upgrade: UpgradeBonusByLevel) {
         this.upgradeService.doUnlockUpgrade$.next(upgrade);
     }
 

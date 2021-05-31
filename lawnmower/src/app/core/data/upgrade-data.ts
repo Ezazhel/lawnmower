@@ -1,6 +1,5 @@
 import { CreationPoint, Idea } from '@core/models/Currencies';
 import { CreationUpgrade } from '@core/models/Upgrade/CreationUpgrade';
-import { Upgrade } from '@core/models/Upgrade/Upgrade';
 import { UpgradeFeature } from '@core/models/Upgrade/UpgradeFeature';
 import { UpgradeOneTimeBuy } from '@core/models/Upgrade/UpgradeOneTimeBuy';
 import { UpgradeBonusByLevel } from '@core/models/Upgrade/UpgradeWithLevel';
@@ -121,7 +120,7 @@ export const BloggingUpgrade = {
         'imaginationGain',
         'Multiplicative',
         'C',
-        () => 1.5,
+        () => 2,
         () => ({ base: 3 }),
     ),
     ['genius']: new UpgradeFeature(
